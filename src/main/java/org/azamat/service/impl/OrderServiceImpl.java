@@ -15,6 +15,12 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
     }
 
+
+    @Override
+    public Iterable<Order> getAllOrders() {
+        return this.orderRepository.findAll();
+    }
+
     @Override
     public Order create(Order order) {
         order.setDateCreated(Calendar.getInstance());

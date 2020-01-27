@@ -39,26 +39,50 @@ public class OrderController {
         return "order";
     }
 
+
     @GetMapping("/cart/buy/{id}")
     public String buy(@PathVariable("id") int id,
                       Model model,
                       HttpSession session) {
-        Order order = new Order();
-        order.setStatus(OrderStatus.INCART);
-        order = this.orderService.create(order);
+        if(session.getAttribute("cart") == null) {
+            Order order = new Order();
+            order.setStatus(OrderStatus.INCART);
+            order = this.orderService.create(order);
+            List<OrderProduct> cart = new ArrayList<>();
+            cart.add(new OrderProduct(order, productService.getProduct(id).orElse(null), 1));
+            order.setOrderProducts(cart);
 
-        List<OrderProduct> cart = new ArrayList<>();
-        cart.add(new OrderProduct(order, productService.getProduct(id).orElse(null), 1));
-        order.setOrderProducts(cart);
+            log.info("buy method: cart: {} ", cart);
 
-        log.info("buy method: order: {} ", order);
-
-        this.orderService.update(order);
-
-
-        session.setAttribute("cart", cart);
-
+            this.orderService.update(order);
+            session.setAttribute("cart", cart);
+        } else {
+            List<OrderProduct> cart = (List<OrderProduct>) session.getAttribute("cart");
+            for (Order order : orderService.getAllOrders()) {
+                int index = isExists(id, cart);
+                if (index == -1) {
+                    cart.add(new OrderProduct(order, productService.getProduct(id).orElse(null), 1));
+                    session.setAttribute("cart", cart);
+                } else {
+                    cart.get(index).setQuantity(cart.get(index).getQuantity()+1);
+                    order.setOrderProducts(cart);
+                    orderService.update(order);
+                    session.setAttribute("cart", cart);
+                }
+            }
+        }
         return "redirect:/order";
     }
+
+    private int isExists(int id, List<OrderProduct> cart) {
+        for (int i=0;i<cart.size();++i){
+            if(cart.get(i).getProduct().getP_id() == id)
+                return i;
+        }
+        return -1;
+    }
+
+
+
 
 }
