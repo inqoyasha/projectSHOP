@@ -1,0 +1,28 @@
+DROP TABLE products;
+
+CREATE TABLE products(
+   p_id serial PRIMARY KEY,
+   product_name VARCHAR (50) NOT NULL,
+   pictureURL varchar NOT NULL,
+   price numeric NOT NULL
+);
+
+INSERT INTO products VALUES (1, 'TV','tv.png', 4999.99);
+INSERT INTO products VALUES (2, 'phone','phone.png', 699.99);
+INSERT INTO products VALUES (3, 'iphone','iphone.png', 1500.0);
+
+DROP tABLE orders;
+
+CREATE TABLE orders(
+   o_id serial PRIMARY KEY,
+   date_created date NOT NULL,
+   status varchar NOT NULL,
+   order_products text[] 
+);
+
+CREATE TABLE order_product(
+   op_id serial PRIMARY KEY,
+   p_id int NOT NULL,
+   o_id int NOT NULL,
+   quantity int NOT NULL
+);

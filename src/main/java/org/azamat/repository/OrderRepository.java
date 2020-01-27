@@ -1,0 +1,7 @@
+package org.azamat.repository;
+
+        import org.azamat.model.Order;
+        import org.springframework.data.repository.CrudRepository;
+
+public interface OrderRepository extends CrudRepository<Order, Integer> {
+}
