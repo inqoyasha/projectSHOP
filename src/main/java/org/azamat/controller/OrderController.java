@@ -1,11 +1,14 @@
 package org.azamat.controller;
 
+import org.azamat.SpringBootStarter;
 import org.azamat.model.Order;
 import org.azamat.model.OrderProduct;
 import org.azamat.model.OrderStatus;
 import org.azamat.service.OrderProductService;
 import org.azamat.service.OrderService;
 import org.azamat.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,7 @@ public class OrderController {
     private final ProductService productService;
     private final OrderService orderService;
     private final OrderProductService orderProductService;
+    private static final Logger log = LoggerFactory.getLogger(SpringBootStarter.class);
     @Autowired
     public OrderController(ProductService productService,
                            OrderService orderService,
@@ -46,6 +50,8 @@ public class OrderController {
         List<OrderProduct> cart = new ArrayList<>();
         cart.add(new OrderProduct(order, productService.getProduct(id).orElse(null), 1));
         order.setOrderProducts(cart);
+
+        log.info("buy method: order: {} ", order);
 
         this.orderService.update(order);
 

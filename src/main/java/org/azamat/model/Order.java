@@ -1,11 +1,13 @@
 package org.azamat.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+        import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+        import javax.persistence.*;
+        import java.time.LocalDate;
+        import java.util.ArrayList;
+        import java.util.Arrays;
+        import java.util.Calendar;
+        import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -14,7 +16,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer o_id;
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dateCreated;
+    private Calendar dateCreated;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<OrderProduct> orderProducts = new ArrayList<>();
@@ -22,7 +25,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer o_id, LocalDate dateCreated, OrderStatus status, List<OrderProduct> orderProducts) {
+    public Order(Integer o_id, Calendar dateCreated, OrderStatus status, List<OrderProduct> orderProducts) {
         this.o_id = o_id;
         this.dateCreated = dateCreated;
         this.status = status;
@@ -37,11 +40,11 @@ public class Order {
         this.o_id = o_id;
     }
 
-    public LocalDate getDateCreated() {
+    public Calendar getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDate dateCreated) {
+    public void setDateCreated(Calendar dateCreated) {
         this.dateCreated = dateCreated;
     }
 

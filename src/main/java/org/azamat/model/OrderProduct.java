@@ -61,4 +61,5 @@ public class OrderProduct {
     public Double getTotalPrice() {
         return getProduct().getPrice() * getQuantity();
     }
+
 }
