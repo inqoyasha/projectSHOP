@@ -6,4 +6,5 @@ public interface OrderService {
     Iterable<Order> getAllOrders();
     Order create(Order order);
     void update(Order order);
+    void remove(int id);
 }

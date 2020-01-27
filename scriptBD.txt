@@ -15,14 +15,16 @@ DROP tABLE orders;
 
 CREATE TABLE orders(
    o_id serial PRIMARY KEY,
-   date_created date NOT NULL,
+   date_created timestamp NOT NULL,
    status varchar NOT NULL,
-   order_products text[] 
+   order_products int[] 
 );
+
+DROP tABLE order_product;
 
 CREATE TABLE order_product(
    op_id serial PRIMARY KEY,
    p_id int NOT NULL,
    o_id int NOT NULL,
-   quantity int NOT NULL
+   quantity int 
 );

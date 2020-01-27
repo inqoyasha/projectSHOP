@@ -32,4 +32,9 @@ public class OrderServiceImpl implements OrderService {
     public void update(Order order) {
         this.orderRepository.save(order);
     }
+
+    @Override
+    public void remove(int id) {
+        this.orderRepository.deleteById(id);
+    }
 }

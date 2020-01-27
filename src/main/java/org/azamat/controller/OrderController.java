@@ -74,6 +74,34 @@ public class OrderController {
         return "redirect:/order";
     }
 
+    @GetMapping("/cart/remove/{id}")
+    public String remove(@PathVariable("id") int id,
+                      HttpSession session) {
+
+        List<OrderProduct> cart = (List<OrderProduct>) session.getAttribute("cart");
+        int index = isExists(id, cart);
+        for (Order order : orderService.getAllOrders()) {
+
+            if (cart.get(index).getQuantity() != 1) {
+                cart.get(index).setQuantity(cart.get(index).getQuantity() - 1);
+            } else {
+                cart.remove(index);
+            }
+
+            System.out.println("b");
+            cart.forEach(System.out::println);
+
+            order.setOrderProducts(cart);
+            orderService.update(order);
+        }
+            session.setAttribute("cart", cart);
+
+        return "redirect:/order";
+    }
+
+
+
+
     private int isExists(int id, List<OrderProduct> cart) {
         for (int i=0;i<cart.size();++i){
             if(cart.get(i).getProduct().getP_id() == id)

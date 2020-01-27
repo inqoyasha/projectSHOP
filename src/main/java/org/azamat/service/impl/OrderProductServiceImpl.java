@@ -16,4 +16,9 @@ public class OrderProductServiceImpl implements OrderProductService {
     public OrderProduct create(OrderProduct orderProduct) {
         return this.orderProductRepository.save(orderProduct);
     }
+
+    @Override
+    public void remove(int id) {
+        orderProductRepository.deleteById(id);
+    }
 }
