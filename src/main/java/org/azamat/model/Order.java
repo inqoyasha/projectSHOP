@@ -80,4 +80,13 @@ public class Order {
         return this.orderProducts.size();
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "o_id=" + o_id +
+                ", dateCreated=" + dateCreated.getTime() +
+                ", status=" + status +
+                ", orderProducts.size()=" + orderProducts.size() +
+                '}';
+    }
 }

@@ -76,7 +76,7 @@ public class OrderController {
 
     @GetMapping("/cart/remove/{id}")
     public String remove(@PathVariable("id") int id,
-                      HttpSession session) {
+                         HttpSession session) {
 
         List<OrderProduct> cart = (List<OrderProduct>) session.getAttribute("cart");
         int index = isExists(id, cart);
@@ -88,12 +88,15 @@ public class OrderController {
                 cart.remove(index);
             }
 
-            System.out.println("b");
+            System.out.println("cart: ");
             cart.forEach(System.out::println);
 
             order.setOrderProducts(cart);
+
+            System.out.println("order:" + order.toString());
             orderService.update(order);
         }
+
             session.setAttribute("cart", cart);
 
         return "redirect:/order";

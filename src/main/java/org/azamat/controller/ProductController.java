@@ -5,13 +5,12 @@ import org.azamat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping(value={"", "/", "store"})
 public class ProductController {
 
     private final ProductService productService;
@@ -20,11 +19,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/store")
+    @GetMapping
     public String index(Model model) {
         model.addAttribute("products", productService.getAllProducts());
 
-        return "products";
+        return "home";
     }
 
     @GetMapping("/info")
