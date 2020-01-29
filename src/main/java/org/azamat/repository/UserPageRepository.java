@@ -4,5 +4,5 @@ import org.azamat.model.UserPage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserPageRepository extends JpaRepository<UserPage, Integer> {
-    UserPage findByUsername(String userName);
+    UserPage findByFirstNameAndLastName(String firstName, String lastName);
 }

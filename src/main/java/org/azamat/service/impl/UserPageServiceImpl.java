@@ -22,8 +22,8 @@ public class UserPageServiceImpl implements UserPageService {
     }
 
 
-    public UserPage findByUsername(String userName) {
-        return userPageRepository.findByUsername(userName);
+    public UserPage findByUsername(String firstName, String lastName) {
+        return userPageRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
     @Override

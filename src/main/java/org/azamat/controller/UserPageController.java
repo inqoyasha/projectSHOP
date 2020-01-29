@@ -18,20 +18,21 @@ public class UserPageController {
 
     @GetMapping("/account")
     public String account(Model model) {
-        model.addAttribute("userPage", new UserPage());
+        UserPage user = userPageService.findById(1);
+        model.addAttribute("userPage", user);
         return "userpage";
     }
 
     @PostMapping("/account")
-    public String saveData(@RequestParam String firstName,
-                           @RequestParam String lastName,
-                           @RequestParam String patronymic,
-                           @RequestParam String email,
-                           @RequestParam String address) {
+    public String saveData(@RequestParam(value = "firstName") String firstName,
+                           @RequestParam(value = "lastName") String lastName,
+                           @RequestParam(value = "patronymic") String patronymic,
+                           @RequestParam(value = "email") String email,
+                           @RequestParam(value = "address") String address) {
         UserPage user = new UserPage(firstName,lastName,patronymic,email,address);
         userPageService.save(user);
 
-        return "redirect:/result";
+        return "userpage";
     }
     @GetMapping("/result")
     public String printData(Model model) {
@@ -39,4 +40,21 @@ public class UserPageController {
         model.addAttribute("userPage", user);
         return "result";
     }
+
+    @PutMapping("/result")
+    public String updateData(@RequestParam String firstName,
+                             @RequestParam String lastName,
+                             @RequestParam String patronymic,
+                             @RequestParam String email,
+                             @RequestParam String address,
+                             Model model) {
+        UserPage user = new UserPage(firstName,lastName,patronymic,email,address);
+        userPageService.update(user);
+        model.addAttribute("userPage", user);
+        return "result";
+    }
+
+
+
 }
+
