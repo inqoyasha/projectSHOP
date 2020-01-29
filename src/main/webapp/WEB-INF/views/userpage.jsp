@@ -22,7 +22,7 @@
         document.getElementById("pa").disabled = true;
         document.getElementById("em").disabled = true;
         document.getElementById("ad").disabled = true;
-        button.type = "submit";
+        form.submit();
     }
 
     return false;
@@ -31,13 +31,13 @@
 </head>
 <body>
 <h1>enter your data</h1>
-    <form method="post">
+    <form name="form" id="formId" method="post">
         <table>
             <td>
                 <p>First Name:  <input id= "fn" type="text" name="firstName"  disabled="true" value ="${userPage.firstName}"  /></p>
                 <p>Last Name:   <input id= "ln" type="text" name="lastName"   disabled="true" value ="${userPage.lastName}" /></p>
                 <p>Patronymic:  <input id= "pa" type="text" name="patronymic" disabled="true" value ="${userPage.patronymic}" /></p>
-                <p>e-mail:      <input id= "em" type="text" name="email"      disabled="true" value ="${userPage.email}" /></p>
+                <p>E-mail:      <input id= "em" type="text" name="email"      disabled="true" value ="${userPage.email}" /></p>
                 <p>Address:     <input id= "ad" type="text" name="address"    disabled="true" value ="${userPage.address}" /></p>
 
                 <p><input type="button" value="edit" id ="editBtn" onClick="doOnClick();"/>

@@ -24,13 +24,17 @@ public class UserPageController {
     }
 
     @PostMapping("/account")
-    public String saveData(@RequestParam(value = "firstName") String firstName,
-                           @RequestParam(value = "lastName") String lastName,
-                           @RequestParam(value = "patronymic") String patronymic,
-                           @RequestParam(value = "email") String email,
-                           @RequestParam(value = "address") String address) {
+    public String saveData(@RequestParam(value = "firstName", required = false) String firstName,
+                           @RequestParam(value = "lastName", required = false) String lastName,
+                           @RequestParam(value = "patronymic", required = false) String patronymic,
+                           @RequestParam(value = "email", required = false) String email,
+                           @RequestParam(value = "address", required = false) String address,
+                           Model model) {
         UserPage user = new UserPage(firstName,lastName,patronymic,email,address);
         userPageService.save(user);
+/*        UserPage user1 = userPageService.findById(1);
+        model.addAttribute("userPage", user1);*/
+        model.addAttribute("userPage", user);
 
         return "userpage";
     }
