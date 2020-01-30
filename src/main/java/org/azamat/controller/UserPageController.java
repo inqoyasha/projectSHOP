@@ -31,34 +31,11 @@ public class UserPageController {
                            @RequestParam(value = "address", required = false) String address,
                            Model model) {
         UserPage user = new UserPage(firstName,lastName,patronymic,email,address);
-        userPageService.save(user);
-/*        UserPage user1 = userPageService.findById(1);
-        model.addAttribute("userPage", user1);*/
+        userPageService.update(user);
+
         model.addAttribute("userPage", user);
 
         return "userpage";
     }
-    @GetMapping("/result")
-    public String printData(Model model) {
-        UserPage user = userPageService.findById(1);
-        model.addAttribute("userPage", user);
-        return "result";
-    }
-
-    @PutMapping("/result")
-    public String updateData(@RequestParam String firstName,
-                             @RequestParam String lastName,
-                             @RequestParam String patronymic,
-                             @RequestParam String email,
-                             @RequestParam String address,
-                             Model model) {
-        UserPage user = new UserPage(firstName,lastName,patronymic,email,address);
-        userPageService.update(user);
-        model.addAttribute("userPage", user);
-        return "result";
-    }
-
-
-
 }
 

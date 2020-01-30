@@ -1,5 +1,6 @@
 package org.azamat.service.impl;
 
+import org.apache.catalina.User;
 import org.azamat.model.UserPage;
 import org.azamat.repository.UserPageRepository;
 import org.azamat.service.UserPageService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserPageServiceImpl implements UserPageService {
@@ -33,6 +35,12 @@ public class UserPageServiceImpl implements UserPageService {
 
     @Override
     public void update(UserPage userPage) {
-        userPageRepository.save(userPage);
+        UserPage userFromDB = userPageRepository.findById(1).orElse(null);
+        userFromDB.setFirstName(userPage.getFirstName());
+        userFromDB.setLastName(userPage.getLastName());
+        userFromDB.setPatronymic(userPage.getPatronymic());
+        userFromDB.setEmail(userPage.getEmail());
+        userFromDB.setAddress(userPage.getAddress());
+        userPageRepository.save(userFromDB);
     }
 }
