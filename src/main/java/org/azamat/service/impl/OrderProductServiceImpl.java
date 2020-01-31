@@ -21,4 +21,15 @@ public class OrderProductServiceImpl implements OrderProductService {
     public void remove(int id) {
         orderProductRepository.deleteById(id);
     }
+
+    @Override
+    public int size() {
+        Iterable<OrderProduct> all = orderProductRepository.findAll();
+        int sum = 0;
+        for (OrderProduct op: all) {
+            sum+=op.getQuantity();
+        }
+        return sum;
+    }
+
 }

@@ -7,6 +7,18 @@
 <title>Product Page</title>
 </head>
 <body>
+    <table>
+    <td>
+        <a href="/account">account</a>
+    </td>
+    <td>
+        <p>Items in cart: ${cartCount}</p>
+    </td>
+
+    <td>
+        <a href="/order">cart</a>
+    </td>
+    </table>
 	<h3>Products Page</h3>
 	<table cellpadding="2" cellspacing="2" border="1">
 		<tr>
@@ -23,10 +35,10 @@
 				<td><img src="${pageContext.request.contextPath}/resources/static/ ${product.pictureURL }" width="50"></td>
 				<td>${product.price }</td>
 				<td>
-				<a href="/cart/buy/${product.p_id}">Buy</a>
+				    <a href="/cart/buy/${product.p_id}">Buy</a>
 				</td>
                 <td>
-                <a href="/info/${product.p_id}">Info</a>
+                    <a href="/info/${product.p_id}">Info</a>
 				</td>
 			</tr>
 		</c:forEach>

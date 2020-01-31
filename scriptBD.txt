@@ -39,3 +39,5 @@ CREATE TABLE user_page(
    email varchar,
    address varchar 
 );
+
+INSERT INTO user_page VALUES (1,'haha', 'haha','haha', 'haha','haha');
