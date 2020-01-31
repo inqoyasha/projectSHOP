@@ -19,7 +19,7 @@ public class UserPage {
     public UserPage() {
     }
 
-    public UserPage(String lastName, String firstName, String patronymic, String email, String address) {
+    public UserPage(String firstName, String lastName, String patronymic, String email, String address) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.patronymic = patronymic;

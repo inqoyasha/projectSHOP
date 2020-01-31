@@ -81,21 +81,25 @@
     <form name="userdata" id="userdataId">
         <table>
             <td>
-                <p>First Name:  <input id= "fn" type="text" name="firstName"  readonly value ="${userPage.firstName}"  /></p></p>
-                <p>Last Name:   <input id= "ln" type="text" name="lastName"   readonly value ="${userPage.lastName}" /></p>
-                <p>Patronymic:  <input id= "pa" type="text" name="patronymic" readonly value ="${userPage.patronymic}" /></p>
-                <p>E-mail:      <input id= "em" type="text" name="email"      readonly value ="${userPage.email}" /></p>
-                <p>Address:     <input id= "ad" type="text" name="address"    readonly value ="${userPage.address}" /></p>
+                <p>First Name:  </p>
+                <p>Last Name:   </p>
+                <p>Patronymic:  </p>
+                <p>E-mail:      </p>
+                <p>Address:     </p>
             </td>
             <td>
-                <p><input type="button" value="edit" id ="editBtn1" onClick="doOnClick(this.id);"/>
-                <p><input type="button" value="edit" id ="editBtn2" onClick="doOnClick(this.id);"/>
-                <p><input type="button" value="edit" id ="editBtn3" onClick="doOnClick(this.id);"/>
-                <p><input type="button" value="edit" id ="editBtn4" onClick="doOnClick(this.id);"/>
-                <p><input type="button" value="edit" id ="editBtn5" onClick="doOnClick(this.id);"/>
+                <p><input id= "fn" type="text" name="firstName"  readonly value ="${userPage.firstName}"/></p>
+                <p><input id= "ln" type="text" name="lastName"   readonly value ="${userPage.lastName}"/></p>
+                <p><input id= "pa" type="text" name="patronymic" readonly value ="${userPage.patronymic}"/></p>
+                <p><input id= "em" type="text" name="email"      readonly value ="${userPage.email}"/></p>
+                <p><input id= "ad" type="text" name="address"    readonly value ="${userPage.address}"/></p>
+            </td>
+            <td>
+                <c:forEach var = "i" begin = "1" end = "5">
+                    <p><input type="button" value="edit" id ="editBtn${i}" onClick="doOnClick(this.id);"/>
+                </c:forEach>
             </td>
         </table>
     </form>
 </body>
-
 </html>
