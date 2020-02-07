@@ -4,14 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Registration Page</title>
+<title>Login page</title>
 </head>
 <body>
-	<h3>Registration form</h3>
-    <form action="#" th:action="@{/login}" method="post">
-        <p>User Name: <input type="text" name="lastName" /></p>
-        <p>Password: <input type="text" name="firstName" /></p>
+	<h3>Login page</h3>
+    <form action="/login" method="post">
+        <p> Login:    <input type="text" name="username" /></p>
+        <p> Password: <input type="text" name="password" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
+    <a href="/registration">create new account</a>
 </body>
 </html>

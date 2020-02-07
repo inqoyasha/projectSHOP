@@ -1,14 +1,10 @@
 package org.azamat.service.impl;
 
-import org.apache.catalina.User;
 import org.azamat.model.UserPage;
 import org.azamat.repository.UserPageRepository;
 import org.azamat.service.UserPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserPageServiceImpl implements UserPageService {
@@ -23,9 +19,9 @@ public class UserPageServiceImpl implements UserPageService {
         return this.userPageRepository.findById(id).orElse(null);
     }
 
-
-    public UserPage findByUsername(String firstName, String lastName) {
-        return userPageRepository.findByFirstNameAndLastName(firstName, lastName);
+    @Override
+    public UserPage create(UserPage userPage) {
+        return userPageRepository.save(userPage);
     }
 
     @Override

@@ -19,6 +19,10 @@ public class UserPageController {
     @GetMapping("/account")
     public String account(Model model) {
         UserPage user = userPageService.findById(1);
+        if (user == null) {
+            userPageService.save(new UserPage("","","","",""));
+            user = userPageService.findById(1);
+        }
         model.addAttribute("userPage", user);
         return "userpage";
     }

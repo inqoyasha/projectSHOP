@@ -43,6 +43,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-
+    <a href="/registration">reg</a>
 </body>
 </html>

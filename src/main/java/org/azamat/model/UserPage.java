@@ -4,24 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class UserPage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer user_id;
-    private String lastName;
     private String firstName;
+    private String lastName;
     private String patronymic;
     private String email;
     private String address;
+//    private Set<Order> ordersSet = new HashSet<>();
 
     public UserPage() {
     }
 
     public UserPage(String firstName, String lastName, String patronymic, String email, String address) {
-        this.lastName = lastName;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.patronymic = patronymic;
         this.email = email;
         this.address = address;

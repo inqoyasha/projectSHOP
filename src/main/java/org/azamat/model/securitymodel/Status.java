@@ -1,5 +1,5 @@
-//package org.azamat.model.securitymodel;
-//
-//public enum Status {
-//    ACTIVE, INACTIVE;
-//}
+package org.azamat.model.securitymodel;
+
+public enum Status {
+    ACTIVE, INACTIVE;
+}

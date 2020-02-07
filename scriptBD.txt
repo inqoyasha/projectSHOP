@@ -1,4 +1,10 @@
-DROP TABLE products;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS order_product;
+DROP TABLE IF EXISTS user_page;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS user_roles;
 
 CREATE TABLE products(
    p_id serial PRIMARY KEY,
@@ -11,16 +17,12 @@ INSERT INTO products VALUES (1, 'TV','tv.png', 4999.99);
 INSERT INTO products VALUES (2, 'phone','phone.png', 699.99);
 INSERT INTO products VALUES (3, 'iphone','iphone.png', 1500.0);
 
-DROP TABLE orders;
-
 CREATE TABLE orders(
    o_id serial PRIMARY KEY,
    date_created timestamp NOT NULL,
    status varchar NOT NULL,
    order_products int[] 
 );
-
-DROP TABLE order_product;
 
 CREATE TABLE order_product(
    op_id serial PRIMARY KEY,
@@ -29,15 +31,42 @@ CREATE TABLE order_product(
    quantity int 
 );
 
-DROP TABLE user_page;
-
 CREATE TABLE user_page(
    user_id serial PRIMARY KEY,
-   last_name varchar,
    first_name varchar,
+   last_name varchar,
    patronymic varchar,
    email varchar,
    address varchar 
 );
 
-INSERT INTO user_page VALUES (1,'haha', 'haha','haha', 'haha','haha');
+CREATE TABLE users(
+   id serial PRIMARY KEY,
+   username varchar,
+   password varchar,
+   first_name varchar,
+   last_name varchar,
+   patronymic varchar,
+   email varchar,
+   date_created timestamp,
+   date_updated timestamp,
+   status varchar 
+);
+
+CREATE TABLE roles(
+   id serial PRIMARY KEY,
+   name varchar
+);
+
+CREATE TABLE user_roles(
+   user_id int not null,
+   role_id int not null,
+
+   FOREIGN KEY (user_id) REFERENCES users(id),
+   FOREIGN KEY (role_id) REFERENCES roles(id),
+
+   UNIQUE (user_id, role_id)
+);
+
+insert into roles values (1,'ROLE_USER');
+insert into roles values (2,'ROLE_ADMIN');

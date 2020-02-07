@@ -102,9 +102,6 @@ public class OrderController {
         return "redirect:/order";
     }
 
-
-
-
     private int isExists(int id, List<OrderProduct> cart) {
         for (int i=0;i<cart.size();++i){
             if(cart.get(i).getProduct().getP_id() == id)
@@ -112,8 +109,5 @@ public class OrderController {
         }
         return -1;
     }
-
-
-
 
 }
