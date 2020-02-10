@@ -7,7 +7,7 @@
 <title>Cart Page</title>
 </head>
 <body>
-
+    <%@ include file="navbar.jsp"%>
 	<h3>Cart Page</h3>
 	<table cellpadding="2" cellspacing="2" border="1">
 		<tr>
@@ -18,7 +18,6 @@
 			<th>Price </th>
             <th>Quantity </th>
             <th>Total price: </th>
-
 		</tr>
 		<c:forEach var="orderProduct" items="${sessionScope.cart}">
 			<tr>
@@ -31,8 +30,6 @@
 				<td>${orderProduct.product.price }</td>
 				<td>${orderProduct.quantity }</td>
 				<td>${orderProduct.product.price * orderProduct.quantity}</td>
-
-
 			</tr>
 		</c:forEach>
 	</table>

@@ -7,19 +7,13 @@
 <title>Product Page</title>
 </head>
 <body>
-    <table>
-    <td>
-        <a href="/account">account</a>
-    </td>
-    <td>
-        <p>Items in cart: ${cartCount}</p>
-    </td>
-
-    <td>
-        <a href="/order">cart</a>
-    </td>
-    </table>
+    <%@ include file="navbar.jsp"%>
 	<h3>Products Page</h3>
+	<div>
+	    <c:forEach items="${categories}" var="category">
+	        <a href="${pageContext.request.contextPath}/category/${category.id}">${category.categoryName}></a>
+	    </c:forEach>
+	</div>
 	<table cellpadding="2" cellspacing="2" border="1">
 		<tr>
 			<th></th>
@@ -32,17 +26,16 @@
 			<tr>
 				<td>${product.p_id }</td>
 				<td>${product.productName }</td>
-				<td><img src="${pageContext.request.contextPath}/resources/static/ ${product.pictureURL }" width="50"></td>
+				<td><img src="${pageContext.request.contextPath}/images/ ${product.pictureURL }" width="50"></td>
 				<td>${product.price }</td>
 				<td>
-				    <a href="/cart/buy/${product.p_id}">Buy</a>
+				    <a href="${pageContext.request.contextPath}/cart/buy/${product.p_id}">Buy</a>
 				</td>
                 <td>
-                    <a href="/info/${product.p_id}">Info</a>
+                    <a href="${pageContext.request.contextPath}/info/${product.p_id}">Info</a>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
-    <a href="/registration">reg</a>
 </body>
 </html>

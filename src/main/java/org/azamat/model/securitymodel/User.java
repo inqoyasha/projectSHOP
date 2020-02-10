@@ -1,10 +1,12 @@
 package org.azamat.model.securitymodel;
 
+import org.azamat.model.Order;
 import org.azamat.model.securitymodel.Role;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -21,19 +23,25 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    private String patronymic;
+    private String address;
     private String email;
     private String password;
 
     @CreatedDate
     @Column(name = "date_created")
-    private Date created;
+    private Calendar created;
 
     @LastModifiedDate
     @Column(name = "date_updated")
-    private Date updated;
+    private Calendar updated;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "o_id")
+    private Order order;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -44,10 +52,21 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, String email, Date created, Date updated, Status status, Collection<Role> roles) {
+    public User(String firstName, String lastName, String patronymic, String email, String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.address = address;
+        this.email = email;
+    }
+
+    public User(Long id, String username, String firstName, String lastName, String patronymic, String address, String email, String password, Calendar created, Calendar updated, Status status, Collection<Role> roles) {
+        this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.address = address;
         this.email = email;
         this.password = password;
         this.created = created;
@@ -104,19 +123,19 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreated() {
+    public Calendar getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Calendar created) {
         this.created = created;
     }
 
-    public Date getUpdated() {
+    public Calendar getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
+    public void setUpdated(Calendar updated) {
         this.updated = updated;
     }
 
@@ -134,5 +153,29 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

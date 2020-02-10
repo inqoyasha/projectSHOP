@@ -1,5 +1,6 @@
 package org.azamat.config;
 
+import org.azamat.component.AuthenticationSuccessHandlerImpl;
 import org.azamat.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+
 
 @Configuration
 @EnableWebSecurity
@@ -17,6 +18,9 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsServiceImpl userService;
+
+    @Autowired
+    AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -28,11 +32,12 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/","/registration").permitAll()
+                    .antMatchers("/","/registration","/welcome","/webjars/**","/js/**","/images/**","/css/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/login")
+                    .successHandler(authenticationSuccessHandler)
                     .permitAll()
                 .and()
                     .logout()

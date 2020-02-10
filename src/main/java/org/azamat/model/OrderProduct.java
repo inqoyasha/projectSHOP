@@ -4,16 +4,20 @@ import javax.persistence.*;
 import java.util.Optional;
 
 @Entity
+@Table(name = "order_product")
 public class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer op_id;
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "p_id")
     private Product product;
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "o_id")
     private Order order;
+
     private Integer quantity;
 
     public OrderProduct() {
@@ -60,6 +64,10 @@ public class OrderProduct {
     @Transient
     public Double getTotalPrice() {
         return getProduct().getPrice() * getQuantity();
+    }
+    @Transient
+    public Double getPrice() {
+        return getProduct().getPrice();
     }
 
 }

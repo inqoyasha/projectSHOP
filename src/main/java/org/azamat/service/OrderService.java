@@ -7,4 +7,5 @@ public interface OrderService {
     Order create(Order order);
     void update(Order order);
     void remove(int id);
+    String addOrderProduct(int p_id);
 }

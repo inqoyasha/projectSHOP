@@ -1,29 +1,36 @@
 package org.azamat.controller;
 
-import org.azamat.model.UserPage;
-import org.azamat.service.UserPageService;
+import org.azamat.model.securitymodel.User;
+import org.azamat.service.OrderProductService;
+import org.azamat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class UserPageController {
 
-    private final UserPageService userPageService;
     @Autowired
-    public UserPageController(UserPageService userPageService) {
-        this.userPageService = userPageService;
-    }
+    private UserService userService;
+
+    @Autowired
+    OrderProductService orderProductService;
+
+    @Autowired
+    HttpSession session;
 
     @GetMapping("/account")
     public String account(Model model) {
-        UserPage user = userPageService.findById(1);
-        if (user == null) {
-            userPageService.save(new UserPage("","","","",""));
-            user = userPageService.findById(1);
-        }
-        model.addAttribute("userPage", user);
+        User userSession = (User)session.getAttribute("connectedUser");
+        userService.findById(userSession.getId());
+        model.addAttribute("userPage", userSession);
+        model.addAttribute("cartCount", orderProductService.size());
+
         return "userpage";
     }
 
@@ -34,10 +41,10 @@ public class UserPageController {
                            @RequestParam(value = "email", required = false) String email,
                            @RequestParam(value = "address", required = false) String address,
                            Model model) {
-        UserPage user = new UserPage(firstName,lastName,patronymic,email,address);
-        userPageService.update(user);
+        User newUser = new User(firstName,lastName,patronymic,email,address);
+        userService.update(newUser);
 
-        model.addAttribute("userPage", user);
+        model.addAttribute("userPage", newUser);
 
         return "userpage";
     }

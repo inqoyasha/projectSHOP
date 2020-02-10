@@ -7,10 +7,11 @@
 <title>Registration Page</title>
 </head>
 <body>
+<%@ include file="navbar.jsp"%>
 	<h3>add new user</h3>
     <form action="/registration" method="post">
         <p> Login:    <input type="text" name="username" /></p>
-        <p> Password: <input type="text" name="password" /></p>
+        <p> Password: <input type="password" name="password" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>

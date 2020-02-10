@@ -32,4 +32,9 @@ public class OrderProductServiceImpl implements OrderProductService {
         return sum;
     }
 
+    @Override
+    public OrderProduct findByOrderAndProduct(Integer o_id, Integer p_id) {
+        return orderProductRepository.findByOrderAndProduct(o_id, p_id);
+    }
+
 }

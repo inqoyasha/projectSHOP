@@ -14,17 +14,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/cart")
 public class OrderController {
     private final ProductService productService;
     private final OrderService orderService;
     private final OrderProductService orderProductService;
     private static final Logger log = LoggerFactory.getLogger(SpringBootStarter.class);
+    @Autowired
+    private HttpSession session;
+
     @Autowired
     public OrderController(ProductService productService,
                            OrderService orderService,
@@ -34,47 +39,22 @@ public class OrderController {
         this.orderProductService = orderProductService;
     }
 
-    @GetMapping("/order")
-    public String index() {
+    @GetMapping
+    public String index(Model model) {
+        model.addAttribute("cartCount", orderProductService.size());
+
         return "order";
     }
 
-
-    @GetMapping("/cart/buy/{id}")
+    @GetMapping("/buy/{id}")
     public String buy(@PathVariable("id") int id,
                       Model model,
                       HttpSession session) {
-        if(session.getAttribute("cart") == null) {
-            Order order = new Order();
-            order.setStatus(OrderStatus.INCART);
-            order = this.orderService.create(order);
-            List<OrderProduct> cart = new ArrayList<>();
-            cart.add(new OrderProduct(order, productService.getProduct(id).orElse(null), 1));
-            order.setOrderProducts(cart);
 
-            log.info("buy method: cart: {} ", cart);
-
-            this.orderService.update(order);
-            session.setAttribute("cart", cart);
-        } else {
-            List<OrderProduct> cart = (List<OrderProduct>) session.getAttribute("cart");
-            for (Order order : orderService.getAllOrders()) {
-                int index = isExists(id, cart);
-                if (index == -1) {
-                    cart.add(new OrderProduct(order, productService.getProduct(id).orElse(null), 1));
-                    session.setAttribute("cart", cart);
-                } else {
-                    cart.get(index).setQuantity(cart.get(index).getQuantity()+1);
-                    order.setOrderProducts(cart);
-                    orderService.update(order);
-                    session.setAttribute("cart", cart);
-                }
-            }
-        }
-        return "redirect:/order";
+        return "redirect:/cart";
     }
 
-    @GetMapping("/cart/remove/{id}")
+    @GetMapping("/remove/{id}")
     public String remove(@PathVariable("id") int id,
                          HttpSession session) {
 
@@ -97,13 +77,13 @@ public class OrderController {
             orderService.update(order);
         }
 
-            session.setAttribute("cart", cart);
+/*            session.setAttribute("cart", cart);*/
 
-        return "redirect:/order";
+        return "redirect:/cart";
     }
 
     private int isExists(int id, List<OrderProduct> cart) {
-        for (int i=0;i<cart.size();++i){
+        for (int i=0; i < cart.size(); ++i){
             if(cart.get(i).getProduct().getP_id() == id)
                 return i;
         }

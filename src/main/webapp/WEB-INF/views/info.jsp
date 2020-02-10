@@ -7,11 +7,12 @@
 <title>Product</title>
 </head>
 <body>
+<%@ include file="navbar.jsp"%>
 	<h3>Product info</h3>
 		<tr>
 			<th></th>
 			<p>Name: ${product.productName}</p>
-			<p><img src="${pageContext.request.contextPath }/resources/static/ ${product.pictureURL }" width="50"></p>
+			<p><img src="${pageContext.request.contextPath}/images/ ${product.pictureURL }" width="50"></p>
 			<p>Price: ${product.price}</p>
 			<th></th>
 		</tr>

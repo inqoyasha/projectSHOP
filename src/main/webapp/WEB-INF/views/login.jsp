@@ -10,7 +10,7 @@
 	<h3>Login page</h3>
     <form action="/login" method="post">
         <p> Login:    <input type="text" name="username" /></p>
-        <p> Password: <input type="text" name="password" /></p>
+        <p> Password: <input type="password" name="password" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
     <a href="/registration">create new account</a>

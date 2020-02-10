@@ -1,9 +1,11 @@
 package org.azamat.service.impl;
 
 import org.azamat.SpringBootStarter;
+import org.azamat.model.Order;
 import org.azamat.model.securitymodel.Role;
 import org.azamat.model.securitymodel.Status;
 import org.azamat.model.securitymodel.User;
+import org.azamat.repository.OrderRepository;
 import org.azamat.repository.RoleRepository;
 import org.azamat.repository.UserRepository;
 import org.azamat.service.UserService;
@@ -13,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,24 +26,35 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final OrderRepository orderRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private static final Logger log = LoggerFactory.getLogger(SpringBootStarter.class);
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.orderRepository = orderRepository;
     }
+
+    @Autowired
+    private HttpSession session;
 
     @Override
     public User registerUser(User user) {
         Role roleUser = roleRepository.findByName("ROLE_USER").orElse(null);
         List<Role> userRoles = new ArrayList<>();
+        Order order = new Order();
+/*        orderRepository.save(order);*/
+/*        order = orderRepository.findById(order.getO_id()).orElse(null);*/
         userRoles.add(roleUser);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setOrder(order);
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
+        user.setCreated(Calendar.getInstance());
+
 
         User registeredUser = userRepository.save(user);
         log.info("registerUser method - user: {} success registered", registeredUser);
@@ -75,5 +90,19 @@ public class UserServiceImpl implements UserService {
     public void removeUser(Long id) {
         userRepository.deleteById(id);
         log.info("removeUser method - user with id: {} successfully deleted");
+    }
+
+    @Override
+    public void update(User user) {
+        User userSession = (User)session.getAttribute("connectedUser");
+        User userFromDB = userRepository.findById(userSession.getId()).orElse(null);
+        userFromDB.setFirstName(user.getFirstName());
+        userFromDB.setLastName(user.getLastName());
+        userFromDB.setPatronymic(user.getPatronymic());
+        userFromDB.setEmail(user.getEmail());
+        userFromDB.setAddress(user.getAddress());
+        userFromDB.setUpdated(Calendar.getInstance());
+        session.setAttribute("connectedUser", userFromDB);
+        userRepository.save(userFromDB);
     }
 }

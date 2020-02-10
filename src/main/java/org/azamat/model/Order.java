@@ -1,6 +1,8 @@
 package org.azamat.model;
 
         import com.fasterxml.jackson.annotation.JsonFormat;
+        import com.fasterxml.jackson.annotation.JsonIgnore;
+        import org.azamat.model.securitymodel.User;
 
         import javax.persistence.*;
         import java.time.LocalDate;
@@ -15,20 +17,20 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer o_id;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+/*    @JsonFormat(pattern = "dd/MM/yyyy")
     private Calendar dateCreated;
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private OrderStatus status;*/
+    @OneToOne(mappedBy ="order", cascade = CascadeType.ALL)
+    private User user;
+    @Transient
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
     public Order() {
     }
 
-    public Order(Integer o_id, Calendar dateCreated, OrderStatus status, List<OrderProduct> orderProducts) {
+    public Order(Integer o_id, List<OrderProduct> orderProducts) {
         this.o_id = o_id;
-        this.dateCreated = dateCreated;
-        this.status = status;
         this.orderProducts = orderProducts;
     }
 
@@ -38,22 +40,6 @@ public class Order {
 
     public void setO_id(Integer o_id) {
         this.o_id = o_id;
-    }
-
-    public Calendar getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Calendar dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
     }
 
     public List<OrderProduct> getOrderProducts() {
@@ -84,8 +70,6 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "o_id=" + o_id +
-                ", dateCreated=" + dateCreated.getTime() +
-                ", status=" + status +
                 ", orderProducts.size()=" + orderProducts.size() +
                 '}';
     }

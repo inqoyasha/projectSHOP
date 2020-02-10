@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS order_product;
-DROP TABLE IF EXISTS user_page;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS user_roles;
@@ -19,9 +18,7 @@ INSERT INTO products VALUES (3, 'iphone','iphone.png', 1500.0);
 
 CREATE TABLE orders(
    o_id serial PRIMARY KEY,
-   date_created timestamp NOT NULL,
-   status varchar NOT NULL,
-   order_products int[] 
+   user_id int
 );
 
 CREATE TABLE order_product(
@@ -31,14 +28,6 @@ CREATE TABLE order_product(
    quantity int 
 );
 
-CREATE TABLE user_page(
-   user_id serial PRIMARY KEY,
-   first_name varchar,
-   last_name varchar,
-   patronymic varchar,
-   email varchar,
-   address varchar 
-);
 
 CREATE TABLE users(
    id serial PRIMARY KEY,
@@ -46,7 +35,9 @@ CREATE TABLE users(
    password varchar,
    first_name varchar,
    last_name varchar,
+   o_id int,
    patronymic varchar,
+   address varchar, 
    email varchar,
    date_created timestamp,
    date_updated timestamp,

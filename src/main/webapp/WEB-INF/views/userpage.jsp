@@ -77,6 +77,7 @@
 </script>
 </head>
 <body>
+<%@ include file="navbar.jsp"%>
 <h1>enter your data</h1>
     <form name="userdata" id="userdataId">
         <table>
