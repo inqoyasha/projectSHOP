@@ -70,4 +70,14 @@ public class OrderProduct {
         return getProduct().getPrice();
     }
 
+
+    @Override
+    public String toString() {
+        return "OrderProduct{" +
+                "op_id=" + op_id +
+                ", product=" + product +
+                ", order=" + order +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

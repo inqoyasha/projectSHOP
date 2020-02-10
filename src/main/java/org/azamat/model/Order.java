@@ -1,15 +1,10 @@
 package org.azamat.model;
 
-        import com.fasterxml.jackson.annotation.JsonFormat;
-        import com.fasterxml.jackson.annotation.JsonIgnore;
-        import org.azamat.model.securitymodel.User;
+import org.azamat.model.securitymodel.User;
 
-        import javax.persistence.*;
-        import java.time.LocalDate;
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.Calendar;
-        import java.util.List;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -17,11 +12,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer o_id;
-/*    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Calendar dateCreated;
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;*/
-    @OneToOne(mappedBy ="order", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
     @Transient
     private List<OrderProduct> orderProducts = new ArrayList<>();
@@ -29,9 +21,18 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer o_id, List<OrderProduct> orderProducts) {
+    public Order(Integer o_id, User user, List<OrderProduct> orderProducts) {
         this.o_id = o_id;
+        this.user = user;
         this.orderProducts = orderProducts;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getO_id() {

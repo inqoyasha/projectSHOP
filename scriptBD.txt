@@ -16,10 +16,6 @@ INSERT INTO products VALUES (1, 'TV','tv.png', 4999.99);
 INSERT INTO products VALUES (2, 'phone','phone.png', 699.99);
 INSERT INTO products VALUES (3, 'iphone','iphone.png', 1500.0);
 
-CREATE TABLE orders(
-   o_id serial PRIMARY KEY,
-   user_id int
-);
 
 CREATE TABLE order_product(
    op_id serial PRIMARY KEY,
@@ -35,13 +31,20 @@ CREATE TABLE users(
    password varchar,
    first_name varchar,
    last_name varchar,
-   o_id int,
    patronymic varchar,
+   o_id int,
    address varchar, 
    email varchar,
    date_created timestamp,
    date_updated timestamp,
    status varchar 
+
+);
+
+CREATE TABLE orders(
+   o_id serial PRIMARY KEY,
+   user_id int
+
 );
 
 CREATE TABLE roles(

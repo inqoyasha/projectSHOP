@@ -5,21 +5,27 @@ import org.azamat.model.OrderProduct;
 import org.azamat.model.securitymodel.User;
 import org.azamat.repository.OrderProductRepository;
 import org.azamat.repository.OrderRepository;
+import org.azamat.repository.ProductRepository;
 import org.azamat.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
+    private final ProductRepository productRepository;
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, OrderProductRepository orderProductRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository,
+                            OrderProductRepository orderProductRepository,
+                            ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
+        this.productRepository = productRepository;
     }
     @Autowired
     private HttpSession session;
@@ -45,12 +51,40 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public String addOrderProduct(int p_id) {
-        String response = null;
+    public void addOrderProduct(Integer p_id) {
         User userSession = (User)session.getAttribute("connectedUser");
         Order order = userSession.getOrder();
-        OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order.getO_id(), p_id);
+        OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(p_id).orElse(null));
+        if (orderProduct == null) {
+            orderProduct = new OrderProduct(order, productRepository.findById(p_id).orElse(null), 1);
+            List<OrderProduct> cart = new ArrayList<>();
+            cart.add(orderProduct);
+            order.setOrderProducts(cart);
 
-        return response;
+            orderProduct.setOrder(order);
+            orderProduct.setProduct(productRepository.findById(p_id).orElse(null));
+            orderProductRepository.save(orderProduct);
+        } else {
+            orderProduct.setQuantity(orderProduct.getQuantity()+1);
+            orderProductRepository.save(orderProduct);
+        }
+    }
+
+    @Override
+    public void removeOrderProduct(Integer op_id) {
+        User userSession = (User)session.getAttribute("connectedUser");
+        Order order = userSession.getOrder();
+        for (OrderProduct op: orderProductRepository.findByOrder(order)) {
+            OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(op.getProduct().getP_id()).orElse(null));
+             if (orderProduct.getOp_id() == op_id) {
+                if (orderProduct.getQuantity() > 1) {
+                    orderProduct.setQuantity(orderProduct.getQuantity() - 1);
+                    orderProductRepository.save(orderProduct);
+                } else {
+                    orderProductRepository.deleteById(op_id);
+                    System.out.println("delete:"+ op_id);
+                }
+            }
+        }
     }
 }

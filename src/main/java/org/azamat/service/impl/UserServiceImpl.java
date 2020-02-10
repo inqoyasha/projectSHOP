@@ -45,8 +45,6 @@ public class UserServiceImpl implements UserService {
         Role roleUser = roleRepository.findByName("ROLE_USER").orElse(null);
         List<Role> userRoles = new ArrayList<>();
         Order order = new Order();
-/*        orderRepository.save(order);*/
-/*        order = orderRepository.findById(order.getO_id()).orElse(null);*/
         userRoles.add(roleUser);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -54,10 +52,8 @@ public class UserServiceImpl implements UserService {
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
         user.setCreated(Calendar.getInstance());
-
-
+        order.setUser(user);
         User registeredUser = userRepository.save(user);
-        log.info("registerUser method - user: {} success registered", registeredUser);
 
         return registeredUser;
     }
@@ -102,7 +98,6 @@ public class UserServiceImpl implements UserService {
         userFromDB.setEmail(user.getEmail());
         userFromDB.setAddress(user.getAddress());
         userFromDB.setUpdated(Calendar.getInstance());
-        session.setAttribute("connectedUser", userFromDB);
         userRepository.save(userFromDB);
     }
 }
