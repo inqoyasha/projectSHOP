@@ -3,14 +3,14 @@ package org.azamat.controller;
 import org.azamat.model.securitymodel.User;
 import org.azamat.service.OrderProductService;
 import org.azamat.service.UserService;
+import org.azamat.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class UserPageController {
@@ -21,14 +21,11 @@ public class UserPageController {
     @Autowired
     OrderProductService orderProductService;
 
-    @Autowired
-    HttpSession session;
 
     @GetMapping("/account")
-    public String account(Model model) {
-        User userSession = (User)session.getAttribute("connectedUser");
-        userService.findById(userSession.getId());
-        model.addAttribute("userPage", userSession);
+    public String account(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
+        userService.findById(user.getId());
+        model.addAttribute("userPage", userService.findById(user.getId()));
         model.addAttribute("cartCount", orderProductService.size());
 
         return "userpage";

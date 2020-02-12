@@ -39,10 +39,10 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
         String userName = "";
         Collection<GrantedAuthority> authorities = null;
-        if(authentication.getPrincipal() instanceof Principal) {
+        if (authentication.getPrincipal() instanceof Principal) {
             userName = ((Principal)authentication.getPrincipal()).getName();
             session.setAttribute("role", "none");
-        }else {
+        } else {
             userName = ((UserDetailsImpl)authentication.getPrincipal()).getUsername();
             UserDetailsImpl authUser = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             session.setAttribute("role", String.valueOf( authUser.getAuthorities()));
@@ -50,7 +50,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         }
         logger.info("userName: " + userName);
         session.setAttribute("userId", userName);
-        response.sendRedirect("/home" );
+        response.sendRedirect("/home");
 
     }
 

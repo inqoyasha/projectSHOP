@@ -1,7 +1,6 @@
 package org.azamat.model;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
 @Table(name = "order_product")

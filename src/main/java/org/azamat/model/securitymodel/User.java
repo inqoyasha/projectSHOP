@@ -1,5 +1,6 @@
 package org.azamat.model.securitymodel;
 
+import org.azamat.model.Checkout;
 import org.azamat.model.Order;
 import org.azamat.model.securitymodel.Role;
 import org.springframework.data.annotation.CreatedDate;
@@ -49,6 +50,9 @@ public class User {
     inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Collection<Role> roles;
 
+    @Transient
+    private Collection<Checkout> checkouts;
+
     public User() {
     }
 
@@ -60,7 +64,7 @@ public class User {
         this.email = email;
     }
 
-    public User(Long id, String username, String firstName, String lastName, String patronymic, String address, String email, String password, Calendar created, Calendar updated, Status status, Collection<Role> roles) {
+    public User(Long id, String username, String firstName, String lastName, String patronymic, String address, String email, String password, Calendar created, Calendar updated, Status status, Collection<Role> roles, Collection<Checkout> checkouts) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -73,6 +77,7 @@ public class User {
         this.updated = updated;
         this.status = status;
         this.roles = roles;
+        this.checkouts = checkouts;
     }
 
     public Long getId() {
@@ -179,6 +184,14 @@ public class User {
         this.order = order;
     }
 
+    public Collection<Checkout> getCheckouts() {
+        return checkouts;
+    }
+
+    public void setCheckouts(Collection<Checkout> checkouts) {
+        this.checkouts = checkouts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -195,6 +208,7 @@ public class User {
                 ", status=" + status +
                 ", order=" + order +
                 ", roles=" + roles +
+                ", checkouts=" + checkouts +
                 '}';
     }
 }

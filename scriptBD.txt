@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS order_product;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS checkouts;
+DROP TABLE IF EXISTS checkout_product;
 
 CREATE TABLE products(
    p_id serial PRIMARY KEY,
@@ -51,6 +53,24 @@ CREATE TABLE roles(
    id serial PRIMARY KEY,
    name varchar
 );
+
+CREATE TABLE checkouts(
+   id serial PRIMARY KEY,
+   user_id int,
+   name varchar,
+   date_created timestamp,
+   status varchar
+
+);
+
+CREATE TABLE checkout_product(
+   id serial PRIMARY KEY,
+   checkout_id int,
+   product_id int,
+   quantity int
+
+);
+
 
 CREATE TABLE user_roles(
    user_id int not null,

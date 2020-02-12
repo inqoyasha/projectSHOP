@@ -1,5 +1,6 @@
 package org.azamat.service.impl;
 
+import org.azamat.model.Checkout;
 import org.azamat.model.Order;
 import org.azamat.model.securitymodel.Status;
 import org.azamat.model.securitymodel.User;
@@ -14,29 +15,31 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
     private Long id;
     private String username;
-    private String firstName;
+/*    private String firstName;
     private String lastName;
-    private String email;
+    private String email;*/
     private String password;
-    private Order order;
+/*    private Order order; // ????*/
     private boolean enabled;
-    private Calendar created;
-    private Calendar updated;
+/*    private Calendar created;
+    private Calendar updated;*/
     private Collection<? extends GrantedAuthority> authorities;
+/*    private Collection<Checkout> checkouts;*/
 
 
     public UserDetailsImpl(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
-        this.firstName = user.getFirstName();
+/*        this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
-        this.order = user.getOrder();
+        this.order = user.getOrder();*/
         this.password = user.getPassword();
-        this.created = user.getCreated();
-        this.updated = user.getUpdated();
+/*        this.created = user.getCreated();
+        this.updated = user.getUpdated();*/
         this.enabled = user.getStatus().equals(Status.ACTIVE);
         this.authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+/*        this.checkouts = user.getCheckouts().stream().map(checkout -> new Checkout(checkout.getId())).collect(Collectors.toList());*/
     }
 
     @Override
@@ -48,7 +51,7 @@ public class UserDetailsImpl implements UserDetails {
         return id;
     }
 
-    public String getFirstName() {
+/*    public String getFirstName() {
         return firstName;
     }
 
@@ -68,7 +71,7 @@ public class UserDetailsImpl implements UserDetails {
         return updated;
     }
 
-    public Order getOrder() { return order; }
+    public Order getOrder() { return order; }*/
 
     @Override
     public String getPassword() {

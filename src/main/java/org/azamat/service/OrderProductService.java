@@ -11,6 +11,7 @@ public interface OrderProductService {
     List<OrderProduct> findAllByOrder(Order order);
 //    void update(OrderProduct orderProduct);
     void remove(int id);
+    void removeAll();
     int size();
     OrderProduct findByOrderAndProduct(Order order, Product product);
 }

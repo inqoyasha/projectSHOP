@@ -16,6 +16,7 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
     private final ProductRepository productRepository;
@@ -27,6 +28,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderProductRepository = orderProductRepository;
         this.productRepository = productRepository;
     }
+
     @Autowired
     private HttpSession session;
 
