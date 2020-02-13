@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface ProductService {
     Iterable<Product> getAllProducts();
     Optional<Product> getProduct(Integer p_id);
+    void update(Product product, int id);
 }

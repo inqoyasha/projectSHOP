@@ -4,16 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Product Page</title>
+<title>Manage Product</title>
 </head>
 <body>
-    <%@ include file="bar/navbar.jsp"%>
-	<h3>Products Page</h3>
-	<div>
-	    <c:forEach items="${categories}" var="category">
-	        <a href="${pageContext.request.contextPath}/category/${category.id}">${category.categoryName}></a>
-	    </c:forEach>
-	</div>
+<%@ include file="bar/navbar.jsp"%>
+	<h3>Products management</h3>
 	<table cellpadding="2" cellspacing="2" border="1">
 		<tr>
 			<th></th>
@@ -22,14 +17,14 @@
 			<th>Price</th>
 			<th></th>
 		</tr>
-		<c:forEach items="${products }" var="product">
+		<c:forEach items="${products}" var="product">
 			<tr>
 				<td>${product.p_id }</td>
 				<td>${product.productName }</td>
-				<td><img src="${pageContext.request.contextPath}/images/ ${product.pictureURL }" width="50"></td>
+				<td><img src="${pageContext.request.contextPath}/images/${product.pictureURL}" width="50"></td>
 				<td>${product.price }</td>
 				<td>
-				    <a href="${pageContext.request.contextPath}/cart/buy/${product.p_id}">Buy</a>
+				    <a href="${pageContext.request.contextPath}/manage/edit/${product.p_id}">Edit</a>
 				</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/info/${product.p_id}">Info</a>
@@ -39,3 +34,5 @@
 	</table>
 </body>
 </html>
+
+

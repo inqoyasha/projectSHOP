@@ -8,6 +8,8 @@ import org.azamat.service.CheckoutProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CheckoutProductServiceImpl implements CheckoutProductService {
 
@@ -22,5 +24,11 @@ public class CheckoutProductServiceImpl implements CheckoutProductService {
     @Override
     public CheckoutProduct findByCheckoutAndProduct(Checkout checkout, Product product) {
         return checkoutProductRepository.findByCheckoutAndProduct(checkout, product);
+    }
+
+    @Override
+    public List<CheckoutProduct> findAll() {
+        List<CheckoutProduct> all = checkoutProductRepository.findAll();
+        return all;
     }
 }

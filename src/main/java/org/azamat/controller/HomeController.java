@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping(value={"", "/", "home"})
+@RequestMapping(value={"", "/", "home", "/home"})
 public class HomeController {
 
     private final ProductService productService;

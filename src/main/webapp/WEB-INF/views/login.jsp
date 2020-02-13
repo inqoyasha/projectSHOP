@@ -7,6 +7,7 @@
 <title>Login page</title>
 </head>
 <body>
+<%@ include file="bar/navbar.jsp"%>
 	<h3>Login page</h3>
     <form action="/login" method="post">
         <p> Login:    <input type="text" name="username" /></p>

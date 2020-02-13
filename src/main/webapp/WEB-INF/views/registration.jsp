@@ -7,7 +7,7 @@
 <title>Registration Page</title>
 </head>
 <body>
-<%@ include file="navbar.jsp"%>
+<%@ include file="bar/navbar.jsp"%>
 	<h3>add new user</h3>
     <form action="/registration" method="post">
         <p> Login:    <input type="text" name="username" /></p>

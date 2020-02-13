@@ -84,3 +84,5 @@ CREATE TABLE user_roles(
 
 insert into roles values (1,'ROLE_USER');
 insert into roles values (2,'ROLE_ADMIN');
+INSERT INTO users(username, password, first_name, last_name, patronymic, o_id, address, email, date_created, date_updated, status) VALUES ('admin','$2a$10$DUZ5UISVrx3hkYbXpoy3aeOqztX/tD9oXwbLJ4vGimmJVGRP2y9Fm','admin', 'admin', '', null,'','', '01-01-1970','01-01-1970', 'ACTIVE');
+insert into user_roles values (1,2);

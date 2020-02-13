@@ -22,6 +22,12 @@ public class Product {
         this.price = price;
     }
 
+    public Product( String productName, String pictureURL, double price) {
+        this.productName = productName;
+        this.pictureURL = pictureURL;
+        this.price = price;
+    }
+
     public Integer getP_id() {
         return p_id;
     }

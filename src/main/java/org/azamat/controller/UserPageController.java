@@ -1,6 +1,7 @@
 package org.azamat.controller;
 
 import org.azamat.model.securitymodel.User;
+import org.azamat.service.CheckoutProductService;
 import org.azamat.service.OrderProductService;
 import org.azamat.service.UserService;
 import org.azamat.service.impl.UserDetailsImpl;
@@ -17,6 +18,8 @@ public class UserPageController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CheckoutProductService checkoutProductService;
 
     @Autowired
     OrderProductService orderProductService;
@@ -24,8 +27,8 @@ public class UserPageController {
 
     @GetMapping("/account")
     public String account(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
-        userService.findById(user.getId());
         model.addAttribute("userPage", userService.findById(user.getId()));
+        model.addAttribute("orders", checkoutProductService.findAll());
         model.addAttribute("cartCount", orderProductService.size());
 
         return "userpage";

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
-<%@ include file="navbar.jsp"%>
+<%@ include file="bar/navbar.jsp"%>
 <h2>spring boot js and css example and color has been change using static/css/custom.css</h2>
 <img src="/images/tv.png" height="50" width="50">
 

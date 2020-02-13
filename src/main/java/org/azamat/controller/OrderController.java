@@ -56,7 +56,7 @@ public class OrderController {
         model.addAttribute("totalOrderPrice", order.getTotalOrderPrice());*/
         model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
         model.addAttribute("totalOrderPrice", userService.findById(user.getId()).getOrder().getTotalOrderPrice());
-        model.addAttribute("cartCount", orderProductService.size());
+        model.addAttribute("cartCount", orderProductService.size()); //неправильно
         model.addAttribute("thanks", "Your order is submitted");
 
         return "order";
@@ -65,12 +65,14 @@ public class OrderController {
     @GetMapping("/buy/{productId}")
     public String buy(@PathVariable("productId") Integer id) {
         orderService.addOrderProduct(id);
+
         return "redirect:/cart";
     }
 
     @GetMapping("/remove/{orderProductId}")
     public String remove(@PathVariable("orderProductId") Integer id) {
         orderService.removeOrderProduct(id);
+
         return "redirect:/cart";
     }
 

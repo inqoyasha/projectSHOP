@@ -7,7 +7,7 @@
 <title>Product</title>
 </head>
 <body>
-<%@ include file="navbar.jsp"%>
+<%@ include file="bar/navbar.jsp"%>
 	<h3>Product info</h3>
 		<tr>
 			<th></th>
