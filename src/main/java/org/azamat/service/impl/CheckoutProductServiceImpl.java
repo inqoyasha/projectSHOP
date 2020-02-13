@@ -28,7 +28,6 @@ public class CheckoutProductServiceImpl implements CheckoutProductService {
 
     @Override
     public List<CheckoutProduct> findAll() {
-        List<CheckoutProduct> all = checkoutProductRepository.findAll();
-        return all;
+        return checkoutProductRepository.findAll();
     }
 }
