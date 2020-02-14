@@ -18,7 +18,7 @@ public class Order {
     private User user;
 
     @Transient
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+    private List<OrderProduct> orderProducts;
 
     public Order() {
     }
@@ -73,7 +73,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "o_id=" + o_id +
-                ", orderProducts.size()=" + orderProducts.size() +
+                ", orderProducts=" + orderProducts +
                 '}';
     }
 }

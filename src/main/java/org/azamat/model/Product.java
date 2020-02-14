@@ -9,23 +9,28 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer p_id;
     private String productName;
+    private String description;
+    private String manufacturer;
     private String pictureURL;
     private double price;
+    private int quantity;
+    private boolean active = true;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Product() {
     }
 
-    public Product(Integer p_id, String productName, String pictureURL, double price) {
-        this.p_id = p_id;
+    public Product(String productName, String description, String manufacturer, String pictureURL, double price, int quantity, boolean active, Category category) {
         this.productName = productName;
+        this.description = description;
+        this.manufacturer = manufacturer;
         this.pictureURL = pictureURL;
         this.price = price;
-    }
-
-    public Product( String productName, String pictureURL, double price) {
-        this.productName = productName;
-        this.pictureURL = pictureURL;
-        this.price = price;
+        this.quantity = quantity;
+        this.active = active;
+        this.category = category;
     }
 
     public Integer getP_id() {
@@ -58,6 +63,46 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

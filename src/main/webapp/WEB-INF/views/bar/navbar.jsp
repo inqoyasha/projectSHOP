@@ -10,16 +10,19 @@
     <td>
         <button onclick="location.href='/home'" type="button">home</button>
     </td>
+
     <sec:authorize access="hasRole('USER')">
-    <td>
-        <button onclick="location.href='/account'" type="button">account</button>
-    </td>
+        <td>
+            <button onclick="location.href='/account'" type="button">account</button>
+        </td>
     </sec:authorize>
+
     <sec:authorize access="hasRole('ADMIN')">
-    <td>
-        <button onclick="location.href='/manage/show/all'" type="button">manage</button>
-    </td>
+        <td>
+            <button onclick="location.href='/manage/show/all'" type="button">manage</button>
+        </td>
     </sec:authorize>
+
     <td>
         <button onclick="location.href='/welcome'" type="button">welcome</button>
     </td>

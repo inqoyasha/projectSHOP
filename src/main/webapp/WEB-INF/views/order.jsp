@@ -5,6 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cart Page</title>
+<script>
+    function checkout() {
+        document.getElementById("message").innerHTML = "Ur order is submitted";
+    }
+</script>
 </head>
 <body>
   <%@ include file="bar/navbar.jsp"%>
@@ -31,15 +36,16 @@
             				<td>${orderProduct.product.price}</td>
             				<td>${orderProduct.quantity}</td>
             				<td>${orderProduct.product.price * orderProduct.quantity}</td>
+            				<td>${totalOrderPrice}</td>
             			</tr>
             		</c:forEach>
             	</table>
             	    <a href="${pageContext.request.contextPath}/home">Continue Shopping</a>
-                    <a href="${pageContext.request.contextPath}/cart/checkout">Checkout</a>
+                    <a href="${pageContext.request.contextPath}/cart/checkout" onClick="checkout();return false;">Checkout</a>
         </c:when>
         <c:otherwise>
             <p>
-                Your cart is empty!<br>
+                <div id="message">Your cart is empty!</div><br>
                 <a href="${pageContext.request.contextPath}/home">Continue Shopping</a>
             </p>
         </c:otherwise>
