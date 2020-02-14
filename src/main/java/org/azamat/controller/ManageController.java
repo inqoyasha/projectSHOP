@@ -36,7 +36,7 @@ public class ManageController {
 /*                                  @RequestParam(value = "productName", required = false) String productName,
                                   @RequestParam(value = "pictureURL", required = false) String pictureURL,
                                   @RequestParam(value = "price", required = false) double price,*/
-                                    @RequestParam(value = "productdata") Product product,
+                                    @ModelAttribute(value = "productdata") Product product,
                                   Model model) {
         System.out.println(product);
         Product newProduct = new Product(product.getProductName(),
