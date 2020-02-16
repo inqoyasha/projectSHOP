@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,13 +49,23 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     @Override
-    public int size() {
-        Iterable<OrderProduct> all = orderProductRepository.findAll();
+    public int cartCount(List<OrderProduct> orderProducts) {
         int sum = 0;
-        for (OrderProduct op: all) {
+        if (orderProducts == null)
+            return 0;
+        for (OrderProduct op: orderProducts) {
             sum+=op.getQuantity();
         }
         return sum;
+    }
+
+    @Override
+    public double getTotalPrice(List<OrderProduct> orderProducts) {
+        double total = 0d;
+        for (OrderProduct op : orderProducts) {
+            total += op.getSubPrice();
+        }
+        return total;
     }
 
     @Override

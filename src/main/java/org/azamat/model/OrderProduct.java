@@ -17,15 +17,17 @@ public class OrderProduct {
     @JoinColumn(name = "o_id")
     private Order order;
 
-    private Integer quantity;
+    private int quantity;
+    private int subPrice;
 
     public OrderProduct() {
     }
 
-    public OrderProduct(Order order, Product product, Integer quantity) {
+    public OrderProduct(Order order, Product product, int quantity, int subPrice) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
+        this.subPrice = subPrice;
     }
 
     public Integer getOp_id() {
@@ -52,23 +54,21 @@ public class OrderProduct {
         this.product = product;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    @Transient
-    public Double getTotalPrice() {
-        return getProduct().getPrice() * getQuantity();
-    }
-    @Transient
-    public Double getPrice() {
-        return getProduct().getPrice();
+    public void setSubPrice(int subPrice) {
+        this.subPrice = subPrice;
     }
 
+    public int getSubPrice() {
+        return subPrice;
+    }
 
     @Override
     public String toString() {
@@ -77,6 +77,7 @@ public class OrderProduct {
                 ", product=" + product +
                 ", order=" + order +
                 ", quantity=" + quantity +
+                ", subPrice=" + subPrice +
                 '}';
     }
 }

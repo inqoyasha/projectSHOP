@@ -12,7 +12,8 @@ public interface OrderProductService {
 //    void update(OrderProduct orderProduct);
     void remove(int id);
     void removeAll();
-    int size();
+    int cartCount(List<OrderProduct> orderProducts);
+    double getTotalPrice(List<OrderProduct> orderProducts);
     OrderProduct findByOrderAndProduct(Order order, Product product);
 }
 

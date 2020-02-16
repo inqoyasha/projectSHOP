@@ -8,7 +8,7 @@
 </head>
 <table>
     <td>
-        <button onclick="location.href='/home'" type="button">home</button>
+        <button onclick="location.href='/'" type="button">home</button>
     </td>
 
     <sec:authorize access="hasRole('USER')">
@@ -23,17 +23,31 @@
         </td>
     </sec:authorize>
 
-    <td>
-        <button onclick="location.href='/welcome'" type="button">welcome</button>
-    </td>
-    <td>
-        <button onclick="location.href='/cart'" type="button">cart</button>
-    </td>
-    <td>
-        <button onclick="location.href='/logout'" type="button">logout</button>
-    </td>
-    <td>
-        <p>Items in cart: ${cartCount}</p>
-    </td>
+    <sec:authorize access="hasRole('USER')">
+        <td>
+            <button onclick="location.href='/cart'" type="button">cart</button>
+        </td>
+    </sec:authorize>
+
+    <sec:authorize access="isAuthenticated()">
+        <td>
+            <button onclick="location.href='/logout'" type="button">logout</button>
+        </td>
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('USER')">
+        <td>
+            <p>Items in cart: ${cartCount}</p>
+        </td>
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ANONYMOUS')">
+        <td>
+            <a href="/login">Sign in</a>
+        </td>
+        <td>
+            <a href="/registration">Sign up</a>
+        </td>
+    </sec:authorize>
 </table>
 </html>

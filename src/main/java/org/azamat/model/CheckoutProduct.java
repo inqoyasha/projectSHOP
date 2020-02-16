@@ -17,12 +17,12 @@ public class CheckoutProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private Integer quantity;
+    private int quantity;
 
     public CheckoutProduct() {
     }
 
-    public CheckoutProduct(Integer id, Checkout checkout, Product product, Integer quantity) {
+    public CheckoutProduct(Integer id, Checkout checkout, Product product, int quantity) {
         this.id = id;
         this.checkout = checkout;
         this.product = product;
@@ -53,11 +53,11 @@ public class CheckoutProduct {
         this.product = product;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

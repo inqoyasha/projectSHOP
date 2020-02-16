@@ -19,17 +19,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public Iterable<Category> getAllCategories() {
+        return this.categoryRepository.findAll();
     }
 
     @Override
-    public Optional<Category> getById(int id) {
-        return categoryRepository.findById(id);
+    public Optional<Category> getById(Integer c_id) {
+        return this.categoryRepository.findById(c_id);
     }
 
     @Override
     public Category create(Category category) {
-        return categoryRepository.save(category);
+        return this.categoryRepository.save(category);
     }
 }

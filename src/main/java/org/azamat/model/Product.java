@@ -12,7 +12,7 @@ public class Product {
     private String description;
     private String manufacturer;
     private String pictureURL;
-    private double price;
+    private int price;
     private int quantity;
     private boolean active = true;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -22,7 +22,14 @@ public class Product {
     public Product() {
     }
 
-    public Product(String productName, String description, String manufacturer, String pictureURL, double price, int quantity, boolean active, Category category) {
+    public Product(String productName,
+                   String description,
+                   String manufacturer,
+                   String pictureURL,
+                   int price,
+                   int quantity,
+                   boolean active,
+                   Category category) {
         this.productName = productName;
         this.description = description;
         this.manufacturer = manufacturer;
@@ -57,11 +64,11 @@ public class Product {
         this.pictureURL = pictureURL;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

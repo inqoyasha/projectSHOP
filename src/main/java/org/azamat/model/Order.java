@@ -17,16 +17,12 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Transient
-    private List<OrderProduct> orderProducts;
-
     public Order() {
     }
 
-    public Order(Integer o_id, User user, List<OrderProduct> orderProducts) {
+    public Order(Integer o_id, User user) {
         this.o_id = o_id;
         this.user = user;
-        this.orderProducts = orderProducts;
     }
 
     public User getUser() {
@@ -45,35 +41,10 @@ public class Order {
         this.o_id = o_id;
     }
 
-    public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
-    }
-
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
-    }
-
-    @Transient
-    public Double getTotalOrderPrice() {
-        Double total = 0d;
-        List<OrderProduct> orderProducts = getOrderProducts();
-        for (OrderProduct op : orderProducts) {
-            total += op.getTotalPrice();
-        }
-
-        return total;
-    }
-
-    @Transient
-    public int getNumberOfProducts() {
-        return this.orderProducts.size();
-    }
-
     @Override
     public String toString() {
         return "Order{" +
                 "o_id=" + o_id +
-                ", orderProducts=" + orderProducts +
                 '}';
     }
 }

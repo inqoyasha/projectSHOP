@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer c_id;
     private String name;
     private String description;
     @Column(name = "imageURL")
@@ -23,12 +23,12 @@ public class Category {
         this.active = active;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getC_id() {
+        return c_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setC_id(Integer c_id) {
+        this.c_id = c_id;
     }
 
     public String getName() {

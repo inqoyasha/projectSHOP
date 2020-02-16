@@ -58,16 +58,17 @@ public class OrderServiceImpl implements OrderService {
         Order order = userSession.getOrder();
         OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(p_id).orElse(null));
         if (orderProduct == null) {
-            orderProduct = new OrderProduct(order, productRepository.findById(p_id).orElse(null), 1);
+            orderProduct = new OrderProduct(order, productRepository.findById(p_id).orElse(null), 1, productRepository.findById(p_id).orElse(null).getPrice());
             List<OrderProduct> cart = new ArrayList<>();
             cart.add(orderProduct);
-            order.setOrderProducts(cart);
+/*            order.setOrderProducts(cart);*/
 
             orderProduct.setOrder(order);
             orderProduct.setProduct(productRepository.findById(p_id).orElse(null));
             orderProductRepository.save(orderProduct);
         } else {
             orderProduct.setQuantity(orderProduct.getQuantity()+1);
+            orderProduct.setSubPrice(orderProduct.getSubPrice());
             orderProductRepository.save(orderProduct);
         }
     }
@@ -81,6 +82,7 @@ public class OrderServiceImpl implements OrderService {
              if (orderProduct.getOp_id() == op_id) {
                 if (orderProduct.getQuantity() > 1) {
                     orderProduct.setQuantity(orderProduct.getQuantity() - 1);
+                    orderProduct.setSubPrice(orderProduct.getSubPrice());
                     orderProductRepository.save(orderProduct);
                 } else {
                     orderProductRepository.deleteById(op_id);

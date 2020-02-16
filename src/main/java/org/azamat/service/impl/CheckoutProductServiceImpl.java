@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CheckoutProductServiceImpl implements CheckoutProductService {
@@ -24,6 +25,11 @@ public class CheckoutProductServiceImpl implements CheckoutProductService {
     @Override
     public CheckoutProduct findByCheckoutAndProduct(Checkout checkout, Product product) {
         return checkoutProductRepository.findByCheckoutAndProduct(checkout, product);
+    }
+
+    @Override
+    public Optional<CheckoutProduct> findById(int id) {
+        return checkoutProductRepository.findById(id);
     }
 
     @Override

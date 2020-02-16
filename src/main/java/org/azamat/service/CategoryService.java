@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
-    List<Category> findAll();
-    Optional<Category> getById(int id);
+    Iterable<Category> getAllCategories();
+    Optional<Category> getById(Integer c_id);
     Category create(Category category);
 }

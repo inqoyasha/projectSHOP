@@ -33,10 +33,7 @@ public class ManageController {
 
     @PostMapping("/edit/{id}")
     public String saveEditProduct(@PathVariable("id") int p_id,
-/*                                  @RequestParam(value = "productName", required = false) String productName,
-                                  @RequestParam(value = "pictureURL", required = false) String pictureURL,
-                                  @RequestParam(value = "price", required = false) double price,*/
-                                    @ModelAttribute(value = "productdata") Product product,
+                                  @ModelAttribute(value = "productdata") Product product,
                                   Model model) {
         System.out.println(product);
         Product newProduct = new Product(product.getProductName(),
@@ -47,6 +44,7 @@ public class ManageController {
                                          product.getQuantity(),
                                          product.isActive(),
                                          product.getCategory());
+        System.out.println(newProduct);
         productService.update(newProduct, p_id);
 
         return "editproduct";

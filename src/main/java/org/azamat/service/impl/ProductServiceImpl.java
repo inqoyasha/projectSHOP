@@ -1,11 +1,13 @@
 package org.azamat.service.impl;
 
+import org.azamat.model.Category;
 import org.azamat.model.Product;
 import org.azamat.repository.ProductRepository;
 import org.azamat.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +33,17 @@ public class ProductServiceImpl implements ProductService {
         productFromDB.setPictureURL(product.getPictureURL());
         productFromDB.setPrice(product.getPrice());
         productFromDB.setProductName(product.getProductName());
+        productFromDB.setQuantity(product.getQuantity());
+        productFromDB.setDescription(product.getDescription());
+        productFromDB.setCategory(product.getCategory());
+        productFromDB.setManufacturer(product.getManufacturer());
+        productFromDB.setActive(product.isActive());
 
         productRepository.save(productFromDB);
+    }
+
+    @Override
+    public List<Product> findAllByCategory(Category category) {
+        return productRepository.findByCategory(category);
     }
 }

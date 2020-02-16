@@ -29,7 +29,7 @@ public class UserPageController {
     public String account(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("userPage", userService.findById(user.getId()));
         model.addAttribute("orders", checkoutProductService.findAll());
-        model.addAttribute("cartCount", orderProductService.size());
+/*        model.addAttribute("cartCount", orderProductService.size());*/
 
         return "userpage";
     }

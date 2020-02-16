@@ -16,56 +16,64 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/cart")
 public class OrderController {
+
     private final ProductService productService;
     private final OrderService orderService;
     private final OrderProductService orderProductService;
     private final CheckoutService checkoutService;
     private final CheckoutProductService checkoutProductService;
+    private final  UserService userService;
     private static final Logger log = LoggerFactory.getLogger(SpringBootStarter.class);
-
     @Autowired
     public OrderController(ProductService productService,
                            OrderService orderService,
-                           OrderProductService orderProductService, CheckoutService checkoutService, CheckoutProductService checkoutProductService/*, HttpSession session*/) {
+                           OrderProductService orderProductService, CheckoutService checkoutService, CheckoutProductService checkoutProductService, UserService userService) {
         this.productService = productService;
         this.orderService = orderService;
         this.orderProductService = orderProductService;
         this.checkoutService = checkoutService;
         this.checkoutProductService = checkoutProductService;
+        this.userService = userService;
     }
 
-    @Autowired
-    UserService userService;
+
 
     @GetMapping
     public String index(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
-        model.addAttribute("totalOrderPrice", userService.findById(user.getId()).getOrder().getTotalOrderPrice());
-        System.out.println("totalOrderPrice: " + userService.findById(user.getId()).getOrder());
-        model.addAttribute("cartCount", orderProductService.size()); //неправильно
+        model.addAttribute("totalOrderPrice", orderProductService.getTotalPrice(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
+        model.addAttribute("cartCount", orderProductService.cartCount(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
 
         return "order";
     }
 
-    @GetMapping("/buy/{productId}")
-    public String buy(@PathVariable("productId") Integer id) {
+    @GetMapping("/buy/{p_id}")
+    public String buy(@PathVariable("p_id") Integer id) {
         orderService.addOrderProduct(id);
 
         return "redirect:/cart";
     }
 
-    @GetMapping("/remove/{orderProductId}")
-    public String remove(@PathVariable("orderProductId") Integer id) {
+    @GetMapping("/remove/{op_id}")
+    public String remove(@PathVariable("op_id") Integer id) {
         orderService.removeOrderProduct(id);
 
         return "redirect:/cart";
     }
 
+    @GetMapping("/create/checkout")
+    public String createCheckout(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
+        model.addAttribute("userPage", userService.findById(user.getId()));
+
+        return "checkoutinfo";
+    }
+
     @GetMapping("/checkout")
-    public String checkout() {
+    public String checkout(Model model) {
         checkoutService.addCheckout();
         orderProductService.removeAll();
+        model.addAttribute("orders", checkoutProductService.findById(checkoutProductService.));
 
-        return "redirect:/cart";
+        return "success";
     }
 }

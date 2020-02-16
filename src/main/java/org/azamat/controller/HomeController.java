@@ -1,16 +1,13 @@
 package org.azamat.controller;
 
-import org.azamat.model.OrderProduct;
 import org.azamat.model.Product;
-import org.azamat.service.OrderProductService;
-import org.azamat.service.OrderService;
-import org.azamat.service.ProductService;
+import org.azamat.service.*;
+import org.azamat.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value={"", "/", "home", "/home"})
@@ -19,19 +16,24 @@ public class HomeController {
     private final ProductService productService;
     private final OrderService orderService;
     private final OrderProductService orderProductService;
+    private final CategoryService categoryService;
+    private final UserService userService;
     @Autowired
     public HomeController(ProductService productService,
                           OrderService orderService,
-                          OrderProductService orderProductService) {
+                          OrderProductService orderProductService, CategoryService categoryService, UserService userService) {
         this.productService = productService;
         this.orderService = orderService;
         this.orderProductService = orderProductService;
+        this.categoryService = categoryService;
+        this.userService = userService;
     }
 
     @GetMapping
-    public String home(Model model) {
+    public String home(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("products", productService.getAllProducts());
-        model.addAttribute("cartCount", orderProductService.size());
+/*        model.addAttribute("cartCount", orderProductService.cartCount(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));*/
+        model.addAttribute("categories", categoryService.getAllCategories());
 
         return "home";
     }
@@ -42,5 +44,13 @@ public class HomeController {
         model.addAttribute("product", product);
 
         return "info";
+    }
+
+    @GetMapping("show/category/{c_id}")
+    public String viewProduct1(@PathVariable("c_id") int c_id, Model model) {
+        model.addAttribute("products", productService.findAllByCategory(categoryService.getById(c_id).orElse(null)));
+        model.addAttribute("categories", categoryService.getAllCategories());
+
+        return "home";
     }
 }

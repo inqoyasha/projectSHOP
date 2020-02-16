@@ -24,13 +24,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
-
     @Autowired
     private HttpSession session;
-
     @Autowired
     private UserService userService;
-
 
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationSuccessHandlerImpl.class);
     @Override
@@ -41,7 +38,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         Collection<GrantedAuthority> authorities = null;
         if (authentication.getPrincipal() instanceof Principal) {
             userName = ((Principal)authentication.getPrincipal()).getName();
-            session.setAttribute("role", "none");
+            session.setAttribute("role", "ANONYMOUS");
         } else {
             userName = ((UserDetailsImpl)authentication.getPrincipal()).getUsername();
             UserDetailsImpl authUser = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -49,10 +46,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
             session.setAttribute("connectedUser" , userService.findByUsername( authUser.getUsername()));
         }
         logger.info("userName: " + userName);
-        session.setAttribute("userId", userName);
+        session.setAttribute("userName", userName);
         response.sendRedirect("/home");
-
     }
-
 }
 

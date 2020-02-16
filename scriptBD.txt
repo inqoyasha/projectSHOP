@@ -1,12 +1,13 @@
-DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS order_product;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS user_roles;
-DROP TABLE IF EXISTS checkouts;
+DROP TABLE IF EXISTS checkouts CASCADE;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS checkout_product;
+DROP TABLE IF EXISTS users_orders;
 
 CREATE TABLE category(
    c_id serial PRIMARY KEY,
@@ -20,7 +21,7 @@ CREATE TABLE products(
    p_id serial PRIMARY KEY,
    product_name VARCHAR (50) NOT NULL,
    pictureURL varchar NOT NULL,
-   price numeric NOT NULL,
+   price int NOT NULL,
    description varchar,
    manufacturer varchar,
    quantity int,
@@ -33,9 +34,9 @@ CREATE TABLE products(
 INSERT INTO category(name, description, imageURL, active) VALUES ('tv', 'TVs', 'TV.png', TRUE);
 INSERT INTO category(name, description, imageURL, active) VALUES ('phone', 'PHONEs', 'Phone.png', TRUE);
 
-INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('TV','tv.png', 4999.99, 'The new TV', 'SONY', 20, TRUE, 1);
-INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('phone','phone.png', 699.99, 'The new Phone', 'ALCATEL', 13, TRUE, 2);
-INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('iphone','iphone.png', 1500.0, 'The old iPhone', 'APPLE', 4, TRUE, 2);
+INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('TV','tv.png', 24990, 'The new TV', 'SONY', 20, TRUE, 1);
+INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('phone','phone.png', 10990, 'The new Phone', 'ALCATEL', 13, TRUE, 2);
+INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('iphone','iphone.png', 16990, 'The old iPhone', 'APPLE', 4, TRUE, 2);
 
 CREATE TABLE orders(
    o_id serial PRIMARY KEY,
@@ -70,6 +71,7 @@ CREATE TABLE order_product(
    o_id int NOT NULL,
    p_id int NOT NULL,
    quantity int,
+   sub_price int,
    
    FOREIGN KEY (o_id) REFERENCES orders(o_id),
    FOREIGN KEY (p_id) REFERENCES products(p_id)

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Calendar;
+import java.util.Optional;
 
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
@@ -40,6 +41,11 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     @Override
+    public Optional<Checkout> getById(int id) {
+        return checkoutRepository.findById(id);
+    }
+
+    @Override
     public void addCheckout() {
         User userSession = (User)session.getAttribute("connectedUser");
         Checkout checkout = new Checkout();
@@ -57,6 +63,12 @@ public class CheckoutServiceImpl implements CheckoutService {
                 checkoutProduct.setProduct(op.getProduct());
                 checkoutProduct.setQuantity(op.getQuantity());
                 checkoutProductRepository.save(checkoutProduct);
+                if (op.getProduct().getQuantity() > 1) {
+                    op.getProduct().setQuantity(op.getProduct().getQuantity() - op.getQuantity());
+                } else {
+                    op.getProduct().setQuantity(0);
+                    op.getProduct().setActive(false);
+                }
             }
         }
     }
