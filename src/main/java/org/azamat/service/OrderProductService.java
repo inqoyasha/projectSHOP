@@ -12,7 +12,7 @@ public interface OrderProductService {
 //    void update(OrderProduct orderProduct);
     void remove(int id);
     void removeAll();
-    int cartCount(List<OrderProduct> orderProducts);
+    int cartCount();
     double getTotalPrice(List<OrderProduct> orderProducts);
     OrderProduct findByOrderAndProduct(Order order, Product product);
 }

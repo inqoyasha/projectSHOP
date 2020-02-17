@@ -62,4 +62,15 @@ public class Category {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "c_id=" + c_id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", active=" + active +
+                '}';
+    }
 }

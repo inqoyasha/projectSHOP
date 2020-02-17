@@ -129,7 +129,7 @@
                 <p><input id= "de" type="text" name="description" readonly value ="${product.description}"/></p>
                 <p><input id= "ma" type="text" name="manufacturer" readonly value ="${product.manufacturer}"/></p>
                 <p><input id= "ac" type="text" name="active"      readonly value ="${product.active}"/></p>
-                <p><input id= "ca" type="text" name="category"    readonly value ="${product.category}"/></p>
+                <p><input id= "ca" type="text" name="category"    readonly value ="${product.category.c_id}"/></p>
             </td>
             <td>
                 <c:forEach var = "i" begin = "1" end = "8">
@@ -137,6 +137,7 @@
                 </c:forEach>
             </td>
         </table>
+        <a href="${pageContext.request.contextPath}/manage/show/all">Back</a>
     </form>
 </body>
 </html>

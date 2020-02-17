@@ -49,10 +49,16 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     @Override
-    public int cartCount(List<OrderProduct> orderProducts) {
-        int sum = 0;
-        if (orderProducts == null)
+    public int cartCount() {
+        User userSession = (User)session.getAttribute("connectedUser");
+        if (userSession == null) {
             return 0;
+        }
+        List<OrderProduct> orderProducts = this.findAllByOrder(userSession.getOrder());
+        int sum = 0;
+        if (orderProducts == null) {
+            return 0;
+        }
         for (OrderProduct op: orderProducts) {
             sum+=op.getQuantity();
         }

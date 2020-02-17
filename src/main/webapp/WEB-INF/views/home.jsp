@@ -41,7 +41,7 @@
 			<th>Name</th>
 			<th>Photo</th>
 			<th>Price</th>
-			<th></th>
+
 		</tr>
 		<c:forEach items="${products }" var="product">
 			<tr>
@@ -54,7 +54,7 @@
 				        <a href="${pageContext.request.contextPath}/cart/buy/${product.p_id}">Buy</a>
 				    </sec:authorize>
 				    <sec:authorize access="hasRole('ADMIN')">
-				        <a href="${pageContext.request.contextPath}/manage/show/all">Edit</a>
+				        <a href="${pageContext.request.contextPath}/manage/edit/${product.p_id}">Edit</a>
 				    </sec:authorize>
 				</td>
                 <td>

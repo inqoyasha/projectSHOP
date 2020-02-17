@@ -8,10 +8,21 @@
 </head>
 <body>
 <%@ include file="bar/navbar.jsp"%>
-	<h3>add new user</h3>
+	<h3>Registration</h3>
     <form action="/registration" method="post">
-        <p> Login:    <input type="text" name="username" /></p>
-        <p> Password: <input type="password" name="password" /></p>
+        <table>
+            <td>
+                <p> Login:  </p>
+                <p> Password: </p>
+            </td>
+            <td>
+                <input type="text" name="username" /></p>
+                <input type="password" name="password" /></p>
+            </td>
+            <td>
+                <p><c:if test="${not empty message}">${message}</c:if></p>
+            </td>
+        </table>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>

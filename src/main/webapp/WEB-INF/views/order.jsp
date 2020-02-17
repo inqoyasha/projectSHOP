@@ -47,7 +47,7 @@
         <c:otherwise>
             <p>
                 <p>Your cart is empty!</p>
-                <a href="${pageContext.request.contextPath}/home">Continue Shopping</a>
+                <a href="${pageContext.request.contextPath}/home">Back </a>to store
             </p>
         </c:otherwise>
     </c:choose>

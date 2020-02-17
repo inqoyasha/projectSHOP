@@ -68,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
             orderProductRepository.save(orderProduct);
         } else {
             orderProduct.setQuantity(orderProduct.getQuantity()+1);
-            orderProduct.setSubPrice(orderProduct.getSubPrice());
+            orderProduct.setSubPrice(orderProduct.getSubPrice() + orderProduct.getProduct().getPrice());
             orderProductRepository.save(orderProduct);
         }
     }
@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
              if (orderProduct.getOp_id() == op_id) {
                 if (orderProduct.getQuantity() > 1) {
                     orderProduct.setQuantity(orderProduct.getQuantity() - 1);
-                    orderProduct.setSubPrice(orderProduct.getSubPrice());
+                    orderProduct.setSubPrice(orderProduct.getSubPrice() - orderProduct.getProduct().getPrice());
                     orderProductRepository.save(orderProduct);
                 } else {
                     orderProductRepository.deleteById(op_id);

@@ -1,8 +1,6 @@
 package org.azamat.controller;
 
 import org.azamat.model.securitymodel.User;
-import org.azamat.model.securitymodel.Role;
-import org.azamat.service.OrderProductService;
 import org.azamat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +14,9 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    OrderProductService orderProductService;
-
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
-/*        model.addAttribute("cartCount", orderProductService.size());*/
 
         return "registration";
     }
@@ -31,9 +25,10 @@ public class RegistrationController {
         User userDB = userService.findByUsername(user.getUsername());
 
         if (userDB != null) {
-            model.addAttribute("message", "User exists!");
+            model.addAttribute("message", "Username already in use, try a different one.");
             return "registration";
         }
+
          userService.registerUser(user);
 
         return "redirect:/login";

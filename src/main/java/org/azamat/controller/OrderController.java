@@ -42,7 +42,7 @@ public class OrderController {
     public String index(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
         model.addAttribute("totalOrderPrice", orderProductService.getTotalPrice(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
-        model.addAttribute("cartCount", orderProductService.cartCount(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
+        model.addAttribute("cartCount", orderProductService.cartCount());
 
         return "order";
     }
@@ -69,10 +69,11 @@ public class OrderController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(Model model) {
+    public String checkout(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         checkoutService.addCheckout();
+        model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
+        model.addAttribute("totalOrderPrice", orderProductService.getTotalPrice(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
         orderProductService.removeAll();
-        model.addAttribute("orders", checkoutProductService.findById(checkoutProductService.));
 
         return "success";
     }

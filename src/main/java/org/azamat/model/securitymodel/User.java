@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;

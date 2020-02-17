@@ -32,7 +32,7 @@ public class HomeController {
     @GetMapping
     public String home(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("products", productService.getAllProducts());
-/*        model.addAttribute("cartCount", orderProductService.cartCount(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));*/
+       model.addAttribute("cartCount", orderProductService.cartCount());
         model.addAttribute("categories", categoryService.getAllCategories());
 
         return "home";
