@@ -1,5 +1,6 @@
 package org.azamat.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.azamat.model.securitymodel.User;
 import org.azamat.service.CheckoutProductService;
 import org.azamat.service.OrderProductService;
@@ -26,6 +27,7 @@ public class UserPageController {
 
 
     @GetMapping("/account")
+    @ApiOperation("View user page")
     public String account(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("userPage", userService.findById(user.getId()));
         model.addAttribute("orders", checkoutProductService.findAll());
@@ -35,6 +37,7 @@ public class UserPageController {
     }
 
     @PutMapping("/account")
+    @ApiOperation("Edit user data")
     public String saveData(@RequestParam(value = "firstName", required = false) String firstName,
                            @RequestParam(value = "lastName", required = false) String lastName,
                            @RequestParam(value = "patronymic", required = false) String patronymic,

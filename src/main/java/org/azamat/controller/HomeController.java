@@ -1,5 +1,6 @@
 package org.azamat.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.azamat.model.Product;
 import org.azamat.service.*;
 import org.azamat.service.impl.UserDetailsImpl;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value={"", "/", "/home"})
+@ApiOperation("/home")
 public class HomeController {
 
     private final ProductService productService;
@@ -30,6 +32,7 @@ public class HomeController {
     }
 
     @GetMapping
+    @ApiOperation("Return home page")
     public String home(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("cartCount", orderProductService.cartCount());
@@ -39,6 +42,7 @@ public class HomeController {
     }
 
     @GetMapping("/info/{p_id}")
+    @ApiOperation("View products")
     public String viewProduct(@PathVariable("p_id") int p_id, Model model) {
         Product product = productService.getProduct(p_id).orElse(null);
         model.addAttribute("cartCount", orderProductService.cartCount());
@@ -48,6 +52,7 @@ public class HomeController {
     }
 
     @GetMapping("show/category/{c_id}")
+    @ApiOperation("Getting categories")
     public String viewCategory(@PathVariable("c_id") int c_id, Model model) {
         model.addAttribute("products", productService.findAllByCategory(categoryService.getById(c_id).orElse(null)));
         model.addAttribute("categories", categoryService.getAllCategories());

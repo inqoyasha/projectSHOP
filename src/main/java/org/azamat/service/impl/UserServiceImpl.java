@@ -70,6 +70,7 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         User result = userRepository.findByUsername(username).orElse(null);
         log.info("findByUsername method - user: {} found by username: {}", result, username);
+        log.debug("findByUsername method - user: {} found by username: {}", result, username);
 
         return result;
     }
@@ -78,6 +79,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) {
         User result = userRepository.findById(id).orElse(new User());
         log.info("findById method - user: {} found by id: {}", result, id);
+        log.debug("findById method - user: {} found by id: {}", result, id);
 
         return result;
     }

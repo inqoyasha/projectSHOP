@@ -1,5 +1,6 @@
 package org.azamat.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.azamat.SpringBootStarter;
 import org.azamat.service.CheckoutProductService;
 import org.azamat.service.CheckoutService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
+@ApiOperation("/admin")
 public class UserOrdersController {
 
     private final ProductService productService;
@@ -35,6 +37,7 @@ public class UserOrdersController {
     }
 
         @GetMapping("/users")
+        @ApiOperation("Show list of users")
         public String viewUsers(Model model) {
             model.addAttribute("users", userService.getAll());
 
@@ -42,6 +45,7 @@ public class UserOrdersController {
         }
 
         @GetMapping("/user-orders/{id}")
+        @ApiOperation("Show user orders by user id")
         public String viewOrders(@PathVariable("id") int id,
                                  Model model) {
             model.addAttribute("orders", checkoutService.getAllByUser(id));
@@ -50,6 +54,7 @@ public class UserOrdersController {
         }
 
         @GetMapping("/user-orders/{id}/info")
+        @ApiOperation("Show order details by order id")
         public String viewOrderInfo(@PathVariable("id") int id,
                                     Model model) {
             model.addAttribute("orderDetails", checkoutProductService.getAllByCheckout(id));

@@ -1,5 +1,6 @@
 package org.azamat.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.azamat.model.securitymodel.User;
 import org.azamat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,14 @@ public class RegistrationController {
     private UserService userService;
 
     @GetMapping("/registration")
+    @ApiOperation("View registration form")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
 
         return "registration";
     }
     @PostMapping("/registration")
+    @ApiOperation("Register new user")
     public String addUser(@ModelAttribute("userForm") User user, Model model) {
         User userDB = userService.findByUsername(user.getUsername());
 

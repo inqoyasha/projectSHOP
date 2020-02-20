@@ -1,5 +1,6 @@
 package org.azamat.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.azamat.model.Category;
 import org.azamat.model.Product;
 import org.azamat.service.ProductService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/manage")
+@ApiOperation("/manage")
 public class ManageController {
 
     private final ProductService productService;
@@ -18,6 +20,7 @@ public class ManageController {
     }
 
     @GetMapping("/show/all")
+    @ApiOperation("View all products")
     public String viewProduct(Model model) {
         model.addAttribute("products", productService.getAllProducts());
 
@@ -25,6 +28,7 @@ public class ManageController {
     }
 
     @GetMapping("/edit/{id}")
+    @ApiOperation("View product by id")
     public String editProduct(@PathVariable("id") int p_id, Model model) {
         Product product = productService.getProduct(p_id).orElse(null);
         model.addAttribute("product", product);
@@ -33,6 +37,7 @@ public class ManageController {
     }
 
     @PutMapping("/edit/{id}")
+    @ApiOperation("Edit product by id")
     public String saveEditProduct(@PathVariable("id") int p_id,
                                   @ModelAttribute(value = "product") Product product,
 /*                                  @RequestParam(value = "productName", required = false) String productName,

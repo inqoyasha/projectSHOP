@@ -1,5 +1,6 @@
 package org.azamat.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.azamat.SpringBootStarter;
 import org.azamat.service.*;
 import org.azamat.service.impl.UserDetailsImpl;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/cart")
+@ApiOperation("/cart")
 public class OrderController {
 
     private final ProductService productService;
@@ -39,7 +41,8 @@ public class OrderController {
 
 
     @GetMapping
-    public String index(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
+    @ApiOperation("View cart")
+    public String cart(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
         model.addAttribute("totalOrderPrice", orderProductService.getTotalPrice(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
         model.addAttribute("cartCount", orderProductService.cartCount());
@@ -48,6 +51,7 @@ public class OrderController {
     }
 
     @GetMapping("/buy/{p_id}")
+    @ApiOperation("Add new product in cart by id")
     public String buy(@PathVariable("p_id") Integer id) {
         orderService.addOrderProduct(id);
 
@@ -55,6 +59,7 @@ public class OrderController {
     }
 
     @GetMapping("/remove/{op_id}")
+    @ApiOperation("Remove product from cart by id")
     public String remove(@PathVariable("op_id") Integer id) {
         orderService.removeOrderProduct(id);
 
@@ -62,6 +67,7 @@ public class OrderController {
     }
 
     @GetMapping("/create/checkout")
+    @ApiOperation("View order details")
     public String createCheckout(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("userPage", userService.findById(user.getId()));
         model.addAttribute("cartCount", orderProductService.cartCount());
@@ -70,6 +76,7 @@ public class OrderController {
     }
 
     @GetMapping("/checkout")
+    @ApiOperation("Submit order, clean cart")
     public String checkout(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         checkoutService.addCheckout();
         model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
