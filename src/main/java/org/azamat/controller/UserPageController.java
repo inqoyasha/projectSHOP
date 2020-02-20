@@ -10,7 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -29,12 +29,12 @@ public class UserPageController {
     public String account(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("userPage", userService.findById(user.getId()));
         model.addAttribute("orders", checkoutProductService.findAll());
-/*        model.addAttribute("cartCount", orderProductService.size());*/
+        model.addAttribute("cartCount", orderProductService.cartCount());
 
         return "userpage";
     }
 
-    @PostMapping("/account")
+    @PutMapping("/account")
     public String saveData(@RequestParam(value = "firstName", required = false) String firstName,
                            @RequestParam(value = "lastName", required = false) String lastName,
                            @RequestParam(value = "patronymic", required = false) String patronymic,

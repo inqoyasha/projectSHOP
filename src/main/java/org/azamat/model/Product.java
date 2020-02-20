@@ -22,6 +22,19 @@ public class Product {
     public Product() {
     }
 
+
+    public Product(Integer p_id, String productName, String description, String manufacturer, String pictureURL, int price, int quantity, boolean active, Category category) {
+        this.p_id = p_id;
+        this.productName = productName;
+        this.description = description;
+        this.manufacturer = manufacturer;
+        this.pictureURL = pictureURL;
+        this.price = price;
+        this.quantity = quantity;
+        this.active = active;
+        this.category = category;
+    }
+
     public Product(String productName,
                    String description,
                    String manufacturer,
@@ -112,13 +125,19 @@ public class Product {
         this.category = category;
     }
 
+
     @Override
     public String toString() {
         return "Product{" +
                 "p_id=" + p_id +
                 ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
                 ", pictureURL='" + pictureURL + '\'' +
                 ", price=" + price +
+                ", quantity=" + quantity +
+                ", active=" + active +
+                ", category=" + category +
                 '}';
     }
 }

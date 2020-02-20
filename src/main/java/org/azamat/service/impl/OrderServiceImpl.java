@@ -2,6 +2,7 @@ package org.azamat.service.impl;
 
 import org.azamat.model.Order;
 import org.azamat.model.OrderProduct;
+import org.azamat.model.Product;
 import org.azamat.model.securitymodel.User;
 import org.azamat.repository.OrderProductRepository;
 import org.azamat.repository.OrderRepository;
@@ -20,17 +21,18 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
     private final ProductRepository productRepository;
+    private final HttpSession session;
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository,
                             OrderProductRepository orderProductRepository,
-                            ProductRepository productRepository) {
+                            ProductRepository productRepository, HttpSession session) {
         this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
         this.productRepository = productRepository;
+        this.session = session;
     }
 
-    @Autowired
-    private HttpSession session;
+
 
     @Override
     public Iterable<Order> getAllOrders() {
@@ -56,15 +58,13 @@ public class OrderServiceImpl implements OrderService {
     public void addOrderProduct(Integer p_id) {
         User userSession = (User)session.getAttribute("connectedUser");
         Order order = userSession.getOrder();
-        OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(p_id).orElse(null));
+        OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(p_id).orElse(new Product()));
         if (orderProduct == null) {
-            orderProduct = new OrderProduct(order, productRepository.findById(p_id).orElse(null), 1, productRepository.findById(p_id).orElse(null).getPrice());
+            orderProduct = new OrderProduct(order, productRepository.findById(p_id).orElse(new Product()), 1, productRepository.findById(p_id).orElse(new Product()).getPrice());
             List<OrderProduct> cart = new ArrayList<>();
             cart.add(orderProduct);
-/*            order.setOrderProducts(cart);*/
-
             orderProduct.setOrder(order);
-            orderProduct.setProduct(productRepository.findById(p_id).orElse(null));
+            orderProduct.setProduct(productRepository.findById(p_id).orElse(new Product()));
             orderProductRepository.save(orderProduct);
         } else {
             orderProduct.setQuantity(orderProduct.getQuantity()+1);
@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
         User userSession = (User)session.getAttribute("connectedUser");
         Order order = userSession.getOrder();
         for (OrderProduct op: orderProductRepository.findByOrder(order)) {
-            OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(op.getProduct().getP_id()).orElse(null));
+            OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(op.getProduct().getP_id()).orElse(new Product()));
              if (orderProduct.getOp_id() == op_id) {
                 if (orderProduct.getQuantity() > 1) {
                     orderProduct.setQuantity(orderProduct.getQuantity() - 1);
@@ -86,7 +86,6 @@ public class OrderServiceImpl implements OrderService {
                     orderProductRepository.save(orderProduct);
                 } else {
                     orderProductRepository.deleteById(op_id);
-                    System.out.println("delete:"+ op_id);
                 }
             }
         }

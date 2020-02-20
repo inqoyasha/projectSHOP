@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping(value={"", "/", "home", "/home"})
+@RequestMapping(value={"", "/", "/home"})
 public class HomeController {
 
     private final ProductService productService;
@@ -32,7 +32,7 @@ public class HomeController {
     @GetMapping
     public String home(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("products", productService.getAllProducts());
-       model.addAttribute("cartCount", orderProductService.cartCount());
+        model.addAttribute("cartCount", orderProductService.cartCount());
         model.addAttribute("categories", categoryService.getAllCategories());
 
         return "home";
@@ -41,15 +41,17 @@ public class HomeController {
     @GetMapping("/info/{p_id}")
     public String viewProduct(@PathVariable("p_id") int p_id, Model model) {
         Product product = productService.getProduct(p_id).orElse(null);
+        model.addAttribute("cartCount", orderProductService.cartCount());
         model.addAttribute("product", product);
 
         return "info";
     }
 
     @GetMapping("show/category/{c_id}")
-    public String viewProduct1(@PathVariable("c_id") int c_id, Model model) {
+    public String viewCategory(@PathVariable("c_id") int c_id, Model model) {
         model.addAttribute("products", productService.findAllByCategory(categoryService.getById(c_id).orElse(null)));
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("cartCount", orderProductService.cartCount());
 
         return "home";
     }

@@ -5,16 +5,14 @@ import org.azamat.model.CheckoutProduct;
 import org.azamat.model.CheckoutStatus;
 import org.azamat.model.OrderProduct;
 import org.azamat.model.securitymodel.User;
-import org.azamat.repository.CheckoutProductRepository;
-import org.azamat.repository.CheckoutRepository;
-import org.azamat.repository.OrderProductRepository;
-import org.azamat.repository.ProductRepository;
+import org.azamat.repository.*;
 import org.azamat.service.CheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -23,11 +21,13 @@ public class CheckoutServiceImpl implements CheckoutService {
     private final CheckoutRepository checkoutRepository;
     private final CheckoutProductRepository checkoutProductRepository;
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
     @Autowired
-    public CheckoutServiceImpl(CheckoutRepository checkoutRepository, CheckoutProductRepository checkoutProductRepository, ProductRepository productRepository) {
+    public CheckoutServiceImpl(CheckoutRepository checkoutRepository, CheckoutProductRepository checkoutProductRepository, ProductRepository productRepository, UserRepository userRepository) {
         this.checkoutRepository = checkoutRepository;
         this.checkoutProductRepository = checkoutProductRepository;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     @Autowired
@@ -46,6 +46,13 @@ public class CheckoutServiceImpl implements CheckoutService {
     }
 
     @Override
+    public Collection<Checkout> getAllByUser(long id) {
+        User user = userRepository.findById(id).orElse(null);
+        return checkoutRepository.findByUser(user);
+    }
+
+
+    @Override
     public void addCheckout() {
         User userSession = (User)session.getAttribute("connectedUser");
         Checkout checkout = new Checkout();
@@ -53,7 +60,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         checkout.setUser(userSession);
         checkout.setName("new order"+checkout.getId());
         checkout.setStatus(CheckoutStatus.SENT_TO_SELLER);
-        checkout.setDateCreated(Calendar.getInstance());
+        checkout.setDateCreated(LocalDateTime.now());
         checkoutRepository.save(checkout);
 
         for (OrderProduct op: orderProductRepository.findAll()) {
@@ -62,6 +69,7 @@ public class CheckoutServiceImpl implements CheckoutService {
                 checkoutProduct.setCheckout(checkout);
                 checkoutProduct.setProduct(op.getProduct());
                 checkoutProduct.setQuantity(op.getQuantity());
+                checkoutProduct.setSubPrice(op.getSubPrice());
                 checkoutProductRepository.save(checkoutProduct);
                 if (op.getProduct().getQuantity() > 1) {
                     op.getProduct().setQuantity(op.getProduct().getQuantity() - op.getQuantity());

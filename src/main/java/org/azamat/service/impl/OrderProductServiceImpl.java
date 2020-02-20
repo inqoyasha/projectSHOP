@@ -66,8 +66,8 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     @Override
-    public double getTotalPrice(List<OrderProduct> orderProducts) {
-        double total = 0d;
+    public int getTotalPrice(List<OrderProduct> orderProducts) {
+        int total = 0;
         for (OrderProduct op : orderProducts) {
             total += op.getSubPrice();
         }

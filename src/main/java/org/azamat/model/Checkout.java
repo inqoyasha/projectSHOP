@@ -4,6 +4,7 @@ import org.azamat.model.securitymodel.User;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -22,7 +23,7 @@ public class Checkout {
 
     @CreatedDate
     @Column(name = "date_created")
-    private Calendar dateCreated;
+    private LocalDateTime dateCreated;
 
     @Enumerated(EnumType.STRING)
     private CheckoutStatus status;
@@ -33,7 +34,7 @@ public class Checkout {
     public Checkout() {
     }
 
-    public Checkout(Integer id, User user, String name, Calendar dateCreated, CheckoutStatus status, Collection<CheckoutProduct> checkoutProducts) {
+    public Checkout(Integer id, User user, String name, LocalDateTime dateCreated, CheckoutStatus status, Collection<CheckoutProduct> checkoutProducts) {
         this.id = id;
         this.user = user;
         this.name = name;
@@ -66,11 +67,11 @@ public class Checkout {
         this.name = name;
     }
 
-    public Calendar getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Calendar dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 

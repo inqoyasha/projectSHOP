@@ -64,6 +64,7 @@ public class OrderController {
     @GetMapping("/create/checkout")
     public String createCheckout(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
         model.addAttribute("userPage", userService.findById(user.getId()));
+        model.addAttribute("cartCount", orderProductService.cartCount());
 
         return "checkoutinfo";
     }
@@ -74,6 +75,7 @@ public class OrderController {
         model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
         model.addAttribute("totalOrderPrice", orderProductService.getTotalPrice(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
         orderProductService.removeAll();
+        model.addAttribute("cartCount", orderProductService.cartCount());
 
         return "success";
     }

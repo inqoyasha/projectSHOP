@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(User user) {
-        Role roleUser = roleRepository.findByName("ROLE_USER").orElse(null);
+        Role roleUser = roleRepository.findByName("ROLE_USER").orElse(new Role());
         List<Role> userRoles = new ArrayList<>();
         Order order = new Order();
         userRoles.add(roleUser);
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        User result = userRepository.findById(id).orElse(null);
+        User result = userRepository.findById(id).orElse(new User());
         log.info("findById method - user: {} found by id: {}", result, id);
 
         return result;
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
         User userSession = (User)session.getAttribute("connectedUser");
-        User userFromDB = userRepository.findById(userSession.getId()).orElse(null);
+        User userFromDB = userRepository.findById(userSession.getId()).orElse(new User());
         userFromDB.setFirstName(user.getFirstName());
         userFromDB.setLastName(user.getLastName());
         userFromDB.setPatronymic(user.getPatronymic());

@@ -5,10 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Checkout</title>
+<title>Admin page</title>
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
+<script src="${pageContext.request.contextPath}/js/sortTable.js"></script>
 </head>
 <body>
+<div class="wrapper">
     <header class="header">
             <div class="header-inner">
                 <div class="logo">e-Shop</div>
@@ -17,9 +19,10 @@
                 </nav>
         </div>
     </header>
+
     <div class= "container">
         <div class="content">
-		<h3>Your order is submitted!</h3>
+            <h3>Details of order</h3>
             <table cellpadding="2" cellspacing="2" border="1">
             		<tr>
             			<th>Name </th>
@@ -28,7 +31,7 @@
                         <th>Quantity </th>
                         <th>Total price </th>
             		</tr>
-            		<c:forEach var="orderProduct" items="${orderProducts}">
+            		<c:forEach var="orderProduct" items="${orderDetails}">
             			<tr>
             				<td>${orderProduct.product.productName }</td>
             				<td><img src="${pageContext.request.contextPath}/images/${orderProduct.product.pictureURL}" width="50"></td>
@@ -45,14 +48,13 @@
                         </tr>
                        </tfoot>
             	</table>
-            	<td>
-            	    <a href="${pageContext.request.contextPath}/home">Back</a> to store
-                </td>
         </div>
-            <div class="sidebar"></div>
+        <div class="sidebar">
+        </div>
     </div>
     <div class="footer">
-            copyright
+    copyright
     </div>
+</div>
 </body>
 </html>

@@ -17,6 +17,12 @@
         </td>
     </sec:authorize>
 
+        <sec:authorize access="hasRole('ADMIN')">
+            <td>
+                <button onclick="location.href='/admin/users'" type="button">users</button>
+            </td>
+        </sec:authorize>
+
     <sec:authorize access="hasRole('ADMIN')">
         <td>
             <button onclick="location.href='/manage/show/all'" type="button">manage</button>

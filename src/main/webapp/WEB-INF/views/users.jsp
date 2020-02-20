@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Product Page</title>
+<title>Admin page</title>
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.request.contextPath}/js/sortTable.js"></script>
 </head>
@@ -22,38 +22,25 @@
 
     <div class= "container">
         <div class="content">
-            <h3>Products Page</h3>
+            <h3>Users</h3>
                 <table id = "productTableId" cellpadding="2" cellspacing="2" border="1">
                     <tr>
                         <th></th>
-                        <th>Name</th>
-                        <th>Photo</th>
-                        <th>Price</th>
-
+                        <th>UserName</th>
+                        <th>Orders</th>
                     </tr>
-                    <c:forEach items="${products }" var="product">
+                    <c:forEach items="${users}" var="user">
                         <tr>
-                            <td>${product.p_id }</td>
-                            <td>${product.productName }</td>
-                            <td><img src="${pageContext.request.contextPath}/images/ ${product.pictureURL }" width="50"></td>
-                            <td>${product.price }</td>
+                            <td>${user.id }</td>
+                            <td>${user.username}</td>
                             <td>
-                                <sec:authorize access="hasAnyRole('USER','ANONYMOUS')">
-                                    <a href="${pageContext.request.contextPath}/cart/buy/${product.p_id}">Buy</a>
-                                </sec:authorize>
-                                <sec:authorize access="hasRole('ADMIN')">
-                                    <a href="${pageContext.request.contextPath}/manage/edit/${product.p_id}">Edit</a>
-                                </sec:authorize>
-                            </td>
-                            <td>
-                                <a href="${pageContext.request.contextPath}/info/${product.p_id}">Info</a>
+                                <a href="${pageContext.request.contextPath}/admin/user-orders/${user.id}">Info</a>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
         </div>
         <div class="sidebar">
-            <%@ include file="bar/sidebar.jsp"%>
         </div>
     </div>
     <div class="footer">

@@ -24,8 +24,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
-    @Autowired
-    private HttpSession session;
+
     @Autowired
     private UserService userService;
 
@@ -34,17 +33,14 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        String userName = "";
-        Collection<GrantedAuthority> authorities = null;
-        if (authentication.getPrincipal() instanceof Principal) {
-            userName = ((Principal)authentication.getPrincipal()).getName();
-            session.setAttribute("role", "ANONYMOUS");
-        } else {
-            userName = ((UserDetailsImpl)authentication.getPrincipal()).getUsername();
-            UserDetailsImpl authUser = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            session.setAttribute("role", String.valueOf( authUser.getAuthorities()));
-            session.setAttribute("connectedUser" , userService.findByUsername( authUser.getUsername()));
-        }
+        HttpSession session = request.getSession(true);
+
+        UserDetailsImpl authUser = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String userName = authUser.getUsername();
+        session.setAttribute("role", String.valueOf(authUser.getAuthorities()));
+        session.setAttribute("connectedUser" , userService.findByUsername( authUser.getUsername()));
+
         logger.info("userName: " + userName);
         session.setAttribute("userName", userName);
         response.sendRedirect("/home");

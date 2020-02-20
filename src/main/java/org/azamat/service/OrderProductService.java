@@ -13,7 +13,7 @@ public interface OrderProductService {
     void remove(int id);
     void removeAll();
     int cartCount();
-    double getTotalPrice(List<OrderProduct> orderProducts);
+    int getTotalPrice(List<OrderProduct> orderProducts);
     OrderProduct findByOrderAndProduct(Order order, Product product);
 }
 

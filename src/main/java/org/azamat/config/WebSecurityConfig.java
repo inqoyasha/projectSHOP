@@ -20,7 +20,7 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userService;
 
     @Autowired
-    AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
+    private AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -32,9 +32,10 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/","/registration","/info/**", "/show/**","/webjars/**","/js/**","/images/**","/css/**").permitAll()
+                    .antMatchers("/","/registration","/info/**", "/show/**","/js/**","/images/**","/css/**").permitAll()
+                    .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html#/**", "/swagger-ui.html").permitAll()
                     .antMatchers("/cart/**","/account").hasRole("USER")
-                    .antMatchers("/manage/**").hasRole("ADMIN")
+                    .antMatchers("/manage/**", "/admin/**").hasRole("ADMIN")
                     .antMatchers("/logout ").hasAnyRole("ADMIN", "USER")
                     .anyRequest().authenticated()
                 .and()

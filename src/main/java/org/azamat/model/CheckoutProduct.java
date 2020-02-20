@@ -18,15 +18,17 @@ public class CheckoutProduct {
     private Product product;
 
     private int quantity;
+    private int subPrice;
 
     public CheckoutProduct() {
     }
 
-    public CheckoutProduct(Integer id, Checkout checkout, Product product, int quantity) {
+    public CheckoutProduct(Integer id, Checkout checkout, Product product, int quantity, int subPrice) {
         this.id = id;
         this.checkout = checkout;
         this.product = product;
         this.quantity = quantity;
+        this.subPrice = subPrice;
     }
 
     public Integer getId() {
@@ -59,5 +61,13 @@ public class CheckoutProduct {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getSubPrice() {
+        return subPrice;
+    }
+
+    public void setSubPrice(int subPrice) {
+        this.subPrice = subPrice;
     }
 }

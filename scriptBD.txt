@@ -99,6 +99,7 @@ CREATE TABLE checkout_product(
    checkout_id int,
    product_id int,
    quantity int,
+   sub_price int,
 
    FOREIGN KEY (checkout_id) REFERENCES checkouts(id),
    FOREIGN KEY (product_id) REFERENCES products(p_id)

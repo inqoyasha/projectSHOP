@@ -5,111 +5,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>user page</title>
+<script src="${pageContext.request.contextPath}/js/editproduct.js"></script>
 <script>
-    function doOnClick(clicked_id) {
-    const button = document.getElementById(clicked_id);
-    switch(clicked_id) {
-      case "editBtn1":
-            if(button.value.toLowerCase() == 'edit'){
-                button.value = 'save';
-                document.getElementById("pn").removeAttribute("readonly");
-            } else {
-                button.value = 'edit';
-                send();
-                document.getElementById("pn").setAttribute("readonly", true);
-            }
-            break;
-      case "editBtn2":
-            if(button.value.toLowerCase() == 'edit'){
-                button.value = 'save';
-                document.getElementById("ph").removeAttribute("readonly");
-            } else {
-                button.value = 'edit';
-                send();
-                document.getElementById("ph").setAttribute("readonly", true);
-            }
-            break;
-      case "editBtn3":
-            if(button.value.toLowerCase() == 'edit'){
-                button.value = 'save';
-                document.getElementById("pr").removeAttribute("readonly");
-            } else {
-                button.value = 'edit';
-                send();
-                document.getElementById("pr").setAttribute("readonly", true);
-            }
-            break;
-      case "editBtn4":
-            if(button.value.toLowerCase() == 'edit'){
-                button.value = 'save';
-                document.getElementById("qu").removeAttribute("readonly");
-            } else {
-                button.value = 'edit';
-                send();
-                document.getElementById("qu").setAttribute("readonly", true);
-            }
-            break;
-      case "editBtn5":
-            if(button.value.toLowerCase() == 'edit'){
-                button.value = 'save';
-                document.getElementById("de").removeAttribute("readonly");
-            } else {
-                button.value = 'edit';
-                send();
-                document.getElementById("de").setAttribute("readonly", true);
-            }
-            break;
-      case "editBtn6":
-            if(button.value.toLowerCase() == 'edit'){
-                button.value = 'save';
-                document.getElementById("ma").removeAttribute("readonly");
-            } else {
-                button.value = 'edit';
-                send();
-                document.getElementById("ma").setAttribute("readonly", true);
-            }
-            break;
-      case "editBtn7":
-            if(button.value.toLowerCase() == 'edit'){
-                button.value = 'save';
-                document.getElementById("ac").removeAttribute("readonly");
-            } else {
-                button.value = 'edit';
-                send();
-                document.getElementById("ac").setAttribute("readonly", true);
-            }
-            break;
-      case "editBtn8":
-            if(button.value.toLowerCase() == 'edit'){
-                button.value = 'save';
-                document.getElementById("ca").removeAttribute("readonly");
-            } else {
-                button.value = 'edit';
-                send();
-                document.getElementById("ca").setAttribute("readonly", true);
-            }
-            break;
-    }
-    return false;
-    }
+function send() {
+             let formData = new FormData(document.forms.productdata);
 
+             let xhr = new XMLHttpRequest();
+             xhr.open("PUT", "/manage/edit/${product.p_id}");
+             xhr.send(formData);
+
+             return false;
+         }
 </script>
-<script>
-    function send() {
-        let formData = new FormData(document.forms.productdata);
-
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/manage/edit/${product.p_id}");
-        xhr.send(formData);
-
-        return false;
-    }
-</script>
+<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<%@ include file="bar/navbar.jsp"%>
-<h1>Manage product</h1>
+    <header class="header">
+            <div class="header-inner">
+                <div class="logo">e-Shop</div>
+                <nav class="nav">
+                    <%@ include file="bar/navbar.jsp"%>
+                </nav>
+        </div>
+    </header>
     <form name="productdata" id="productdataId">
+    <div class= "container">
+        <div class="content">
+        <h3>Manage product</h3>
         <table>
             <td>
                 <p>Name:  </p>
@@ -124,12 +46,12 @@
             <td>
                 <p><input id= "pn" type="text" name="productName" readonly value ="${product.productName}"/></p>
                 <p><input id= "ph" type="text" name="pictureURL"  readonly value ="${product.pictureURL}"/></p>
-                <p><input id= "pr" type="text" name="price"       readonly value ="${product.price}"/></p>
-                <p><input id= "qu" type="text" name="quantity"    readonly value ="${product.quantity}"/></p>
+                <p><input id= "pr" type="number" name="price"       readonly value ="${product.price}"/></p>
+                <p><input id= "qu" type="number" name="quantity"    readonly value ="${product.quantity}"/></p>
                 <p><input id= "de" type="text" name="description" readonly value ="${product.description}"/></p>
                 <p><input id= "ma" type="text" name="manufacturer" readonly value ="${product.manufacturer}"/></p>
                 <p><input id= "ac" type="text" name="active"      readonly value ="${product.active}"/></p>
-                <p><input id= "ca" type="text" name="category"    readonly value ="${product.category.c_id}"/></p>
+                <p><input id= "ca" type="number" name="category"    readonly value ="${product.category.c_id}"/></p>
             </td>
             <td>
                 <c:forEach var = "i" begin = "1" end = "8">
@@ -138,6 +60,12 @@
             </td>
         </table>
         <a href="${pageContext.request.contextPath}/manage/show/all">Back</a>
+        </div>
+            <div class="sidebar"></div>
+    </div>
+    <div class="footer">
+            copyright
+    </div>
     </form>
 </body>
 </html>
