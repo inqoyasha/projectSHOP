@@ -11,16 +11,16 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 public class MvcConfig implements WebMvcConfigurer {
 
     @Bean
-    public UrlBasedViewResolver viewResolver() {
-        UrlBasedViewResolver resolver
-                = new UrlBasedViewResolver();
+    public static UrlBasedViewResolver viewResolver() {
+        final UrlBasedViewResolver resolver = new UrlBasedViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
         return resolver;
     }
 
-    public void addViewControllers(ViewControllerRegistry registry) {
+    @Override
+    public void addViewControllers(final ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
     }
 

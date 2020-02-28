@@ -11,30 +11,33 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
 @Configuration
 @EnableWebSecurity
 public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsServiceImpl userService;
+    private final UserDetailsServiceImpl userService;
+
+    private final AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
 
     @Autowired
-    private AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
+    public WebSecurityConfig(final UserDetailsServiceImpl userService, final AuthenticationSuccessHandlerImpl authenticationSuccessHandler) {
+        this.userService = userService;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/","/registration","/info/**", "/show/**","/js/**","/images/**","/css/**").permitAll()
+                    .antMatchers("/", "/registration", "/info/**", "/show/**", "/js/**", "/images/**", "/css/**").permitAll()
                     .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html#/**", "/swagger-ui.html").permitAll()
-                    .antMatchers("/cart/**","/account").hasRole("USER")
+                    .antMatchers("/cart/**", "/account").hasRole("USER")
                     .antMatchers("/manage/**", "/admin/**").hasRole("ADMIN")
                     .antMatchers("/logout ").hasAnyRole("ADMIN", "USER")
                     .anyRequest().authenticated()
@@ -49,9 +52,9 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(this.passwordEncoder());
     }
 
 }

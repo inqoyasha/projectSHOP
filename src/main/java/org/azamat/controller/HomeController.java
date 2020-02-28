@@ -21,9 +21,11 @@ public class HomeController {
     private final CategoryService categoryService;
     private final UserService userService;
     @Autowired
-    public HomeController(ProductService productService,
-                          OrderService orderService,
-                          OrderProductService orderProductService, CategoryService categoryService, UserService userService) {
+    public HomeController(final ProductService productService,
+                          final OrderService orderService,
+                          final OrderProductService orderProductService,
+                          final CategoryService categoryService,
+                          final UserService userService) {
         this.productService = productService;
         this.orderService = orderService;
         this.orderProductService = orderProductService;

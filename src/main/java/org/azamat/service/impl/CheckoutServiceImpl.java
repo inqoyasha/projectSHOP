@@ -1,5 +1,6 @@
 package org.azamat.service.impl;
 
+import org.azamat.exception.ProductNotFoundException;
 import org.azamat.model.Checkout;
 import org.azamat.model.CheckoutProduct;
 import org.azamat.model.CheckoutStatus;
@@ -20,20 +21,21 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     private final CheckoutRepository checkoutRepository;
     private final CheckoutProductRepository checkoutProductRepository;
-    private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final OrderProductRepository orderProductRepository;
+    private final HttpSession session;
     @Autowired
-    public CheckoutServiceImpl(CheckoutRepository checkoutRepository, CheckoutProductRepository checkoutProductRepository, ProductRepository productRepository, UserRepository userRepository) {
+    public CheckoutServiceImpl(CheckoutRepository checkoutRepository,
+                               CheckoutProductRepository checkoutProductRepository,
+                               UserRepository userRepository,
+                               OrderProductRepository orderProductRepository,
+                               HttpSession session) {
         this.checkoutRepository = checkoutRepository;
         this.checkoutProductRepository = checkoutProductRepository;
-        this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.orderProductRepository = orderProductRepository;
+        this.session = session;
     }
-
-    @Autowired
-    private HttpSession session;
-    @Autowired
-    OrderProductRepository orderProductRepository;
 
     @Override
     public Checkout create(Checkout checkout) {
@@ -73,7 +75,7 @@ public class CheckoutServiceImpl implements CheckoutService {
                 checkoutProductRepository.save(checkoutProduct);
 
                 if (op.getProduct().getQuantity() - op.getQuantity() < 0) {
-                    throw new RuntimeException("product not found");
+                    throw new ProductNotFoundException(op.getProduct().getQuantity());
                 } else {
                     op.getProduct().setQuantity(op.getProduct().getQuantity() - op.getQuantity());
                 }
