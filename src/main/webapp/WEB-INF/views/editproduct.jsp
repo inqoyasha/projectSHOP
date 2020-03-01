@@ -11,7 +11,7 @@ function send() {
              let formData = new FormData(document.forms.productdata);
 
              let xhr = new XMLHttpRequest();
-             xhr.open("PUT", "/manage/edit/${product.p_id}");
+             xhr.open("PUT", "/manage/edit/${product.id}");
              xhr.send(formData);
 
              return false;
@@ -45,13 +45,13 @@ function send() {
             </td>
             <td>
                 <p><input id= "pn" type="text" name="productName" readonly value ="${product.productName}"/></p>
-                <p><input id= "ph" type="text" name="pictureURL"  readonly value ="${product.pictureURL}"/></p>
+                <p><input id= "ph" type="text" name="pictureURL"  readonly value ="${product.pictureUrl}"/></p>
                 <p><input id= "pr" type="number" name="price"       readonly value ="${product.price}"/></p>
                 <p><input id= "qu" type="number" name="quantity"    readonly value ="${product.quantity}"/></p>
                 <p><input id= "de" type="text" name="description" readonly value ="${product.description}"/></p>
                 <p><input id= "ma" type="text" name="manufacturer" readonly value ="${product.manufacturer}"/></p>
                 <p><input id= "ac" type="text" name="active"      readonly value ="${product.active}"/></p>
-                <p><input id= "ca" type="number" name="category"    readonly value ="${product.category.c_id}"/></p>
+                <p><input id= "ca" type="number" name="category"    readonly value ="${product.category.id}"/></p>
             </td>
             <td>
                 <c:forEach var = "i" begin = "1" end = "8">

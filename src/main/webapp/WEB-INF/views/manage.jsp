@@ -30,15 +30,15 @@
                 </tr>
                 <c:forEach items="${products}" var="product">
                     <tr>
-                        <td>${product.p_id }</td>
+                        <td>${product.id }</td>
                         <td>${product.productName }</td>
-                        <td><img src="${pageContext.request.contextPath}/images/${product.pictureURL}" width="50"></td>
+                        <td><img src="${pageContext.request.contextPath}/images/${product.pictureUrl}" width="50"></td>
                         <td>${product.price }</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/manage/edit/${product.p_id}">Edit</a>
+                            <a href="${pageContext.request.contextPath}/manage/edit/${product.id}">Edit</a>
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/info/${product.p_id}">Info</a>
+                            <a href="${pageContext.request.contextPath}/info/${product.id}">Info</a>
                         </td>
                     </tr>
                 </c:forEach>

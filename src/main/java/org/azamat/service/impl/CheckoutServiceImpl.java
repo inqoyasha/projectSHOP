@@ -66,7 +66,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         checkoutRepository.save(checkout);
 
         for (OrderProduct op: orderProductRepository.findAll()) {
-            if (op.getOrder().getO_id().equals(userSession.getOrder().getO_id())) {
+            if (op.getOrder().getId().equals(userSession.getOrder().getId())) {
                 CheckoutProduct checkoutProduct = new CheckoutProduct();
                 checkoutProduct.setCheckout(checkout);
                 checkoutProduct.setProduct(op.getProduct());
@@ -75,7 +75,7 @@ public class CheckoutServiceImpl implements CheckoutService {
                 checkoutProductRepository.save(checkoutProduct);
 
                 if (op.getProduct().getQuantity() - op.getQuantity() < 0) {
-                    throw new ProductNotFoundException(op.getProduct().getQuantity());
+                    throw new ProductNotFoundException(op.getProduct().getId(), op.getProduct().getQuantity());
                 } else {
                     op.getProduct().setQuantity(op.getProduct().getQuantity() - op.getQuantity());
                 }

@@ -10,18 +10,11 @@
  * are met: no conditions.
  */
 
-package org.azamat.model;
-
 /**
- * This is class of CheckoutStatus.
+ * This package contains services.
  *
  * Shamsutdinov Azamat
  * 0.1
  * @since 0.1
  */
-public enum CheckoutStatus {
-    /**
-     * Enum of CheckoutStatus.
-     */
-    IN_CART, SENT_TO_SELLER, DELIVERY;
-}
+package org.azamat.service;

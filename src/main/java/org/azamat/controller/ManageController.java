@@ -1,68 +1,106 @@
+/*
+ * Copyright (c) 2019-2020, Aamat.org
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ *
+ * modification, are permitted provided that the following conditions
+ *
+ * are met: no conditions.
+ */
+
 package org.azamat.controller;
 
 import io.swagger.annotations.ApiOperation;
-import org.azamat.model.Category;
 import org.azamat.model.Product;
 import org.azamat.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * This is ManageController.
+ *
+ * Shamsutdinov Azamat
+ * 0.1
+ * @since 0.1
+ */
 @Controller
 @RequestMapping("/manage")
 @ApiOperation("/manage")
 public class ManageController {
 
+    /**
+     * ProductService.
+     */
     private final ProductService productService;
 
-    public ManageController(ProductService productService) {
+    /**
+     * Constructor for class WebSecurityConfig.
+     * @param productService ProductService
+     */
+    @Autowired
+    public ManageController(final ProductService productService) {
         this.productService = productService;
     }
 
+    /**
+     * Method view all products.
+     * @param model Model
+     * @return Manage
+     */
     @GetMapping("/show/all")
     @ApiOperation("View all products")
-    public String viewProduct(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
-
+    public String viewProduct(final Model model) {
+        model.addAttribute("products", this.productService.getAllProducts());
         return "manage";
     }
 
-    @GetMapping("/edit/{id}")
+    /**
+     * Method return edit product page.
+     * @param productId ProductId
+     * @param model Model
+     * @return Editproduct
+     */
+    @GetMapping("/edit/{productId}")
     @ApiOperation("View product by id")
-    public String editProduct(@PathVariable("id") int p_id, Model model) {
-        Product product = productService.getProduct(p_id).orElse(null);
+    public String editProduct(@PathVariable("productId") final int productId, final Model model) {
+        final Product product = this.productService.getProduct(productId).orElse(null);
         model.addAttribute("product", product);
-
         return "editproduct";
     }
 
-    @PutMapping("/edit/{id}")
+    /**
+     * Method return edit product page by id.
+     * @param productId ProductId
+     * @param product Product
+     * @param model Model
+     * @return Editproduct
+     */
+    @PutMapping("/edit/{productId}")
     @ApiOperation("Edit product by id")
-    public String saveEditProduct(@PathVariable("id") int p_id,
-                                  @ModelAttribute(value = "product") Product product,
-/*                                  @RequestParam(value = "productName", required = false) String productName,
-                                  @RequestParam(value = "pictureURL", required = false) String pictureURL,
-                                  @RequestParam(value = "price", required = false) int price,
-                                  @RequestParam(value = "quantity", required = false) int quantity,
-                                  @RequestParam(value = "description", required = false) String description,
-                                  @RequestParam(value = "manufacturer", required = false) String manufacturer,
-                                  @RequestParam(value = "active", required = false) boolean active,
-                                  @RequestParam(value = "category", required = false) Category category,*/
-                                  Model model) {
-        System.out.println("product 1 "+ product);
-        Product newProduct = new Product(product.getProductName(),
-                                         product.getDescription(),
-                                         product.getManufacturer(),
-                                         product.getPictureURL(),
-                                         product.getPrice(),
-                                         product.getQuantity(),
-                                         product.isActive(),
-                                         product.getCategory());
-        System.out.println("product 2 "+newProduct);
-/*        Product newProduct = new Product(productName, description, manufacturer, pictureURL, price, quantity, active, category);*/
-        productService.update(newProduct, p_id);
+    public String saveEditProduct(
+        @PathVariable("productId") final int productId,
+            @ModelAttribute(value = "product") final Product product,
+                final Model model) {
+        final Product newProduct = new Product(
+            product.getProductName(),
+            product.getDescription(),
+            product.getManufacturer(),
+            product.getPictureUrl(),
+            product.getPrice(),
+            product.getQuantity(),
+            product.isActive(),
+            product.getCategory()
+        );
+        this.productService.update(newProduct, productId);
         model.addAttribute("product", newProduct);
-
         return "editproduct";
     }
 }

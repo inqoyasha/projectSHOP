@@ -30,8 +30,8 @@
             		</tr>
             		<c:forEach var="orderProduct" items="${orderProducts}">
             			<tr>
-            				<td>${orderProduct.product.productName }</td>
-            				<td><img src="${pageContext.request.contextPath}/images/${orderProduct.product.pictureURL}" width="50"></td>
+            				<td>${orderProduct.product.productName}</td>
+            				<td><img src="${pageContext.request.contextPath}/images/${orderProduct.product.pictureUrl}" width="50"></td>
             				<td>${orderProduct.product.price}</td>
             				<td>${orderProduct.quantity}</td>
                             <td>${orderProduct.subPrice}</td>

@@ -1,8 +1,22 @@
+/*
+ * Copyright (c) 2019-2020, Aamat.org
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ *
+ * modification, are permitted provided that the following conditions
+ *
+ * are met: no conditions.
+ */
+
 package org.azamat.controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.azamat.SpringBootStarter;
-import org.azamat.service.*;
+import org.azamat.service.OrderProductService;
+import org.azamat.service.OrderService;
+import org.azamat.service.UserService;
 import org.azamat.service.impl.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,76 +28,104 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * This is OrderController.
+ *
+ * Shamsutdinov Azamat
+ * 0.1
+ * @since 0.1
+ */
 @Controller
 @RequestMapping("/cart")
 @ApiOperation("/cart")
 public class OrderController {
 
-    private final ProductService productService;
+    /**
+     * LOGGER.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootStarter.class);
+
+    /**
+     * OrderService.
+     */
     private final OrderService orderService;
+
+    /**
+     * OrderProductService.
+     */
     private final OrderProductService orderProductService;
-    private final CheckoutService checkoutService;
-    private final CheckoutProductService checkoutProductService;
+
+    /**
+     * UserService.
+     */
     private final  UserService userService;
-    private static final Logger log = LoggerFactory.getLogger(SpringBootStarter.class);
+
+    /**
+     * Constructor for class WebSecurityConfig.
+     * @param orderService OrderService
+     * @param orderProductService OrderProductService
+     * @param userService UserService
+     */
     @Autowired
-    public OrderController(ProductService productService,
-                           OrderService orderService,
-                           OrderProductService orderProductService, CheckoutService checkoutService, CheckoutProductService checkoutProductService, UserService userService) {
-        this.productService = productService;
+    public OrderController(
+        final OrderService orderService,
+            final OrderProductService orderProductService,
+                final UserService userService) {
         this.orderService = orderService;
         this.orderProductService = orderProductService;
-        this.checkoutService = checkoutService;
-        this.checkoutProductService = checkoutProductService;
         this.userService = userService;
     }
 
-
-
+    /**
+     * Method view cart.
+     * @param user UserDetailsImpl
+     * @param model Model
+     * @return Order
+     */
     @GetMapping
     @ApiOperation("View cart")
-    public String cart(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
-        model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
-        model.addAttribute("totalOrderPrice", orderProductService.getTotalPrice(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
-        model.addAttribute("cartCount", orderProductService.cartCount());
-
+    public String cart(@AuthenticationPrincipal final UserDetailsImpl user, final Model model) {
+        model.addAttribute(
+            "orderProducts", this.orderProductService
+                .findAllByOrder(this.userService
+                    .findById(user.getId()).getOrder()
+                )
+        );
+        model.addAttribute(
+            "totalOrderPrice", this.orderProductService
+                .getTotalPrice(this.orderProductService
+                    .findAllByOrder(this.userService
+                        .findById(user.getId()).getOrder()
+                    )
+                )
+        );
+        model.addAttribute("cartCount", this.orderProductService.cartCount());
         return "order";
     }
 
-    @GetMapping("/buy/{p_id}")
+    /**
+     * Method return info product page.
+     * @param productId ProductId
+     * @return Cart
+     */
+    @GetMapping("/buy/{productId}")
     @ApiOperation("Add new product in cart by id")
-    public String buy(@PathVariable("p_id") Integer id) {
-        orderService.addOrderProduct(id);
-
+    public String buy(@PathVariable("productId") final Integer productId) {
+        this.orderService.addOrderProduct(productId);
+        LOGGER.debug("Add product in cart with id {}", productId);
         return "redirect:/cart";
     }
 
-    @GetMapping("/remove/{op_id}")
+    /**
+     * Method return info product page.
+     * @param productId ProductId
+     * @return Cart
+     */
+    @GetMapping("/remove/{productId}")
     @ApiOperation("Remove product from cart by id")
-    public String remove(@PathVariable("op_id") Integer id) {
-        orderService.removeOrderProduct(id);
-
+    public String remove(@PathVariable("productId") final Integer productId) {
+        this.orderService.removeOrderProduct(productId);
+        LOGGER.debug("Remove product from cart with id {}", productId);
         return "redirect:/cart";
-    }
-
-    @GetMapping("/create/checkout")
-    @ApiOperation("View order details")
-    public String createCheckout(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
-        model.addAttribute("userPage", userService.findById(user.getId()));
-        model.addAttribute("cartCount", orderProductService.cartCount());
-
-        return "checkoutinfo";
-    }
-
-    @GetMapping("/checkout")
-    @ApiOperation("Submit order, clean cart")
-    public String checkout(@AuthenticationPrincipal UserDetailsImpl user, Model model) {
-        checkoutService.addCheckout();
-        model.addAttribute("orderProducts", orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder()));
-        model.addAttribute("totalOrderPrice", orderProductService.getTotalPrice(orderProductService.findAllByOrder(userService.findById(user.getId()).getOrder())));
-        orderProductService.removeAll();
-        model.addAttribute("cartCount", orderProductService.cartCount());
-
-        return "success";
     }
 }

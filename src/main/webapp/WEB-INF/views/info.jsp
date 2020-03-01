@@ -23,16 +23,16 @@
                 <tr>
                     <th></th>
                     <p>Name: ${product.productName}</p>
-                    <p><img src="${pageContext.request.contextPath}/images/ ${product.pictureURL }" width="50"></p>
+                    <p><img src="${pageContext.request.contextPath}/images/ ${product.pictureUrl}" width="50"></p>
                     <p>Description: ${product.description}</p>
                     <p>Manufacturer: ${product.manufacturer}</p>
                     <p>Price: ${product.price}</p>
                     <th></th>
                     <sec:authorize access="hasRole('USER')">
-                        <a href="${pageContext.request.contextPath}/cart/buy/${product.p_id}">Buy</a>
+                        <a href="${pageContext.request.contextPath}/cart/buy/${product.id}">Buy</a>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ADMIN')">
-                        <a href="${pageContext.request.contextPath}/manage/edit/${product.p_id}">Edit</a>
+                        <a href="${pageContext.request.contextPath}/manage/edit/${product.id}">Edit</a>
                     </sec:authorize>
                 </tr>
         </div>

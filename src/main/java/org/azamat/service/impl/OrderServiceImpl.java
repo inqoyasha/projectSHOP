@@ -45,26 +45,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void update(Order order) {
-        this.orderRepository.save(order);
-    }
-
-    @Override
-    public void remove(int id) {
-        this.orderRepository.deleteById(id);
-    }
-
-    @Override
-    public void addOrderProduct(Integer p_id) {
+    public void addOrderProduct(Integer productId) {
         User userSession = (User)session.getAttribute("connectedUser");
         Order order = userSession.getOrder();
-        OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(p_id).orElse(new Product()));
+        OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(productId).orElse(new Product()));
         if (orderProduct == null) {
-            orderProduct = new OrderProduct(order, productRepository.findById(p_id).orElse(new Product()), 1, productRepository.findById(p_id).orElse(new Product()).getPrice());
+            orderProduct = new OrderProduct(order, productRepository.findById(productId).orElse(new Product()), 1, productRepository.findById(productId).orElse(new Product()).getPrice());
             List<OrderProduct> cart = new ArrayList<>();
             cart.add(orderProduct);
             orderProduct.setOrder(order);
-            orderProduct.setProduct(productRepository.findById(p_id).orElse(new Product()));
+            orderProduct.setProduct(productRepository.findById(productId).orElse(new Product()));
             orderProductRepository.save(orderProduct);
         } else {
             orderProduct.setQuantity(orderProduct.getQuantity()+1);
@@ -74,18 +64,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void removeOrderProduct(Integer op_id) {
+    public void removeOrderProduct(Integer orderProductId) {
         User userSession = (User)session.getAttribute("connectedUser");
         Order order = userSession.getOrder();
         for (OrderProduct op: orderProductRepository.findByOrder(order)) {
-            OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(op.getProduct().getP_id()).orElse(new Product()));
-             if (orderProduct.getOp_id() == op_id) {
+            OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(op.getProduct().getId()).orElse(new Product()));
+             if (orderProduct.getId() == orderProductId) {
                 if (orderProduct.getQuantity() > 1) {
                     orderProduct.setQuantity(orderProduct.getQuantity() - 1);
                     orderProduct.setSubPrice(orderProduct.getSubPrice() - orderProduct.getProduct().getPrice());
                     orderProductRepository.save(orderProduct);
                 } else {
-                    orderProductRepository.deleteById(op_id);
+                    orderProductRepository.deleteById(orderProductId);
                 }
             }
         }

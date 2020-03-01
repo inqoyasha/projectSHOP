@@ -33,10 +33,10 @@
                             <c:forEach var="orderProduct" items="${orderProducts}">
                                 <tr>
                                     <td align="center">
-                                        <a href="${pageContext.request.contextPath }/cart/remove/${orderProduct.op_id}">Remove from cart </a>
+                                        <a href="${pageContext.request.contextPath}/cart/remove/${orderProduct.id}">Remove from cart </a>
                                     </td>
                                     <td>${orderProduct.product.productName }</td>
-                                    <td><img src="${pageContext.request.contextPath}/images/${orderProduct.product.pictureURL}" width="50"></td>
+                                    <td><img src="${pageContext.request.contextPath}/images/${orderProduct.product.pictureUrl}" width="50"></td>
                                     <td>${orderProduct.product.price}</td>
                                     <td>${orderProduct.quantity}</td>
                                     <td>${orderProduct.subPrice}</td>
@@ -51,7 +51,7 @@
                                </tfoot>
                         </table>
                             <a href="${pageContext.request.contextPath}/home">Continue Shopping</a>
-                            <a href="${pageContext.request.contextPath}/cart/create/checkout">Checkout</a>
+                            <a href="${pageContext.request.contextPath}cart/create/checkout">Checkout</a>
                 </c:when>
                 <c:otherwise>
                     <p>

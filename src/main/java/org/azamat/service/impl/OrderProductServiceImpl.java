@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,8 +41,8 @@ public class OrderProductServiceImpl implements OrderProductService {
         User userSession = (User)session.getAttribute("connectedUser");
         Iterable<OrderProduct> all = orderProductRepository.findAll();
         for (OrderProduct op: all) {
-            if (op.getOrder().getO_id() == userSession.getOrder().getO_id()) {
-                this.remove(op.getOp_id());
+            if (op.getOrder().getId() == userSession.getOrder().getId()) {
+                this.remove(op.getId());
             }
         }
     }

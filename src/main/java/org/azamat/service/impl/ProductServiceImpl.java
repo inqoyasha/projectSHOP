@@ -23,14 +23,14 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
     @Override
-    public Optional<Product> getProduct(Integer p_id) {
-        return productRepository.findById(p_id);
+    public Optional<Product> getProduct(Integer productId) {
+        return productRepository.findById(productId);
     }
 
     @Override
     public void update(Product product, int id) {
         Product productFromDB = productRepository.findById(id).orElse(null);
-        productFromDB.setPictureURL(product.getPictureURL());
+        productFromDB.setPictureUrl(product.getPictureUrl());
         productFromDB.setPrice(product.getPrice());
         productFromDB.setProductName(product.getProductName());
         productFromDB.setQuantity(product.getQuantity());
