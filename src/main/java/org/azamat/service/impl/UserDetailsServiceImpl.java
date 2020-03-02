@@ -1,3 +1,15 @@
+/*
+ * Copyright (c) 2019-2020, Aamat.org
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ *
+ * modification, are permitted provided that the following conditions
+ *
+ * are met: no conditions.
+ */
+
 package org.azamat.service.impl;
 
 import org.azamat.model.securitymodel.User;
@@ -9,20 +21,39 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * This is UserDetailsService implementation.
+ *
+ * Shamsutdinov Azamat
+ * 0.1
+ * @since 0.1
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    /**
+     * UserRepository.
+     */
+    private final UserRepository userRepository;
 
+    /**
+     * Constructor for class UserDetailsServiceImpl.
+     * @param userRepository UserRepository
+     */
     @Autowired
-    private UserRepository userRepository;
+    public UserDetailsServiceImpl(final UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                                  .orElseThrow(()-> new UsernameNotFoundException("user "+username+" not found"));
-
-        UserDetailsImpl userDetails = new UserDetailsImpl(user);
-
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        final User user = this.userRepository.findByUsername(username)
+            .orElseThrow(()
+                -> new UsernameNotFoundException(
+                    new StringBuilder("user ").append(username).append(" not found").toString()
+                )
+            );
+        final UserDetailsImpl userDetails = new UserDetailsImpl(user);
         return userDetails;
     }
 }

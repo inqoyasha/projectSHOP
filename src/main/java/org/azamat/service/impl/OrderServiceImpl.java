@@ -1,5 +1,20 @@
+/*
+ * Copyright (c) 2019-2020, Aamat.org
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ *
+ * modification, are permitted provided that the following conditions
+ *
+ * are met: no conditions.
+ */
+
 package org.azamat.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.azamat.model.Order;
 import org.azamat.model.OrderProduct;
 import org.azamat.model.Product;
@@ -11,28 +26,53 @@ import org.azamat.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * This is Order Service implementation.
+ *
+ * Shamsutdinov Azamat
+ * 0.1
+ * @since 0.1
+ */
 @Service
 public class OrderServiceImpl implements OrderService {
-
+    /**
+     * OrderRepository.
+     */
     private final OrderRepository orderRepository;
+
+    /**
+     * OrderProductRepository.
+     */
     private final OrderProductRepository orderProductRepository;
+
+    /**
+     * ProductRepository.
+     */
     private final ProductRepository productRepository;
+
+    /**
+     * HttpSession.
+     */
     private final HttpSession session;
+
+    /**
+     * Constructor for class CategoryServiceImpl.
+     * @param orderRepository OrderRepository
+     * @param orderProductRepository OrderProductRepository
+     * @param productRepository ProductRepository
+     * @param session HttpSession
+     * @checkstyle ParameterNumber (6 lines)
+     */
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository,
-                            OrderProductRepository orderProductRepository,
-                            ProductRepository productRepository, HttpSession session) {
+    public OrderServiceImpl(final OrderRepository orderRepository,
+        final OrderProductRepository orderProductRepository,
+            final ProductRepository productRepository,
+                final HttpSession session) {
         this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
         this.productRepository = productRepository;
         this.session = session;
     }
-
-
 
     @Override
     public Iterable<Order> getAllOrders() {
@@ -40,42 +80,57 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order create(Order order) {
+    public Order create(final Order order) {
         return this.orderRepository.save(order);
     }
 
     @Override
-    public void addOrderProduct(Integer productId) {
-        User userSession = (User)session.getAttribute("connectedUser");
-        Order order = userSession.getOrder();
-        OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(productId).orElse(new Product()));
+    public void addOrderProduct(final Integer productId) {
+        final User userSession = (User) this.session.getAttribute("connectedUser");
+        final Order order = userSession.getOrder();
+        OrderProduct orderProduct = this.orderProductRepository.findByOrderAndProduct(
+            order, this.productRepository.findById(productId).orElse(new Product())
+        );
         if (orderProduct == null) {
-            orderProduct = new OrderProduct(order, productRepository.findById(productId).orElse(new Product()), 1, productRepository.findById(productId).orElse(new Product()).getPrice());
-            List<OrderProduct> cart = new ArrayList<>();
+            orderProduct = new OrderProduct(
+                order, this.productRepository.findById(productId).orElse(new Product()),
+        1, this.productRepository.findById(productId).orElse(new Product()).getPrice()
+            );
+            final List<OrderProduct> cart = new ArrayList<>(10);
             cart.add(orderProduct);
             orderProduct.setOrder(order);
-            orderProduct.setProduct(productRepository.findById(productId).orElse(new Product()));
-            orderProductRepository.save(orderProduct);
+            orderProduct.setProduct(
+                this.productRepository.findById(productId).orElse(new Product())
+            );
+            this.orderProductRepository.save(orderProduct);
         } else {
-            orderProduct.setQuantity(orderProduct.getQuantity()+1);
-            orderProduct.setSubPrice(orderProduct.getSubPrice() + orderProduct.getProduct().getPrice());
-            orderProductRepository.save(orderProduct);
+            orderProduct.setQuantity(orderProduct.getQuantity() + 1);
+            orderProduct.setSubPrice(
+                orderProduct.getSubPrice() + orderProduct.getProduct().getPrice()
+            );
+            this.orderProductRepository.save(orderProduct);
         }
     }
 
     @Override
-    public void removeOrderProduct(Integer orderProductId) {
-        User userSession = (User)session.getAttribute("connectedUser");
-        Order order = userSession.getOrder();
-        for (OrderProduct op: orderProductRepository.findByOrder(order)) {
-            OrderProduct orderProduct = orderProductRepository.findByOrderAndProduct(order, productRepository.findById(op.getProduct().getId()).orElse(new Product()));
-             if (orderProduct.getId() == orderProductId) {
+    public void removeOrderProduct(final Integer orderProductId) {
+        final User userSession = (User) this.session.getAttribute("connectedUser");
+        final Order order = userSession.getOrder();
+        for (final OrderProduct op: this.orderProductRepository.findByOrder(order)) {
+            final OrderProduct orderProduct = this.orderProductRepository.findByOrderAndProduct(
+                order, this.productRepository.findById(
+                    op.getProduct().getId()
+                ).orElse(new Product())
+            );
+            if (orderProduct.getId().equals(orderProductId)) {
                 if (orderProduct.getQuantity() > 1) {
                     orderProduct.setQuantity(orderProduct.getQuantity() - 1);
-                    orderProduct.setSubPrice(orderProduct.getSubPrice() - orderProduct.getProduct().getPrice());
-                    orderProductRepository.save(orderProduct);
+                    orderProduct.setSubPrice(
+                        orderProduct.getSubPrice() - orderProduct.getProduct().getPrice()
+                    );
+                    this.orderProductRepository.save(orderProduct);
                 } else {
-                    orderProductRepository.deleteById(orderProductId);
+                    this.orderProductRepository.deleteById(orderProductId);
                 }
             }
         }

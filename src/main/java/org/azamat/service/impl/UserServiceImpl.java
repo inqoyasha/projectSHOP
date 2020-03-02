@@ -1,11 +1,27 @@
+/*
+ * Copyright (c) 2019-2020, Aamat.org
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ *
+ * modification, are permitted provided that the following conditions
+ *
+ * are met: no conditions.
+ */
+
 package org.azamat.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.azamat.SpringBootStarter;
 import org.azamat.model.Order;
 import org.azamat.model.securitymodel.Role;
 import org.azamat.model.securitymodel.Status;
 import org.azamat.model.securitymodel.User;
-import org.azamat.repository.OrderRepository;
 import org.azamat.repository.RoleRepository;
 import org.azamat.repository.UserRepository;
 import org.azamat.service.UserService;
@@ -15,91 +31,115 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
-
+/**
+ * This is User Service implementation.
+ *
+ * Shamsutdinov Azamat
+ * 0.1
+ * @since 0.1
+ */
 @Service
 public class UserServiceImpl implements UserService {
+    /**
+     * LOGGER.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootStarter.class);
 
+    /**
+     * UserRepository.
+     */
     private final UserRepository userRepository;
+
+    /**
+     * RoleRepository.
+     */
     private final RoleRepository roleRepository;
-    private final OrderRepository orderRepository;
+
+    /**
+     * BCryptPasswordEncoder.
+     */
     private final BCryptPasswordEncoder passwordEncoder;
-    private static final Logger log = LoggerFactory.getLogger(SpringBootStarter.class);
+
+    /**
+     * HttpSession.
+     */
+    private final HttpSession session;
+
+    /**
+     * Constructor for class UserServiceImpl.
+     * @param userRepository UserRepository
+     * @param roleRepository RoleRepository
+     * @param passwordEncoder BCryptPasswordEncoder
+     * @param session HttpSession
+     * @checkstyle ParameterNumber (6 lines)
+     */
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, OrderRepository orderRepository) {
+    public UserServiceImpl(final UserRepository userRepository,
+        final RoleRepository roleRepository,
+            final BCryptPasswordEncoder passwordEncoder,
+                final HttpSession session) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.orderRepository = orderRepository;
+        this.session = session;
     }
 
-    @Autowired
-    private HttpSession session;
-
     @Override
-    public User registerUser(User user) {
-        Role roleUser = roleRepository.findByName("ROLE_USER").orElse(new Role());
-        List<Role> userRoles = new ArrayList<>();
-        Order order = new Order();
+    public User registerUser(final User user) {
+        final Role roleUser = this.roleRepository.findByName("ROLE_USER").orElse(new Role());
+        final List<Role> userRoles = new ArrayList<>(2);
+        final Order order = new Order();
         userRoles.add(roleUser);
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         user.setOrder(order);
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
         user.setCreated(Calendar.getInstance());
         order.setUser(user);
-        User registeredUser = userRepository.save(user);
-
+        final User registeredUser = this.userRepository.save(user);
         return registeredUser;
     }
 
     @Override
     public Collection<User> getAll() {
-        List<User> result = userRepository.findAll();
-        log.info("getAll method - {} users found", result.size());
-
+        final List<User> result = this.userRepository.findAll();
+        LOGGER.info("getAll method - {} users found", result.size());
         return result;
     }
 
     @Override
-    public User findByUsername(String username) {
-        User result = userRepository.findByUsername(username).orElse(null);
-        log.info("findByUsername method - user: {} found by username: {}", result, username);
-        log.debug("findByUsername method - user: {} found by username: {}", result, username);
-
+    public User findByUsername(final String username) {
+        final User result = this.userRepository.findByUsername(username).orElse(null);
+        LOGGER.info("findByUsername method - user: {} found by username: {}", result, username);
+        LOGGER.debug("findByUsername method - user: {} found by username: {}", result, username);
         return result;
     }
 
     @Override
-    public User findById(Long id) {
-        User result = userRepository.findById(id).orElse(new User());
-        log.info("findById method - user: {} found by id: {}", result, id);
-        log.debug("findById method - user: {} found by id: {}", result, id);
-
+    public User findById(final Long id) {
+        final User result = this.userRepository.findById(id).orElse(new User());
+        LOGGER.info("findById method - user: {} found by id: {}", result, id);
+        LOGGER.debug("findById method - user: {} found by id: {}", result, id);
         return result;
     }
 
     @Override
-    public void removeUser(Long id) {
-        userRepository.deleteById(id);
-        log.info("removeUser method - user with id: {} successfully deleted");
+    public void removeUser(final Long id) {
+        this.userRepository.deleteById(id);
+        LOGGER.info("removeUser method - user with id: {} successfully deleted");
     }
 
     @Override
-    public void update(User user) {
-        User userSession = (User)session.getAttribute("connectedUser");
-        User userFromDB = userRepository.findById(userSession.getId()).orElse(new User());
+    public void update(final User user) {
+        final User userSession = (User) this.session.getAttribute("connectedUser");
+        final User userFromDB = this.userRepository
+            .findById(userSession.getId()).orElse(new User());
         userFromDB.setFirstName(user.getFirstName());
         userFromDB.setLastName(user.getLastName());
         userFromDB.setPatronymic(user.getPatronymic());
         userFromDB.setEmail(user.getEmail());
         userFromDB.setAddress(user.getAddress());
         userFromDB.setUpdated(Calendar.getInstance());
-        userRepository.save(userFromDB);
+        this.userRepository.save(userFromDB);
     }
 }

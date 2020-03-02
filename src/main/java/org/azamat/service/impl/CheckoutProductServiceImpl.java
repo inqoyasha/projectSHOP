@@ -60,7 +60,8 @@ public class CheckoutProductServiceImpl implements CheckoutProductService {
     }
 
     @Override
-    public CheckoutProduct findByCheckoutAndProduct(final Checkout checkout, final Product product) {
+    public CheckoutProduct findByCheckoutAndProduct(final Checkout checkout,
+        final Product product) {
         return this.checkoutProductRepository.findByCheckoutAndProduct(checkout, product);
     }
 
@@ -72,7 +73,7 @@ public class CheckoutProductServiceImpl implements CheckoutProductService {
     @Override
     public int getTotalPrice(final List<CheckoutProduct> checkoutProducts) {
         int total = 0;
-        for (CheckoutProduct op : checkoutProducts) {
+        for (final CheckoutProduct op : checkoutProducts) {
             total += op.getSubPrice();
         }
         return total;
@@ -85,7 +86,7 @@ public class CheckoutProductServiceImpl implements CheckoutProductService {
 
     @Override
     public List<CheckoutProduct> getAllByCheckout(final int id) {
-        Checkout checkout = this.checkoutRepository.findById(id).orElse(new Checkout());
+        final Checkout checkout = this.checkoutRepository.findById(id).orElse(new Checkout());
         return this.checkoutProductRepository.findByCheckout(checkout);
     }
 
