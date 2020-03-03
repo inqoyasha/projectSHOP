@@ -29,6 +29,11 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public final class UserDetailsImpl implements UserDetails {
     /**
+     * SerialVersionUID.
+     */
+    private static final long serialVersionUID = 5224257992159519731L;
+
+    /**
      * Id.
      */
     private final Long id;

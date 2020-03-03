@@ -16,14 +16,14 @@ function doOnClick() {
         document.getElementById("em").setAttribute("readonly", true);
         document.getElementById("ad").setAttribute("readonly", true);
     }
+return false;
 }
-
 
 function send() {
     let formData = new FormData(document.forms.userdata);
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/account");
+    xhr.open("PUT", "/account");
     xhr.send(formData);
 
     return false;

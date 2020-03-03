@@ -12,8 +12,6 @@
 
 package org.azamat.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.azamat.model.Order;
 import org.azamat.model.OrderProduct;
@@ -107,8 +105,6 @@ public class OrderServiceImpl implements OrderService {
                 order, this.productRepository.findById(productId).orElse(new Product()),
         1, this.productRepository.findById(productId).orElse(new Product()).getPrice()
             );
-            final List<OrderProduct> cart = new ArrayList<>(10);
-            cart.add(orderProduct);
             orderProduct.setOrder(order);
             orderProduct.setProduct(
                 this.productRepository.findById(productId).orElse(new Product())

@@ -83,7 +83,7 @@ public class OrderProductServiceImpl implements OrderProductService {
         final User userSession = (User) this.session.getAttribute("connectedUser");
         final Iterable<OrderProduct> all = this.opRepository.findAll();
         for (final OrderProduct op: all) {
-            if (op.getOrder().getId() == userSession.getOrder().getId()) {
+            if (op.getOrder().getId().equals(userSession.getOrder().getId())) {
                 this.remove(op.getId());
             }
         }

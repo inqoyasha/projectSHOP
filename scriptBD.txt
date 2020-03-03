@@ -7,39 +7,36 @@ DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS checkouts CASCADE;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS checkout_product;
-DROP TABLE IF EXISTS users_orders;
 
 CREATE TABLE category(
-   c_id serial PRIMARY KEY,
+   id serial PRIMARY KEY,
    name varchar,
    description varchar,
-   imageURL varchar,
-   active boolean
+   imageURL varchar
 );
 
 CREATE TABLE products(
-   p_id serial PRIMARY KEY,
+   id serial PRIMARY KEY,
    product_name VARCHAR (50) NOT NULL,
-   pictureURL varchar NOT NULL,
+   pictureURL varchar,
    price int NOT NULL,
    description varchar,
    manufacturer varchar,
    quantity int,
-   active boolean,
    category_id int,
 
-   FOREIGN KEY (category_id) REFERENCES category(c_id)
+   FOREIGN KEY (category_id) REFERENCES category(id)
 );
 
-INSERT INTO category(name, description, imageURL, active) VALUES ('tv', 'TVs', 'TV.png', TRUE);
-INSERT INTO category(name, description, imageURL, active) VALUES ('phone', 'PHONEs', 'Phone.png', TRUE);
+INSERT INTO category(name, description, imageURL) VALUES ('tv', 'TVs', 'TV.png');
+INSERT INTO category(name, description, imageURL) VALUES ('phone', 'PHONEs', 'Phone.png');
 
-INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('TV','tv.png', 24990, 'The new TV', 'SONY', 20, TRUE, 1);
-INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('phone','phone.png', 10990, 'The new Phone', 'ALCATEL', 13, TRUE, 2);
-INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, active, category_id) VALUES ('iphone','iphone.png', 16990, 'The old iPhone', 'APPLE', 4, TRUE, 2);
+INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, category_id) VALUES ('TV','tv.png', 24990, 'The new TV', 'SONY', 20, 1);
+INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, category_id) VALUES ('phone','phone.png', 10990, 'The new Phone', 'ALCATEL', 13, 2);
+INSERT INTO products(product_name, pictureURL, price, description, manufacturer, quantity, category_id) VALUES ('iphone','iphone.png', 16990, 'The old iPhone', 'APPLE', 4, 2);
 
 CREATE TABLE orders(
-   o_id serial PRIMARY KEY,
+   id serial PRIMARY KEY,
    user_id int
 );
 
@@ -50,7 +47,7 @@ CREATE TABLE users(
    first_name varchar,
    last_name varchar,
    patronymic varchar,
-   o_id int,
+   order_id int,
    address varchar, 
    email varchar,
    date_created timestamp,
@@ -58,23 +55,15 @@ CREATE TABLE users(
    status varchar
 );
 
-CREATE TABLE users_orders(
-   o_id int not null,
-   user_id int not null,
-
-   FOREIGN KEY (user_id) REFERENCES users(id),
-   FOREIGN KEY (o_id) REFERENCES orders(o_id)
-);
-
 CREATE TABLE order_product(
-   op_id serial PRIMARY KEY,
-   o_id int NOT NULL,
-   p_id int NOT NULL,
+   id serial PRIMARY KEY,
+   order_id int NOT NULL,
+   product_id int NOT NULL,
    quantity int,
    sub_price int,
    
-   FOREIGN KEY (o_id) REFERENCES orders(o_id),
-   FOREIGN KEY (p_id) REFERENCES products(p_id)
+   FOREIGN KEY (order_id) REFERENCES orders(id),
+   FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 
@@ -102,7 +91,7 @@ CREATE TABLE checkout_product(
    sub_price int,
 
    FOREIGN KEY (checkout_id) REFERENCES checkouts(id),
-   FOREIGN KEY (product_id) REFERENCES products(p_id)
+   FOREIGN KEY (product_id) REFERENCES products(id)
 
 );
 
@@ -119,5 +108,5 @@ CREATE TABLE user_roles(
 
 insert into roles values (1,'ROLE_USER');
 insert into roles values (2,'ROLE_ADMIN');
-INSERT INTO users(username, password, first_name, last_name, patronymic, o_id, address, email, date_created, date_updated, status) VALUES ('admin','$2a$10$DUZ5UISVrx3hkYbXpoy3aeOqztX/tD9oXwbLJ4vGimmJVGRP2y9Fm','admin', 'admin', '', null,'','', '01-01-1970','01-01-1970', 'ACTIVE');
+INSERT INTO users(username, password, first_name, last_name, patronymic, order_id, address, email, date_created, date_updated, status) VALUES ('admin','$2a$10$DUZ5UISVrx3hkYbXpoy3aeOqztX/tD9oXwbLJ4vGimmJVGRP2y9Fm','admin', 'admin', '', null,'','', '01-01-1970','01-01-1970', 'ACTIVE');
 insert into user_roles values (1,2);

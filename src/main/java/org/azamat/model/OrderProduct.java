@@ -28,7 +28,7 @@ import javax.persistence.Table;
  * 0.1
  * @since 0.1
  */
-@SuppressWarnings("PMD.DataClass")
+@SuppressWarnings({"PMD.DataClass", "PMD.OnlyOneConstructorShouldDoInitialization"})
 @Entity
 @Table(name = "order_product")
 public class OrderProduct {
@@ -70,6 +70,28 @@ public class OrderProduct {
      */
     @SuppressWarnings("PMD.UncommentedEmptyConstructor")
     public OrderProduct() {
+    }
+
+    // @checkstyle ParameterNameCheck (14 lines)
+    // @checkstyle ParameterNumber (13 lines)
+    /**
+     * Constructor for OrderProduct with params.
+     * @param id Integer
+     * @param product Product
+     * @param order Order
+     * @param quantity Quantity
+     * @param subPrice SubPrice
+     */
+    public OrderProduct(final Integer id,
+        final Product product,
+            final Order order,
+                final int quantity,
+                    final int subPrice) {
+        this.id = id;
+        this.product = product;
+        this.order = order;
+        this.quantity = quantity;
+        this.subPrice = subPrice;
     }
 
     // @checkstyle ParameterNameCheck (12 lines)
