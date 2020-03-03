@@ -33,7 +33,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * UserService.
      */
@@ -42,33 +42,36 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * AuthenticationSuccessHandler.
      */
-    private final AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
+    private final AuthenticationSuccessHandlerImpl auth;
 
+    // @checkstyle ParameterNameCheck (12 lines)
     /**
      * Constructor for class WebSecurityConfig.
      * @param userService UserService
-     * @param authenticationSuccessHandler AuthenticationSuccessHandlerImpl
+     * @param auth AuthenticationSuccessHandlerImpl
      */
     @Autowired
     public WebSecurityConfig(
         final UserDetailsServiceImpl userService,
-            final AuthenticationSuccessHandlerImpl authenticationSuccessHandler) {
+            final AuthenticationSuccessHandlerImpl auth) {
         this.userService = userService;
-        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.auth = auth;
     }
 
     /**
      * Method api generate.
      * @return New BCryptPasswordEncoder object
      */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
-        final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
+        return new BCryptPasswordEncoder();
     }
 
     @Override
     protected final void configure(final HttpSecurity http) throws Exception {
+        final String user = "USER";
+        final String admin = "ADMIN";
         http.csrf().disable()
             .authorizeRequests()
                 .antMatchers(
@@ -78,14 +81,14 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
         "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
             "/configuration/**", "/swagger-ui.html#/**", "/swagger-ui.html"
             ).permitAll()
-                .antMatchers("/cart/**", "/account").hasRole("USER")
-                .antMatchers("/manage/**", "/admin/**").hasRole("ADMIN")
-                .antMatchers("/logout ").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/cart/**", "/account").hasRole(user)
+                .antMatchers("/manage/**", "/admin/**").hasRole(admin)
+                .antMatchers("/logout ").hasAnyRole(admin, user)
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
                 .loginPage("/login")
-                .successHandler(this.authenticationSuccessHandler)
+                .successHandler(this.auth)
                 .permitAll()
             .and()
                 .logout()
@@ -93,9 +96,9 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    // @checkstyle HiddenField (4 lines)
     protected final void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(this.userService)
             .passwordEncoder(this.passwordEncoder());
     }
-
 }

@@ -31,12 +31,13 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class RegistrationController {
-
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * UserService.
      */
     private final UserService userService;
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Constructor for class WebSecurityConfig.
      * @param userService UserService
@@ -51,6 +52,7 @@ public class RegistrationController {
      * @param model Model
      * @return Registration
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @GetMapping("/registration")
     @ApiOperation("View registration form")
     public static String registration(final Model model) {
@@ -58,13 +60,15 @@ public class RegistrationController {
         return "registration";
     }
 
+    // @checkstyle LocalFinalVariableNameCheck (13 lines)
+    // @checkstyle ReturnCount (10 lines)
     /**
      * Method return home page.
      * @param user User
      * @param model Model
      * @return Login
-     * @checkstyle ReturnCount (13 lines)
      */
+    @SuppressWarnings("PMD.OnlyOneReturn")
     @PostMapping("/registration")
     @ApiOperation("Register new user")
     public String addUser(@ModelAttribute("userForm") final User user, final Model model) {

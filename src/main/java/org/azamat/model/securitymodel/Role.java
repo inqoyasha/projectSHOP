@@ -28,6 +28,7 @@ import javax.persistence.Table;
  * 0.1
  * @since 0.1
  */
+@SuppressWarnings("PMD.DataClass")
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -53,6 +54,7 @@ public class Role {
     /**
      * Default constructor for Role.
      */
+    @SuppressWarnings("PMD.UncommentedEmptyConstructor")
     public Role() {
     }
 
@@ -74,10 +76,10 @@ public class Role {
         return this.id;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Role id.
      * @param id Id
-     * @checkstyle HiddenField (2 lines)
      */
     public void setId(final Long id) {
         this.id = id;
@@ -91,10 +93,10 @@ public class Role {
         return this.name;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Role name.
      * @param name Name
-     * @checkstyle HiddenField (2 lines)
      */
     public void setName(final String name) {
         this.name = name;
@@ -108,10 +110,10 @@ public class Role {
         return this.users;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Role users.
      * @param users Users
-     * @checkstyle HiddenField (2 lines)
      */
     public void setUsers(final Collection<User> users) {
         this.users = users;

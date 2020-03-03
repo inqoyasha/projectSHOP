@@ -25,6 +25,7 @@ import javax.persistence.Id;
  * 0.1
  * @since 0.1
  */
+@SuppressWarnings("PMD.DataClass")
 @Entity
 public class Category {
 
@@ -45,6 +46,7 @@ public class Category {
      */
     private String description;
 
+    // @checkstyle MemberNameCheck (5 lines)
     /**
      * ImageURL.
      */
@@ -52,32 +54,26 @@ public class Category {
     private String imageUrl;
 
     /**
-     * Category status.
-     */
-    private boolean active = true;
-
-    /**
      * Default constructor for Category.
      */
+    @SuppressWarnings("PMD.UncommentedEmptyConstructor")
     public Category() {
     }
 
+    // @checkstyle ParameterNameCheck (10 lines)
+    // @checkstyle ParameterNumber (9 lines)
     /**
      * Constructor for Category with params.
      * @param name Name of category
      * @param description Description of category
      * @param imageUrl ImageURL of category
-     * @param active Status of category
-     * @checkstyle ParameterNumber (5 lines)
      */
     public Category(final String name,
         final String description,
-            final String imageUrl,
-                final boolean active) {
+            final String imageUrl) {
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.active = active;
     }
 
     /**
@@ -88,10 +84,10 @@ public class Category {
         return this.id;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set category id.
      * @param id Id
-     * @checkstyle HiddenField (2 lines)
      */
     public void setId(final Integer id) {
         this.id = id;
@@ -105,10 +101,10 @@ public class Category {
         return this.name;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set category name.
      * @param name Name
-     * @checkstyle HiddenField (2 lines)
      */
     public void setName(final String name) {
         this.name = name;
@@ -122,10 +118,10 @@ public class Category {
         return this.description;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set category description.
      * @param description Description
-     * @checkstyle HiddenField (2 lines)
      */
     public void setDescription(final String description) {
         this.description = description;
@@ -139,29 +135,13 @@ public class Category {
         return this.imageUrl;
     }
 
+    // @checkstyle HiddenField (6 lines)
+    // @checkstyle ParameterNameCheck (5 lines)
     /**
      * Method set category imageUrl.
      * @param imageUrl ImageUrl
-     * @checkstyle HiddenField (2 lines)
      */
     public void setImageUrl(final String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    /**
-     * Method get category status.
-     * @return Status
-     */
-    public boolean isActive() {
-        return this.active;
-    }
-
-    /**
-     * Method set category status.
-     * @param active Status
-     * @checkstyle HiddenField (2 lines)
-     */
-    public void setActive(final boolean active) {
-        this.active = active;
     }
 }

@@ -28,6 +28,7 @@ import javax.persistence.Table;
  * 0.1
  * @since 0.1
  */
+@SuppressWarnings("PMD.DataClass")
 @Entity
 @Table(name = "checkout_product")
 public class CheckoutProduct {
@@ -58,6 +59,7 @@ public class CheckoutProduct {
      */
     private int quantity;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * SubPrice.
      */
@@ -66,9 +68,12 @@ public class CheckoutProduct {
     /**
      * Default constructor for CheckoutProduct.
      */
+    @SuppressWarnings("PMD.UncommentedEmptyConstructor")
     public CheckoutProduct() {
     }
 
+    // @checkstyle ParameterNameCheck (15 lines)
+    // @checkstyle ParameterNumber (14 lines)
     /**
      * Constructor for CheckoutProduct with params.
      * @param id Id
@@ -76,7 +81,6 @@ public class CheckoutProduct {
      * @param product Product
      * @param quantity Quantity
      * @param subPrice SubPrice
-     * @checkstyle ParameterNumber (6 lines)
      */
     public CheckoutProduct(final Integer id,
         final Checkout checkout,
@@ -98,10 +102,10 @@ public class CheckoutProduct {
         return this.id;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set CheckoutProduct id.
      * @param id Id
-     * @checkstyle HiddenField (2 lines)
      */
     public void setId(final Integer id) {
         this.id = id;
@@ -115,10 +119,10 @@ public class CheckoutProduct {
         return this.checkout;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set CheckoutProduct checkout.
      * @param checkout Checkout
-     * @checkstyle HiddenField (2 lines)
      */
     public void setCheckout(final Checkout checkout) {
         this.checkout = checkout;
@@ -132,10 +136,10 @@ public class CheckoutProduct {
         return this.product;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set CheckoutProduct product.
      * @param product Product
-     * @checkstyle HiddenField (2 lines)
      */
     public void setProduct(final Product product) {
         this.product = product;
@@ -149,10 +153,10 @@ public class CheckoutProduct {
         return this.quantity;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set CheckoutProduct quantity.
      * @param quantity Quantity
-     * @checkstyle HiddenField (2 lines)
      */
     public void setQuantity(final int quantity) {
         this.quantity = quantity;
@@ -166,10 +170,11 @@ public class CheckoutProduct {
         return this.subPrice;
     }
 
+    // @checkstyle ParameterNameCheck (6 lines)
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set CheckoutProduct subPrice.
      * @param subPrice SubPrice
-     * @checkstyle HiddenField (2 lines)
      */
     public void setSubPrice(final int subPrice) {
         this.subPrice = subPrice;

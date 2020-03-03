@@ -32,48 +32,56 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderProductServiceImpl implements OrderProductService {
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * OrderProductRepository.
      */
-    private final OrderProductRepository orderProductRepository;
+    private final OrderProductRepository opRepository;
 
     /**
      * HttpSession.
      */
     private final HttpSession session;
 
+    // @checkstyle ParameterNameCheck (7 lines)
     /**
      * Constructor for class OrderProductServiceImpl.
-     * @param orderProductRepository OrderProductRepository
+     * @param opRepository OrderProductRepository
      * @param session HttpSession
-     * @checkstyle ReturnCount (70 lines)
      */
     @Autowired
-    public OrderProductServiceImpl(final OrderProductRepository orderProductRepository,
+    public OrderProductServiceImpl(final OrderProductRepository opRepository,
         final HttpSession session) {
-        this.orderProductRepository = orderProductRepository;
+        this.opRepository = opRepository;
         this.session = session;
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
+    // @checkstyle ParameterNameCheck (2 lines)
     @Override
     public OrderProduct create(final OrderProduct orderProduct) {
-        return this.orderProductRepository.save(orderProduct);
+        return this.opRepository.save(orderProduct);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public List<OrderProduct> findAllByOrder(final Order order) {
-        return this.orderProductRepository.findByOrder(order);
+        return this.opRepository.findByOrder(order);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public void remove(final int id) {
-        this.orderProductRepository.deleteById(id);
+        this.opRepository.deleteById(id);
     }
 
+    // @checkstyle DesignForExtensionCheck (4 lines)
+    // @checkstyle LocalFinalVariableNameCheck (6 lines)
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Override
     public void removeAll() {
         final User userSession = (User) this.session.getAttribute("connectedUser");
-        final Iterable<OrderProduct> all = this.orderProductRepository.findAll();
+        final Iterable<OrderProduct> all = this.opRepository.findAll();
         for (final OrderProduct op: all) {
             if (op.getOrder().getId() == userSession.getOrder().getId()) {
                 this.remove(op.getId());
@@ -81,6 +89,10 @@ public class OrderProductServiceImpl implements OrderProductService {
         }
     }
 
+    // @checkstyle DesignForExtensionCheck (5 lines)
+    // @checkstyle LocalFinalVariableNameCheck (14 lines)
+    // @checkstyle ReturnCount (17 lines)
+    @SuppressWarnings("PMD.OnlyOneReturn")
     @Override
     public int cartCount() {
         final User userSession = (User) this.session.getAttribute("connectedUser");
@@ -88,16 +100,19 @@ public class OrderProductServiceImpl implements OrderProductService {
             return 0;
         }
         final List<OrderProduct> orderProducts = this.findAllByOrder(userSession.getOrder());
-        int sum = 0;
         if (orderProducts == null) {
             return 0;
         }
+        int sum = 0;
         for (final OrderProduct op: orderProducts) {
             sum += op.getQuantity();
         }
         return sum;
     }
 
+    // @checkstyle DesignForExtensionCheck (4 lines)
+    // @checkstyle LocalFinalVariableNameCheck (5 lines)
+    // @checkstyle ParameterNameCheck (2 lines)
     @Override
     public int getTotalPrice(final List<OrderProduct> orderProducts) {
         int total = 0;
@@ -107,8 +122,9 @@ public class OrderProductServiceImpl implements OrderProductService {
         return total;
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public OrderProduct findByOrderAndProduct(final Order order, final Product product) {
-        return this.orderProductRepository.findByOrderAndProduct(order, product);
+        return this.opRepository.findByOrderAndProduct(order, product);
     }
 }

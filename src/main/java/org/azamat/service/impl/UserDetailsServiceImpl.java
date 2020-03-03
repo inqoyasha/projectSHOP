@@ -30,11 +30,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * UserRepository.
      */
     private final UserRepository userRepository;
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Constructor for class UserDetailsServiceImpl.
      * @param userRepository UserRepository
@@ -44,6 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
@@ -53,7 +56,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     new StringBuilder("user ").append(username).append(" not found").toString()
                 )
             );
-        final UserDetailsImpl userDetails = new UserDetailsImpl(user);
-        return userDetails;
+        return new UserDetailsImpl(user);
     }
 }

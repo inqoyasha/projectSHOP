@@ -24,6 +24,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since 0.1
  */
 public interface UserRepository extends JpaRepository<User, Long> {
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Method findByUsername interface method.
      * @param userName UserName

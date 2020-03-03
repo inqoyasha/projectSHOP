@@ -43,6 +43,7 @@ public class UserOrdersController {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootStarter.class);
 
+    // @checkstyle MemberNameCheck (15 lines)
     /**
      * CheckoutService.
      */
@@ -51,26 +52,27 @@ public class UserOrdersController {
     /**
      * CheckoutProductService.
      */
-    private final CheckoutProductService checkoutProductService;
+    private final CheckoutProductService cpService;
 
     /**
      * UserService.
      */
     private final UserService userService;
 
+    // @checkstyle ParameterNameCheck (11 lines)
     /**
      * Constructor for class WebSecurityConfig.
      * @param checkoutService CheckoutService
-     * @param checkoutProductService CheckoutProductService
+     * @param cpService CheckoutProductService
      * @param userService UserService
      */
     @Autowired
     public UserOrdersController(
         final CheckoutService checkoutService,
-            final CheckoutProductService checkoutProductService,
+            final CheckoutProductService cpService,
                 final UserService userService) {
         this.checkoutService = checkoutService;
-        this.checkoutProductService = checkoutProductService;
+        this.cpService = cpService;
         this.userService = userService;
     }
 
@@ -79,6 +81,7 @@ public class UserOrdersController {
      * @param model Model
      * @return Users
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @GetMapping("/users")
     @ApiOperation("Show list of users")
     public String viewUsers(final Model model) {
@@ -111,10 +114,10 @@ public class UserOrdersController {
     @ApiOperation("Show order details by order id")
     public String viewOrderInfo(@PathVariable("id") final int id,
         final Model model) {
-        model.addAttribute("orderDetails", this.checkoutProductService.getAllByCheckout(id));
+        model.addAttribute("orderDetails", this.cpService.getAllByCheckout(id));
         model.addAttribute(
-            "totalOrderPrice", this.checkoutProductService
-                .getTotalPrice(this.checkoutProductService.getAllByCheckout(id))
+            "totalOrderPrice", this.cpService
+                .getTotalPrice(this.cpService.getAllByCheckout(id))
         );
         return "userorderinfo";
     }

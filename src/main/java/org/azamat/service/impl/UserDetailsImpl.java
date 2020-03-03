@@ -27,31 +27,31 @@ import org.springframework.security.core.userdetails.UserDetails;
  * 0.1
  * @since 0.1
  */
-public class UserDetailsImpl implements UserDetails {
+public final class UserDetailsImpl implements UserDetails {
     /**
      * Id.
      */
-    private Long id;
+    private final Long id;
 
     /**
      * Username.
      */
-    private String username;
+    private final String username;
 
     /**
      * Password.
      */
-    private String password;
+    private final String password;
 
     /**
      * Status.
      */
-    private boolean enabled;
+    private final boolean enabled;
 
     /**
      * Authorities.
      */
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     /**
      * Constructor for class UserDetailsImpl.

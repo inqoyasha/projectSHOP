@@ -34,38 +34,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 0.1
  */
 @Controller
-@RequestMapping(value = {"", "/", "/home"})
+@RequestMapping({"", "/", "/home"})
 @ApiOperation("/home")
 public class HomeController {
-
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * ProductService.
      */
     private final ProductService productService;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * OrderProductService.
      */
-    private final OrderProductService orderProductService;
+    private final OrderProductService opService;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * CategoryService.
      */
     private final CategoryService categoryService;
 
+    // @checkstyle ParameterNameCheck (15 lines)
     /**
      * Constructor for class WebSecurityConfig.
      * @param productService ProductService
-     * @param orderProductService OrderProductService
+     * @param opService OrderProductService
      * @param categoryService CategoryService
      */
     @Autowired
     public HomeController(
         final ProductService productService,
-            final OrderProductService orderProductService,
+            final OrderProductService opService,
                 final CategoryService categoryService) {
         this.productService = productService;
-        this.orderProductService = orderProductService;
+        this.opService = opService;
         this.categoryService = categoryService;
     }
 
@@ -75,15 +78,17 @@ public class HomeController {
      * @param model Model
      * @return Home
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @GetMapping
     @ApiOperation("Return home page")
     public String home(@AuthenticationPrincipal final UserDetailsImpl user, final Model model) {
         model.addAttribute("products", this.productService.getAllProducts());
-        model.addAttribute("cartCount", this.orderProductService.cartCount());
+        model.addAttribute("cartCount", this.opService.cartCount());
         model.addAttribute("categories", this.categoryService.getAllCategories());
         return "home";
     }
 
+    // @checkstyle ParameterNameCheck (40 lines)
     /**
      * Method return info product page.
      * @param productId ProductId
@@ -94,7 +99,7 @@ public class HomeController {
     @ApiOperation("View products")
     public String viewProduct(@PathVariable("productId") final int productId, final Model model) {
         final Product product = this.productService.getProduct(productId).orElse(null);
-        model.addAttribute("cartCount", this.orderProductService.cartCount());
+        model.addAttribute("cartCount", this.opService.cartCount());
         model.addAttribute("product", product);
         return "info";
     }
@@ -116,7 +121,7 @@ public class HomeController {
                 )
         );
         model.addAttribute("categories", this.categoryService.getAllCategories());
-        model.addAttribute("cartCount", this.orderProductService.cartCount());
+        model.addAttribute("cartCount", this.opService.cartCount());
         return "home";
     }
 }

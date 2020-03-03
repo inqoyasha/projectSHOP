@@ -35,11 +35,11 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class CheckoutController {
-
+    // @checkstyle MemberNameCheck (15 lines)
     /**
      * OrderProductService.
      */
-    private final OrderProductService orderProductService;
+    private final OrderProductService opService;
 
     /**
      * CheckoutService.
@@ -51,18 +51,19 @@ public class CheckoutController {
      */
     private final  UserService userService;
 
+    // @checkstyle ParameterNameCheck (80 lines)
     /**
      * Constructor for class WebSecurityConfig.
-     * @param orderProductService OrderProductService
+     * @param opService OrderProductService
      * @param checkoutService CheckoutService
      * @param userService UserService
      */
     @Autowired
     public CheckoutController(
-        final OrderProductService orderProductService,
+        final OrderProductService opService,
             final CheckoutService checkoutService,
                 final UserService userService) {
-        this.orderProductService = orderProductService;
+        this.opService = opService;
         this.checkoutService = checkoutService;
         this.userService = userService;
     }
@@ -73,12 +74,13 @@ public class CheckoutController {
      * @param model Model
      * @return Checkoutinfo
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @GetMapping("cart/create/checkout")
     @ApiOperation("View order details")
     public String createCheckout(@AuthenticationPrincipal final UserDetailsImpl user,
         final Model model) {
         model.addAttribute("userPage", this.userService.findById(user.getId()));
-        model.addAttribute("cartCount", this.orderProductService.cartCount());
+        model.addAttribute("cartCount", this.opService.cartCount());
         return "checkoutinfo";
     }
 
@@ -94,21 +96,21 @@ public class CheckoutController {
         final Model model) {
         this.checkoutService.addCheckout();
         model.addAttribute(
-            "orderProducts", this.orderProductService
+            "orderProducts", this.opService
                 .findAllByOrder(this.userService
                     .findById(user.getId()).getOrder()
                 )
         );
         model.addAttribute(
-            "totalOrderPrice", this.orderProductService
-                .getTotalPrice(this.orderProductService
+            "totalOrderPrice", this.opService
+                .getTotalPrice(this.opService
                     .findAllByOrder(this.userService
                         .findById(user.getId()).getOrder()
                     )
                 )
         );
-        this.orderProductService.removeAll();
-        model.addAttribute("cartCount", this.orderProductService.cartCount());
+        this.opService.removeAll();
+        model.addAttribute("cartCount", this.opService.cartCount());
         return "success";
     }
 
@@ -120,10 +122,10 @@ public class CheckoutController {
      * @return Error
      */
     @ApiOperation("Error handling")
-    @ExceptionHandler(value = ProductNotFoundException.class)
+    @ExceptionHandler(ProductNotFoundException.class)
     public static String handleProductNotFoundException(
         final HttpServletRequest request,
-            final Exception ex,
+            final ProductNotFoundException ex,
                 final Model model) {
         model.addAttribute("exception", ex);
         model.addAttribute("url", request.getRequestURL());

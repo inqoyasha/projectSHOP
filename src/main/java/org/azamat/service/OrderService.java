@@ -35,12 +35,14 @@ public interface OrderService {
      */
     Order create(Order order);
 
+    // @checkstyle ParameterNameCheck (5 lines)
     /**
      * Method addOrderProduct interface method.
      * @param productId Product id
      */
     void addOrderProduct(Integer productId);
 
+    // @checkstyle ParameterNameCheck (5 lines)
     /**
      * Method removeOrderProduct interface method.
      * @param orderProductId Order product id

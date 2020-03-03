@@ -30,11 +30,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * ProductRepository.
      */
     private final ProductRepository productRepository;
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Constructor for class ProductServiceImpl.
      * @param productRepository ProductRepository
@@ -44,16 +46,21 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Iterable<Product> getAllProducts() {
         return this.productRepository.findAll();
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
+    // @checkstyle ParameterNameCheck (2 lines)
     @Override
     public Optional<Product> getProduct(final Integer productId) {
         return this.productRepository.findById(productId);
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
+    // @checkstyle LocalFinalVariableNameCheck (3 lines)
     @Override
     public void update(final Product product, final int id) {
         final Product productFromDB = this.productRepository.findById(id).orElse(null);
@@ -64,10 +71,10 @@ public class ProductServiceImpl implements ProductService {
         productFromDB.setDescription(product.getDescription());
         productFromDB.setCategory(product.getCategory());
         productFromDB.setManufacturer(product.getManufacturer());
-        productFromDB.setActive(product.isActive());
         this.productRepository.save(productFromDB);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public List<Product> findAllByCategory(final Category category) {
         return this.productRepository.findByCategory(category);

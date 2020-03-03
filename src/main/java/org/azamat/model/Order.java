@@ -30,6 +30,7 @@ import org.azamat.model.securitymodel.User;
  * 0.1
  * @since 0.1
  */
+@SuppressWarnings("PMD.DataClass")
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -51,6 +52,7 @@ public class Order {
     /**
      * Default constructor for Order.
      */
+    @SuppressWarnings("PMD.UncommentedEmptyConstructor")
     public Order() {
     }
 
@@ -72,10 +74,10 @@ public class Order {
         return this.id;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Order id.
      * @param id Id
-     * @checkstyle HiddenField (2 lines)
      */
     public void setId(final Integer id) {
         this.id = id;
@@ -89,10 +91,10 @@ public class Order {
         return this.user;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Order user.
      * @param user User
-     * @checkstyle HiddenField (2 lines)
      */
     public void setUser(final User user) {
         this.user = user;

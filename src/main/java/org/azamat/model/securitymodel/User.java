@@ -41,10 +41,10 @@ import org.springframework.data.annotation.LastModifiedDate;
  * 0.1
  * @since 0.1
  */
+@SuppressWarnings({"PMD.DataClass", "PMD.OnlyOneConstructorShouldDoInitialization"})
 @Entity
 @Table(name = "users")
 public class User {
-
     /**
      * Id.
      */
@@ -52,18 +52,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // @checkstyle MemberNameCheck (5 lines)
     /**
      * Username.
      */
     @Column(name = "username")
     private String username;
 
+    // @checkstyle MemberNameCheck (5 lines)
     /**
      * User firstName.
      */
     @Column(name = "first_name")
     private String firstName;
 
+    // @checkstyle MemberNameCheck (5 lines)
     /**
      * User lastName.
      */
@@ -135,9 +138,12 @@ public class User {
     /**
      * Default constructor for User.
      */
+    @SuppressWarnings("PMD.UncommentedEmptyConstructor")
     public User() {
     }
 
+    // @checkstyle ParameterNameCheck (14 lines)
+    // @checkstyle ParameterNumber (13 lines)
     /**
      * Constructor for User with params.
      * @param firstName FirstName
@@ -145,7 +151,6 @@ public class User {
      * @param patronymic Patronymic
      * @param email Email
      * @param address Address
-     * @checkstyle ParameterNumber (6 lines)
      */
     public User(final String firstName,
         final String lastName,
@@ -159,6 +164,8 @@ public class User {
         this.email = email;
     }
 
+    // @checkstyle ParameterNameCheck (28 lines)
+    // @checkstyle ParameterNumber (27 lines)
     /**
      * Constructor for User with params.
      * @param id Id
@@ -174,8 +181,8 @@ public class User {
      * @param status Status
      * @param roles Roles
      * @param checkouts Checkouts
-     * @checkstyle ParameterNumber (14 lines)
      */
+    @SuppressWarnings("PMD.ExcessiveParameterList")
     public User(final Long id,
         final String username,
             final String firstName,
@@ -212,10 +219,10 @@ public class User {
         return this.id;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User id.
      * @param id Id
-     * @checkstyle HiddenField (2 lines)
      */
     public void setId(final Long id) {
         this.id = id;
@@ -229,10 +236,10 @@ public class User {
         return this.username;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User username.
      * @param username Username
-     * @checkstyle HiddenField (2 lines)
      */
     public void setUsername(final String username) {
         this.username = username;
@@ -246,10 +253,11 @@ public class User {
         return this.firstName;
     }
 
+    // @checkstyle ParameterNameCheck (6 lines)
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User firstName.
      * @param firstName FirstName
-     * @checkstyle HiddenField (2 lines)
      */
     public void setFirstName(final String firstName) {
         this.firstName = firstName;
@@ -263,10 +271,11 @@ public class User {
         return this.lastName;
     }
 
+    // @checkstyle ParameterNameCheck (7 lines)
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User lastName.
      * @param lastName LastName
-     * @checkstyle HiddenField (2 lines)
      */
     public void setLastName(final String lastName) {
         this.lastName = lastName;
@@ -280,10 +289,10 @@ public class User {
         return this.email;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User email.
      * @param email Email
-     * @checkstyle HiddenField (2 lines)
      */
     public void setEmail(final String email) {
         this.email = email;
@@ -297,10 +306,10 @@ public class User {
         return this.password;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User password.
      * @param password Password
-     * @checkstyle HiddenField (2 lines)
      */
     public void setPassword(final String password) {
         this.password = password;
@@ -314,10 +323,10 @@ public class User {
         return this.created;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User date created.
      * @param created Created
-     * @checkstyle HiddenField (2 lines)
      */
     public void setCreated(final Calendar created) {
         this.created = created;
@@ -331,10 +340,10 @@ public class User {
         return this.updated;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User date updated.
      * @param updated Updated
-     * @checkstyle HiddenField (2 lines)
      */
     public void setUpdated(final Calendar updated) {
         this.updated = updated;
@@ -348,10 +357,10 @@ public class User {
         return this.status;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User status.
      * @param status Status
-     * @checkstyle HiddenField (2 lines)
      */
     public void setStatus(final Status status) {
         this.status = status;
@@ -365,10 +374,10 @@ public class User {
         return this.roles;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User roles.
      * @param roles Roles
-     * @checkstyle HiddenField (2 lines)
      */
     public void setRoles(final Collection<Role> roles) {
         this.roles = roles;
@@ -382,10 +391,10 @@ public class User {
         return this.patronymic;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User patronymic.
      * @param patronymic Patronymic
-     * @checkstyle HiddenField (2 lines)
      */
     public void setPatronymic(final String patronymic) {
         this.patronymic = patronymic;
@@ -399,10 +408,10 @@ public class User {
         return this.address;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User address.
      * @param address Address
-     * @checkstyle HiddenField (2 lines)
      */
     public void setAddress(final String address) {
         this.address = address;
@@ -416,10 +425,10 @@ public class User {
         return this.order;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User order.
      * @param order Order
-     * @checkstyle HiddenField (2 lines)
      */
     public void setOrder(final Order order) {
         this.order = order;
@@ -433,10 +442,10 @@ public class User {
         return this.checkouts;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set User checkouts.
      * @param checkouts Checkouts
-     * @checkstyle HiddenField (2 lines)
      */
     public void setCheckouts(final Collection<Checkout> checkouts) {
         this.checkouts = checkouts;

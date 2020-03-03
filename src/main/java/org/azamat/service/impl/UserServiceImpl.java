@@ -45,16 +45,19 @@ public class UserServiceImpl implements UserService {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootStarter.class);
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * UserRepository.
      */
     private final UserRepository userRepository;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * RoleRepository.
      */
     private final RoleRepository roleRepository;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * BCryptPasswordEncoder.
      */
@@ -65,13 +68,14 @@ public class UserServiceImpl implements UserService {
      */
     private final HttpSession session;
 
+    // @checkstyle ParameterNameCheck (12 lines)
+    // @checkstyle ParameterNumber (12 lines)
     /**
      * Constructor for class UserServiceImpl.
      * @param userRepository UserRepository
      * @param roleRepository RoleRepository
      * @param passwordEncoder BCryptPasswordEncoder
      * @param session HttpSession
-     * @checkstyle ParameterNumber (6 lines)
      */
     @Autowired
     public UserServiceImpl(final UserRepository userRepository,
@@ -84,6 +88,8 @@ public class UserServiceImpl implements UserService {
         this.session = session;
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
+    // @checkstyle LocalFinalVariableNameCheck (5 lines)
     @Override
     public User registerUser(final User user) {
         final Role roleUser = this.roleRepository.findByName("ROLE_USER").orElse(new Role());
@@ -96,10 +102,10 @@ public class UserServiceImpl implements UserService {
         user.setStatus(Status.ACTIVE);
         user.setCreated(Calendar.getInstance());
         order.setUser(user);
-        final User registeredUser = this.userRepository.save(user);
-        return registeredUser;
+        return this.userRepository.save(user);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Collection<User> getAll() {
         final List<User> result = this.userRepository.findAll();
@@ -107,6 +113,8 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Override
     public User findByUsername(final String username) {
         final User result = this.userRepository.findByUsername(username).orElse(null);
@@ -115,6 +123,8 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Override
     public User findById(final Long id) {
         final User result = this.userRepository.findById(id).orElse(new User());
@@ -123,12 +133,15 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public void removeUser(final Long id) {
         this.userRepository.deleteById(id);
-        LOGGER.info("removeUser method - user with id: {} successfully deleted");
+        LOGGER.info("removeUser method - user with id: {} successfully deleted", id);
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
+    // @checkstyle LocalFinalVariableNameCheck (4 lines)
     @Override
     public void update(final User user) {
         final User userSession = (User) this.session.getAttribute("connectedUser");

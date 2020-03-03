@@ -35,12 +35,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/manage")
 @ApiOperation("/manage")
 public class ManageController {
-
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * ProductService.
      */
     private final ProductService productService;
 
+    // @checkstyle ParameterNameCheck (60 lines)
     /**
      * Constructor for class WebSecurityConfig.
      * @param productService ProductService
@@ -68,14 +69,16 @@ public class ManageController {
      * @param model Model
      * @return Editproduct
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @GetMapping("/edit/{productId}")
     @ApiOperation("View product by id")
     public String editProduct(@PathVariable("productId") final int productId, final Model model) {
-        final Product product = this.productService.getProduct(productId).orElse(null);
+        final Product product = this.productService.getProduct(productId).orElse(new Product());
         model.addAttribute("product", product);
         return "editproduct";
     }
 
+    // @checkstyle LocalFinalVariableNameCheck (20 lines)
     /**
      * Method return edit product page by id.
      * @param productId ProductId
@@ -87,7 +90,7 @@ public class ManageController {
     @ApiOperation("Edit product by id")
     public String saveEditProduct(
         @PathVariable("productId") final int productId,
-            @ModelAttribute(value = "product") final Product product,
+            @ModelAttribute("product") final Product product,
                 final Model model) {
         final Product newProduct = new Product(
             product.getProductName(),
@@ -96,7 +99,6 @@ public class ManageController {
             product.getPictureUrl(),
             product.getPrice(),
             product.getQuantity(),
-            product.isActive(),
             product.getCategory()
         );
         this.productService.update(newProduct, productId);

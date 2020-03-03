@@ -26,6 +26,7 @@ import org.azamat.model.Product;
  * @since 0.1
  */
 public interface CheckoutProductService {
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Method create interface method.
      * @param checkoutProduct CheckoutProduct
@@ -48,6 +49,7 @@ public interface CheckoutProductService {
      */
     Optional<CheckoutProduct> findById(int id);
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Method getTotalPrice interface method.
      * @param checkoutProducts List of CheckoutProducts

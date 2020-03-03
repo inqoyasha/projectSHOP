@@ -15,13 +15,13 @@ package org.azamat;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// @checkstyle HideUtilityClassConstructor (15 lines)
 /**
  * This is SpringBootStarter class.
  *
  * Shamsutdinov Azamat
  * 0.1
  * @since 0.1
- * @checkstyle HideUtilityClassConstructor (8 lines)
  */
 @SpringBootApplication
 @SuppressWarnings("PMD.UseUtilityClass")

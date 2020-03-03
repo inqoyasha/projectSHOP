@@ -35,16 +35,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * OrderRepository.
      */
     private final OrderRepository orderRepository;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * OrderProductRepository.
      */
-    private final OrderProductRepository orderProductRepository;
+    private final OrderProductRepository opRepository;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * ProductRepository.
      */
@@ -55,40 +58,48 @@ public class OrderServiceImpl implements OrderService {
      */
     private final HttpSession session;
 
+    // @checkstyle ParameterNameCheck (12 lines)
+    // @checkstyle ParameterNumber (12 lines)
     /**
      * Constructor for class CategoryServiceImpl.
      * @param orderRepository OrderRepository
-     * @param orderProductRepository OrderProductRepository
+     * @param opRepository OrderProductRepository
      * @param productRepository ProductRepository
      * @param session HttpSession
-     * @checkstyle ParameterNumber (6 lines)
      */
     @Autowired
     public OrderServiceImpl(final OrderRepository orderRepository,
-        final OrderProductRepository orderProductRepository,
+        final OrderProductRepository opRepository,
             final ProductRepository productRepository,
                 final HttpSession session) {
         this.orderRepository = orderRepository;
-        this.orderProductRepository = orderProductRepository;
+        this.opRepository = opRepository;
         this.productRepository = productRepository;
         this.session = session;
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Iterable<Order> getAllOrders() {
         return this.orderRepository.findAll();
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Order create(final Order order) {
         return this.orderRepository.save(order);
     }
 
+    // @checkstyle LocalVariableNameCheck (9 lines)
+    // @checkstyle LocalFinalVariableNameCheck (16 lines)
+    // @checkstyle DesignForExtensionCheck (4 lines)
+    // @checkstyle ParameterNameCheck (3 lines)
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Override
     public void addOrderProduct(final Integer productId) {
         final User userSession = (User) this.session.getAttribute("connectedUser");
         final Order order = userSession.getOrder();
-        OrderProduct orderProduct = this.orderProductRepository.findByOrderAndProduct(
+        OrderProduct orderProduct = this.opRepository.findByOrderAndProduct(
             order, this.productRepository.findById(productId).orElse(new Product())
         );
         if (orderProduct == null) {
@@ -102,22 +113,25 @@ public class OrderServiceImpl implements OrderService {
             orderProduct.setProduct(
                 this.productRepository.findById(productId).orElse(new Product())
             );
-            this.orderProductRepository.save(orderProduct);
+            this.opRepository.save(orderProduct);
         } else {
             orderProduct.setQuantity(orderProduct.getQuantity() + 1);
             orderProduct.setSubPrice(
                 orderProduct.getSubPrice() + orderProduct.getProduct().getPrice()
             );
-            this.orderProductRepository.save(orderProduct);
+            this.opRepository.save(orderProduct);
         }
     }
 
+    // @checkstyle LocalFinalVariableNameCheck (8 lines)
+    // @checkstyle DesignForExtensionCheck (4 lines)
+    // @checkstyle ParameterNameCheck (2 lines)
     @Override
     public void removeOrderProduct(final Integer orderProductId) {
         final User userSession = (User) this.session.getAttribute("connectedUser");
         final Order order = userSession.getOrder();
-        for (final OrderProduct op: this.orderProductRepository.findByOrder(order)) {
-            final OrderProduct orderProduct = this.orderProductRepository.findByOrderAndProduct(
+        for (final OrderProduct op: this.opRepository.findByOrder(order)) {
+            final OrderProduct orderProduct = this.opRepository.findByOrderAndProduct(
                 order, this.productRepository.findById(
                     op.getProduct().getId()
                 ).orElse(new Product())
@@ -128,9 +142,9 @@ public class OrderServiceImpl implements OrderService {
                     orderProduct.setSubPrice(
                         orderProduct.getSubPrice() - orderProduct.getProduct().getPrice()
                     );
-                    this.orderProductRepository.save(orderProduct);
+                    this.opRepository.save(orderProduct);
                 } else {
-                    this.orderProductRepository.deleteById(orderProductId);
+                    this.opRepository.deleteById(orderProductId);
                 }
             }
         }

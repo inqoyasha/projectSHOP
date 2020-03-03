@@ -30,10 +30,10 @@ import javax.persistence.Table;
  * 0.1
  * @since 0.1
  */
+@SuppressWarnings({"PMD.DataClass", "PMD.OnlyOneConstructorShouldDoInitialization"})
 @Entity
 @Table(name = "products")
 public class Product {
-
     /**
      * Id.
      */
@@ -41,6 +41,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * ProductName.
      */
@@ -56,6 +57,7 @@ public class Product {
      */
     private String manufacturer;
 
+    // @checkstyle MemberNameCheck (5 lines)
     /**
      * PictureUrl.
      */
@@ -73,11 +75,6 @@ public class Product {
     private int quantity;
 
     /**
-     * Status.
-     */
-    private boolean active = true;
-
-    /**
      * Category.
      */
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -87,9 +84,12 @@ public class Product {
     /**
      * Default constructor for Product.
      */
+    @SuppressWarnings("PMD.UncommentedEmptyConstructor")
     public Product() {
     }
 
+    // @checkstyle ParameterNameCheck (20 lines)
+    // @checkstyle ParameterNumber (19 lines)
     /**
      * Constructor for Product with params.
      * @param id Id
@@ -99,9 +99,7 @@ public class Product {
      * @param pictureUrl PictureUrl
      * @param price Price
      * @param quantity Quantity
-     * @param active Status
      * @param category Category
-     * @checkstyle ParameterNumber (7 lines)
      */
     public Product(final Integer id,
         final String productName,
@@ -110,8 +108,7 @@ public class Product {
                     final String pictureUrl,
                         final int price,
                             final int quantity,
-                                final boolean active,
-                                    final Category category) {
+                                final Category category) {
         this.id = id;
         this.productName = productName;
         this.description = description;
@@ -119,10 +116,11 @@ public class Product {
         this.pictureUrl = pictureUrl;
         this.price = price;
         this.quantity = quantity;
-        this.active = active;
         this.category = category;
     }
 
+    // @checkstyle ParameterNameCheck (19 lines)
+    // @checkstyle ParameterNumber (18 lines)
     /**
      * Constructor for Product with params.
      * @param productName ProductName
@@ -131,9 +129,7 @@ public class Product {
      * @param pictureUrl PictureUrl
      * @param price Price
      * @param quantity Quantity
-     * @param active Status
      * @param category Category
-     * @checkstyle ParameterNumber (7 lines)
      */
     public Product(final String productName,
         final String description,
@@ -141,15 +137,13 @@ public class Product {
                 final String pictureUrl,
                     final int price,
                         final int quantity,
-                            final boolean active,
-                                final Category category) {
+                            final Category category) {
         this.productName = productName;
         this.description = description;
         this.manufacturer = manufacturer;
         this.pictureUrl = pictureUrl;
         this.price = price;
         this.quantity = quantity;
-        this.active = active;
         this.category = category;
     }
 
@@ -161,10 +155,10 @@ public class Product {
         return this.id;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Product id.
      * @param id Id
-     * @checkstyle HiddenField (2 lines)
      */
     public void setId(final Integer id) {
         this.id = id;
@@ -178,10 +172,11 @@ public class Product {
         return this.productName;
     }
 
+    // @checkstyle ParameterNameCheck (6 lines)
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set ProductName.
      * @param productName ProductName
-     * @checkstyle HiddenField (2 lines)
      */
     public void setProductName(final String productName) {
         this.productName = productName;
@@ -195,10 +190,11 @@ public class Product {
         return this.pictureUrl;
     }
 
+    // @checkstyle ParameterNameCheck (6 lines)
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Product pictureUrl.
      * @param pictureUrl PictureUrl
-     * @checkstyle HiddenField (2 lines)
      */
     public void setPictureUrl(final String pictureUrl) {
         this.pictureUrl = pictureUrl;
@@ -212,10 +208,10 @@ public class Product {
         return this.price;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Product price.
      * @param price Price
-     * @checkstyle HiddenField (2 lines)
      */
     public void setPrice(final int price) {
         this.price = price;
@@ -229,10 +225,10 @@ public class Product {
         return this.description;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Product description.
      * @param description Description
-     * @checkstyle HiddenField (2 lines)
      */
     public void setDescription(final String description) {
         this.description = description;
@@ -246,10 +242,10 @@ public class Product {
         return this.manufacturer;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Product manufacturer.
      * @param manufacturer Manufacturer
-     * @checkstyle HiddenField (2 lines)
      */
     public void setManufacturer(final String manufacturer) {
         this.manufacturer = manufacturer;
@@ -263,30 +259,13 @@ public class Product {
         return this.quantity;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Product quantity.
      * @param quantity Quantity
-     * @checkstyle HiddenField (2 lines)
      */
     public void setQuantity(final int quantity) {
         this.quantity = quantity;
-    }
-
-    /**
-     * Method get Product status.
-     * @return Status
-     */
-    public boolean isActive() {
-        return this.active;
-    }
-
-    /**
-     * Method set Product status.
-     * @param active Status
-     * @checkstyle HiddenField (2 lines)
-     */
-    public void setActive(final boolean active) {
-        this.active = active;
     }
 
     /**
@@ -297,10 +276,10 @@ public class Product {
         return this.category;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set Product category.
      * @param category Category
-     * @checkstyle HiddenField (2 lines)
      */
     public void setCategory(final Category category) {
         this.category = category;

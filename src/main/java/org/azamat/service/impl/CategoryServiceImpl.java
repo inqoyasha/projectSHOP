@@ -28,32 +28,38 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * CategoryRepository.
      */
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepo;
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Constructor for class CategoryServiceImpl.
-     * @param categoryRepository CategoryRepository
+     * @param categoryRepo CategoryRepository
      */
     @Autowired
-    public CategoryServiceImpl(final CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryServiceImpl(final CategoryRepository categoryRepo) {
+        this.categoryRepo = categoryRepo;
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Iterable<Category> getAllCategories() {
-        return this.categoryRepository.findAll();
+        return this.categoryRepo.findAll();
     }
 
+    // @checkstyle DesignForExtensionCheck (3 lines)
+    // @checkstyle ParameterNameCheck (2 lines)
     @Override
     public Optional<Category> getById(final Integer categoryId) {
-        return this.categoryRepository.findById(categoryId);
+        return this.categoryRepo.findById(categoryId);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Category create(final Category category) {
-        return this.categoryRepository.save(category);
+        return this.categoryRepo.save(category);
     }
 }

@@ -38,17 +38,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
-
     /**
      * LOGGER.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootStarter.class);
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * UserService.
      */
     private final UserService userService;
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Constructor for class AuthenticationSuccessHandlerImpl.
      * @param userService UserService
@@ -59,6 +60,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     }
 
     @Override
+    // @checkstyle LocalFinalVariableNameCheck (18 lines)
     public final void onAuthenticationSuccess(
         final HttpServletRequest request,
             final HttpServletResponse response,

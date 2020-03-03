@@ -45,6 +45,7 @@ public class OrderController {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootStarter.class);
 
+    // @checkstyle MemberNameCheck (15 lines)
     /**
      * OrderService.
      */
@@ -53,26 +54,27 @@ public class OrderController {
     /**
      * OrderProductService.
      */
-    private final OrderProductService orderProductService;
+    private final OrderProductService opService;
 
     /**
      * UserService.
      */
     private final  UserService userService;
 
+    // @checkstyle ParameterNameCheck (75 lines)
     /**
      * Constructor for class WebSecurityConfig.
      * @param orderService OrderService
-     * @param orderProductService OrderProductService
+     * @param opService OrderProductService
      * @param userService UserService
      */
     @Autowired
     public OrderController(
         final OrderService orderService,
-            final OrderProductService orderProductService,
+            final OrderProductService opService,
                 final UserService userService) {
         this.orderService = orderService;
-        this.orderProductService = orderProductService;
+        this.opService = opService;
         this.userService = userService;
     }
 
@@ -86,20 +88,20 @@ public class OrderController {
     @ApiOperation("View cart")
     public String cart(@AuthenticationPrincipal final UserDetailsImpl user, final Model model) {
         model.addAttribute(
-            "orderProducts", this.orderProductService
+            "orderProducts", this.opService
                 .findAllByOrder(this.userService
                     .findById(user.getId()).getOrder()
                 )
         );
         model.addAttribute(
-            "totalOrderPrice", this.orderProductService
-                .getTotalPrice(this.orderProductService
+            "totalOrderPrice", this.opService
+                .getTotalPrice(this.opService
                     .findAllByOrder(this.userService
                         .findById(user.getId()).getOrder()
                     )
                 )
         );
-        model.addAttribute("cartCount", this.orderProductService.cartCount());
+        model.addAttribute("cartCount", this.opService.cartCount());
         return "order";
     }
 
@@ -108,6 +110,7 @@ public class OrderController {
      * @param productId ProductId
      * @return Cart
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @GetMapping("/buy/{productId}")
     @ApiOperation("Add new product in cart by id")
     public String buy(@PathVariable("productId") final Integer productId) {

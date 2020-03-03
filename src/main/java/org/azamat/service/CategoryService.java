@@ -29,6 +29,7 @@ public interface CategoryService {
      */
     Iterable<Category> getAllCategories();
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Method getById interface method.
      * @param categoryId Category id

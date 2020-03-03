@@ -31,6 +31,7 @@ public interface ProductService {
      */
     Iterable<Product> getAllProducts();
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Method getProduct interface method.
      * @param productId Product id

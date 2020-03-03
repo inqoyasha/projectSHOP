@@ -28,7 +28,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * This is UserPageController.
@@ -45,6 +44,7 @@ public class UserPageController {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootStarter.class);
 
+    // @checkstyle MemberNameCheck (15 lines)
     /**
      * UserService.
      */
@@ -53,27 +53,28 @@ public class UserPageController {
     /**
      * CheckoutProductService.
      */
-    private final CheckoutProductService checkoutProductService;
+    private final CheckoutProductService cpService;
 
     /**
      * CheckoutProductService.
      */
-    private final OrderProductService orderProductService;
+    private final OrderProductService opService;
 
+    // @checkstyle ParameterNameCheck (11 lines)
     /**
      * Constructor for class WebSecurityConfig.
      * @param userService UserService
-     * @param checkoutProductService CheckoutProductService
-     * @param orderProductService OrderProductService
+     * @param cpService CheckoutProductService
+     * @param opService OrderProductService
      */
     @Autowired
     public UserPageController(
         final UserService userService,
-            final CheckoutProductService checkoutProductService,
-                final OrderProductService orderProductService) {
+            final CheckoutProductService cpService,
+                final OrderProductService opService) {
         this.userService = userService;
-        this.checkoutProductService = checkoutProductService;
-        this.orderProductService = orderProductService;
+        this.cpService = cpService;
+        this.opService = opService;
     }
 
     /**
@@ -82,15 +83,17 @@ public class UserPageController {
      * @param model Model
      * @return Userpage
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @GetMapping("/account")
     @ApiOperation("View user page")
     public String account(@AuthenticationPrincipal final UserDetailsImpl user, final Model model) {
         model.addAttribute("userPage", this.userService.findById(user.getId()));
-        model.addAttribute("orders", this.checkoutProductService.findAll());
-        model.addAttribute("cartCount", this.orderProductService.cartCount());
+        model.addAttribute("orders", this.cpService.findAll());
+        model.addAttribute("cartCount", this.opService.cartCount());
         return "userpage";
     }
 
+    // @checkstyle LocalFinalVariableNameCheck (11 lines)
     /**
      * Method show user page.
      * @param user User

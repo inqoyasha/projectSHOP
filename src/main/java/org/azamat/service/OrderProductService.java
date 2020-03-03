@@ -25,6 +25,7 @@ import org.azamat.model.Product;
  * @since 0.1
  */
 public interface OrderProductService {
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Method create interface method.
      * @param orderProduct OrderProduct
@@ -56,6 +57,7 @@ public interface OrderProductService {
      */
     int cartCount();
 
+    // @checkstyle ParameterNameCheck (6 lines)
     /**
      * Method getTotalPrice interface method.
      * @param orderProducts List of OrderProducts

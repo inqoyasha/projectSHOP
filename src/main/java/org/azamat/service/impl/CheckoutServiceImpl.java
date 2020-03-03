@@ -39,87 +39,97 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * CheckoutRepository.
      */
-    private final CheckoutRepository checkoutRepository;
+    private final CheckoutRepository checkoutRepo;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * CheckoutProductRepository.
      */
-    private final CheckoutProductRepository checkoutProductRepository;
+    private final CheckoutProductRepository checkPRepository;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * UserRepository.
      */
     private final UserRepository userRepository;
 
+    // @checkstyle MemberNameCheck (4 lines)
     /**
      * OrderProductRepository.
      */
-    private final OrderProductRepository orderProductRepository;
+    private final OrderProductRepository opRepository;
 
     /**
      * HttpSession.
      */
     private final HttpSession session;
 
+    // @checkstyle ParameterNameCheck (14 lines)
+    // @checkstyle ParameterNumber (15 lines)
     /**
      * Constructor for class CheckoutServiceImpl.
-     * @param checkoutRepository CheckoutRepository
-     * @param checkoutProductRepository CheckoutProductRepository
+     * @param checkoutRepo CheckoutRepository
+     * @param checkPRepository CheckoutProductRepository
      * @param userRepository UserRepository
-     * @param orderProductRepository OrderProductRepository
+     * @param opRepository OrderProductRepository
      * @param session HttpSession
-     * @checkstyle ParameterNumber (7 lines)
      */
     @Autowired
-    public CheckoutServiceImpl(final CheckoutRepository checkoutRepository,
-        final CheckoutProductRepository checkoutProductRepository,
+    public CheckoutServiceImpl(final CheckoutRepository checkoutRepo,
+        final CheckoutProductRepository checkPRepository,
             final UserRepository userRepository,
-                final OrderProductRepository orderProductRepository,
+                final OrderProductRepository opRepository,
                     final HttpSession session) {
-        this.checkoutRepository = checkoutRepository;
-        this.checkoutProductRepository = checkoutProductRepository;
+        this.checkoutRepo = checkoutRepo;
+        this.checkPRepository = checkPRepository;
         this.userRepository = userRepository;
-        this.orderProductRepository = orderProductRepository;
+        this.opRepository = opRepository;
         this.session = session;
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Checkout create(final Checkout checkout) {
-        return this.checkoutRepository.save(checkout);
+        return this.checkoutRepo.save(checkout);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Optional<Checkout> getById(final int id) {
-        return this.checkoutRepository.findById(id);
+        return this.checkoutRepo.findById(id);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Collection<Checkout> getAllByUser(final long id) {
         final User user = this.userRepository.findById(id).orElse(null);
-        return this.checkoutRepository.findByUser(user);
+        return this.checkoutRepo.findByUser(user);
     }
 
+    // @checkstyle LocalFinalVariableNameCheck (14 lines)
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public void addCheckout() {
         final User userSession = (User) this.session.getAttribute("connectedUser");
         final Checkout checkout = new Checkout();
-        this.checkoutRepository.save(checkout);
+        this.checkoutRepo.save(checkout);
         checkout.setUser(userSession);
         checkout.setName(new StringBuilder("new order").append(checkout.getId()).toString());
         checkout.setStatus(CheckoutStatus.SENT_TO_SELLER);
         checkout.setDateCreated(LocalDateTime.now());
-        this.checkoutRepository.save(checkout);
-        for (final OrderProduct op: this.orderProductRepository.findAll()) {
+        this.checkoutRepo.save(checkout);
+        for (final OrderProduct op: this.opRepository.findAll()) {
             if (op.getOrder().getId().equals(userSession.getOrder().getId())) {
                 final CheckoutProduct checkoutProduct = new CheckoutProduct();
                 checkoutProduct.setCheckout(checkout);
                 checkoutProduct.setProduct(op.getProduct());
                 checkoutProduct.setQuantity(op.getQuantity());
                 checkoutProduct.setSubPrice(op.getSubPrice());
-                this.checkoutProductRepository.save(checkoutProduct);
+                this.checkPRepository.save(checkoutProduct);
                 if (op.getProduct().getQuantity() - op.getQuantity() < 0) {
                     throw new ProductNotFoundException(
                         op.getProduct().getId(), op.getProduct().getQuantity()

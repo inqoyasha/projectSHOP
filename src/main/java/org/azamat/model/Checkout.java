@@ -36,6 +36,7 @@ import org.springframework.data.annotation.CreatedDate;
  * 0.1
  * @since 0.1
  */
+@SuppressWarnings("PMD.DataClass")
 @Entity
 @Table(name = "checkouts")
 public class Checkout {
@@ -59,6 +60,7 @@ public class Checkout {
      */
     private String name;
 
+    // @checkstyle MemberNameCheck (6 lines)
     /**
      * DateCreated.
      */
@@ -72,6 +74,7 @@ public class Checkout {
     @Enumerated(EnumType.STRING)
     private CheckoutStatus status;
 
+    // @checkstyle MemberNameCheck (5 lines)
     /**
      * Collection of CheckoutProducts.
      */
@@ -81,9 +84,12 @@ public class Checkout {
     /**
      * Default constructor for Checkout.
      */
+    @SuppressWarnings("PMD.UncommentedEmptyConstructor")
     public Checkout() {
     }
 
+    // @checkstyle ParameterNumber (16 lines)
+    // @checkstyle ParameterNameCheck (15 lines)
     /**
      * Constructor for Category with params.
      * @param id Id
@@ -92,7 +98,6 @@ public class Checkout {
      * @param dateCreated DateCreated
      * @param status Status
      * @param checkoutProducts CheckoutProducts
-     * @checkstyle ParameterNumber (7 lines)
      */
     public Checkout(final Integer id,
         final User user,
@@ -116,10 +121,10 @@ public class Checkout {
         return this.id;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set checkout id.
      * @param id Id
-     * @checkstyle HiddenField (2 lines)
      */
     public void setId(final Integer id) {
         this.id = id;
@@ -133,10 +138,10 @@ public class Checkout {
         return this.user;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set checkout user.
      * @param user User
-     * @checkstyle HiddenField (2 lines)
      */
     public void setUser(final User user) {
         this.user = user;
@@ -150,10 +155,10 @@ public class Checkout {
         return this.name;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set checkout name.
      * @param name Name
-     * @checkstyle HiddenField (2 lines)
      */
     public void setName(final String name) {
         this.name = name;
@@ -167,10 +172,11 @@ public class Checkout {
         return this.dateCreated;
     }
 
+    // @checkstyle ParameterNameCheck (6 lines)
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set checkout name.
      * @param dateCreated DateCreated
-     * @checkstyle HiddenField (2 lines)
      */
     public void setDateCreated(final LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
@@ -184,10 +190,10 @@ public class Checkout {
         return this.status;
     }
 
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set checkout status.
      * @param status Status
-     * @checkstyle HiddenField (2 lines)
      */
     public void setStatus(final CheckoutStatus status) {
         this.status = status;
@@ -201,10 +207,11 @@ public class Checkout {
         return this.checkoutProducts;
     }
 
+    // @checkstyle ParameterNameCheck (6 lines)
+    // @checkstyle HiddenField (5 lines)
     /**
      * Method set checkout Collection of CheckoutProducts.
      * @param checkoutProducts CheckoutProducts
-     * @checkstyle HiddenField (2 lines)
      */
     public void setCheckoutProducts(final Collection<CheckoutProduct> checkoutProducts) {
         this.checkoutProducts = checkoutProducts;

@@ -32,44 +32,54 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CheckoutProductServiceImpl implements CheckoutProductService {
+    // @checkstyle MemberNameCheck (5 lines)
     /**
      * CheckoutRepository.
      */
-    private final CheckoutRepository checkoutRepository;
+    private final CheckoutRepository checkoutRepo;
 
+    // @checkstyle MemberNameCheck (5 lines)
     /**
      * CheckoutProductRepository.
      */
-    private final CheckoutProductRepository checkoutProductRepository;
+    private final CheckoutProductRepository checkPRepository;
 
+    // @checkstyle ParameterNameCheck (8 lines)
     /**
      * Constructor for class CategoryServiceImpl.
-     * @param checkoutRepository CheckoutRepository
-     * @param checkoutProductRepository CheckoutProductRepository
+     * @param checkoutRepo CheckoutRepository
+     * @param checkPRepository CheckoutProductRepository
      */
     @Autowired
-    public CheckoutProductServiceImpl(final CheckoutRepository checkoutRepository,
-        final CheckoutProductRepository checkoutProductRepository) {
-        this.checkoutRepository = checkoutRepository;
-        this.checkoutProductRepository = checkoutProductRepository;
+    public CheckoutProductServiceImpl(final CheckoutRepository checkoutRepo,
+        final CheckoutProductRepository checkPRepository) {
+        this.checkoutRepo = checkoutRepo;
+        this.checkPRepository = checkPRepository;
     }
 
+    // @checkstyle ParameterNameCheck (3 lines)
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public CheckoutProduct create(final CheckoutProduct checkoutProduct) {
-        return this.checkoutProductRepository.save(checkoutProduct);
+        return this.checkPRepository.save(checkoutProduct);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public CheckoutProduct findByCheckoutAndProduct(final Checkout checkout,
         final Product product) {
-        return this.checkoutProductRepository.findByCheckoutAndProduct(checkout, product);
+        return this.checkPRepository.findByCheckoutAndProduct(checkout, product);
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public Optional<CheckoutProduct> findById(final int id) {
-        return this.checkoutProductRepository.findById(id);
+        return this.checkPRepository.findById(id);
     }
 
+    // @checkstyle LocalFinalVariableNameCheck (6 lines)
+    // @checkstyle ParameterNameCheck (3 lines)
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public int getTotalPrice(final List<CheckoutProduct> checkoutProducts) {
         int total = 0;
@@ -79,15 +89,17 @@ public class CheckoutProductServiceImpl implements CheckoutProductService {
         return total;
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public List<CheckoutProduct> findAll() {
-        return this.checkoutProductRepository.findAll();
+        return this.checkPRepository.findAll();
     }
 
+    // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public List<CheckoutProduct> getAllByCheckout(final int id) {
-        final Checkout checkout = this.checkoutRepository.findById(id).orElse(new Checkout());
-        return this.checkoutProductRepository.findByCheckout(checkout);
+        final Checkout checkout = this.checkoutRepo.findById(id).orElse(new Checkout());
+        return this.checkPRepository.findByCheckout(checkout);
     }
 
 }

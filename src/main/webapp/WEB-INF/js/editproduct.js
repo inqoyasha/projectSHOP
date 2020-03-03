@@ -64,16 +64,6 @@ switch(clicked_id) {
   case "editBtn7":
         if(button.value.toLowerCase() == 'edit'){
             button.value = 'save';
-            document.getElementById("ac").removeAttribute("readonly");
-        } else {
-            button.value = 'edit';
-            send();
-            document.getElementById("ac").setAttribute("readonly", true);
-        }
-        break;
-  case "editBtn8":
-        if(button.value.toLowerCase() == 'edit'){
-            button.value = 'save';
             document.getElementById("ca").removeAttribute("readonly");
         } else {
             button.value = 'edit';
@@ -81,6 +71,7 @@ switch(clicked_id) {
             document.getElementById("ca").setAttribute("readonly", true);
         }
         break;
+
 }
 return false;
 }
