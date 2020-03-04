@@ -106,29 +106,29 @@ public class OrderController {
     }
 
     /**
-     * Method return info product page.
-     * @param productId ProductId
+     * Method Add new product in cart by id.
+     * @param opId ProductId
      * @return Cart
      */
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @GetMapping("/buy/{productId}")
+    @GetMapping("/buy/{opId}")
     @ApiOperation("Add new product in cart by id")
-    public String buy(@PathVariable("productId") final Integer productId) {
-        this.orderService.addOrderProduct(productId);
-        LOGGER.debug("Add product in cart with id {}", productId);
+    public String buy(@PathVariable("opId") final Integer opId) {
+        this.orderService.addOrderProduct(opId);
+        LOGGER.debug("Add product in cart with id {}", opId);
         return "redirect:/cart";
     }
 
     /**
-     * Method return info product page.
-     * @param productId ProductId
+     * Method Remove product from cart by id.
+     * @param opId ProductId
      * @return Cart
      */
-    @GetMapping("/remove/{productId}")
+    @GetMapping("/remove/{opId}")
     @ApiOperation("Remove product from cart by id")
-    public String remove(@PathVariable("productId") final Integer productId) {
-        this.orderService.removeOrderProduct(productId);
-        LOGGER.debug("Remove product from cart with id {}", productId);
+    public String remove(@PathVariable("opId") final Integer opId) {
+        this.orderService.removeOrderProduct(opId);
+        LOGGER.debug("Remove product from cart with id {}", opId);
         return "redirect:/cart";
     }
 }

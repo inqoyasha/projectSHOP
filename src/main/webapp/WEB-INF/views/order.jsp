@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cart Page</title>
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/css/input.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <header class="header">
@@ -38,7 +39,7 @@
                                     <td>${orderProduct.product.productName }</td>
                                     <td><img src="${pageContext.request.contextPath}/images/${orderProduct.product.pictureUrl}" width="50"></td>
                                     <td>${orderProduct.product.price}</td>
-                                    <td>${orderProduct.quantity}</td>
+                                    <td><input id="qu${orderProduct.id}" type="number" name="quantity" readonly value ="${orderProduct.quantity}"/></td>
                                     <td>${orderProduct.subPrice}</td>
                                 </tr>
                             </c:forEach>

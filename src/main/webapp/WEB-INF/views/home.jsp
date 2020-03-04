@@ -35,7 +35,7 @@
                         <tr>
                             <td>${product.id}</td>
                             <td>${product.productName}</td>
-                            <td><img src="${pageContext.request.contextPath}/images/ ${product.pictureUrl}" width="50"></td>
+                            <td><img src="${pageContext.request.contextPath}/images/ ${product.pictureUrl1}" width="50"></td>
                             <td>${product.price}</td>
                             <td>
                                 <sec:authorize access="hasAnyRole('USER','ANONYMOUS')">

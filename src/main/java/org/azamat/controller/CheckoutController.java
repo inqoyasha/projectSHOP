@@ -129,6 +129,6 @@ public class CheckoutController {
                 final Model model) {
         model.addAttribute("exception", ex);
         model.addAttribute("url", request.getRequestURL());
-        return "error";
+        return "errorProduct";
     }
 }

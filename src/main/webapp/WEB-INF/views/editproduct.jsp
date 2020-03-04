@@ -7,15 +7,15 @@
 <title>user page</title>
 <script src="${pageContext.request.contextPath}/js/editproduct.js"></script>
 <script>
-function send() {
-             let formData = new FormData(document.forms.productdata);
+    function send() {
+         let formData = new FormData(document.forms.productdata);
 
-             let xhr = new XMLHttpRequest();
-             xhr.open("PUT", "/manage/edit/${product.id}");
-             xhr.send(formData);
+         let xhr = new XMLHttpRequest();
+         xhr.open("PUT", "/manage/edit/${product.id}");
+         xhr.send(formData);
 
-             return false;
-         }
+         return false;
+     }
 </script>
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
 </head>
