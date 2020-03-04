@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -129,6 +130,17 @@ public class OrderController {
     public String remove(@PathVariable("opId") final Integer opId) {
         this.orderService.removeOrderProduct(opId);
         LOGGER.debug("Remove product from cart with id {}", opId);
+        return "redirect:/cart";
+    }
+
+    /**
+     * Method update product from cart by id.
+     * @param opId ProductId
+     * @return Cart
+     */
+    @PutMapping("/update/{opId}")
+    @ApiOperation("Update product from cart by id")
+    public String update(@PathVariable("opId") final Integer opId) {
         return "redirect:/cart";
     }
 }
