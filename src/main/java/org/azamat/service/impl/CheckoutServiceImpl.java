@@ -134,9 +134,8 @@ public class CheckoutServiceImpl implements CheckoutService {
                     throw new ProductNotFoundException(
                         op.getProduct().getId(), op.getProduct().getQuantity()
                     );
-                } else {
-                    op.getProduct().setQuantity(op.getProduct().getQuantity() - op.getQuantity());
                 }
+                op.getProduct().setQuantity(op.getProduct().getQuantity() - op.getQuantity());
             }
         }
     }

@@ -11,7 +11,7 @@
          let formData = new FormData(document.forms.productdata);
 
          let xhr = new XMLHttpRequest();
-         xhr.open("PUT", "/manage/edit/${product.id}");
+         xhr.open("POST", "/manage/edit/${product.id}");
          xhr.send(formData);
 
          return false;

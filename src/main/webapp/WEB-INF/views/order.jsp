@@ -11,7 +11,8 @@
         var a = parseInt(document.getElementById("qu"+id).value);
         a += 1;
         document.getElementById("qu"+id).value= a;
-        send();
+        const v = id;
+        send(v);
 
         return false;
     }
@@ -24,16 +25,16 @@
             a = 1;
         }
         document.getElementById("qu"+id).value= a;
-        send();
+        send(id);
 
         return false;
     }
 
-    function send() {
+    function send(id) {
         let formData = new FormData(document.forms.cartdata);
 
         let xhr = new XMLHttpRequest();
-        xhr.open("PUT", "cart/update/${orderProduct.id}");
+        xhr.open("POST", "cart/update/id");
         xhr.send(formData);
 
         return false;

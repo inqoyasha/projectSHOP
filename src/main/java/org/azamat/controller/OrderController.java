@@ -26,7 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -62,7 +62,7 @@ public class OrderController {
      */
     private final  UserService userService;
 
-    // @checkstyle ParameterNameCheck (75 lines)
+    // @checkstyle ParameterNameCheck (85 lines)
     /**
      * Constructor for class WebSecurityConfig.
      * @param orderService OrderService
@@ -138,9 +138,9 @@ public class OrderController {
      * @param opId ProductId
      * @return Cart
      */
-    @PutMapping("/update/{opId}")
+    @PostMapping("/update/{opId}")
     @ApiOperation("Update product from cart by id")
-    public String update(@PathVariable("opId") final Integer opId) {
+    public static String update(@PathVariable("opId") final Integer opId) {
         return "redirect:/cart";
     }
 }
