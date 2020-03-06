@@ -2,32 +2,25 @@ function doOnClick(clicked_id, id) {
     const button = document.getElementById(clicked_id);
         switch(clicked_id) {
             case "editBtn1":
-                var inputId = 'pn';
-                edit(clicked_id, inputId, id);
+                edit(clicked_id, 'pn', id);
                 break;
             case "editBtn2":
-                var inputId = 'ph';
-                edit(clicked_id, inputId, id);
+                edit(clicked_id, 'ph', id);
                 break;
             case "editBtn3":
-                var inputId = 'pr';
-                edit(clicked_id, inputId, id);
+                edit(clicked_id, 'pr', id);
                 break;
             case "editBtn4":
-                var inputId = 'qu';
-                edit(clicked_id, inputId, id);
+                edit(clicked_id, 'qu', id);
                 break;
             case "editBtn5":
-                var inputId = 'de';
-                edit(clicked_id, inputId, id);
+                edit(clicked_id, 'de', id);
                 break;
             case "editBtn6":
-                var inputId = 'ma';
-                edit(clicked_id, inputId, id);
+                edit(clicked_id, 'ma', id);
                 break;
             case "editBtn7":
-                var inputId = 'ca';
-                edit(clicked_id, inputId, id);
+                edit(clicked_id, 'ca', id);
                 break;
         }
     return false;

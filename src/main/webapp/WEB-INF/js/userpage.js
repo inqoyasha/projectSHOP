@@ -1,24 +1,19 @@
 function doOnClick(clicked_id) {
     switch(clicked_id) {
       case "editBtn1":
-            var inputId = 'fn';
-            edit(clicked_id, inputId);
+            edit(clicked_id, 'fn');
             break;
       case "editBtn2":
-            var inputId = 'ln';
-            edit(clicked_id, inputId);
+            edit(clicked_id, 'ln');
             break;
       case "editBtn3":
-            var inputId = 'pa';
-            edit(clicked_id, inputId);
+            edit(clicked_id, 'pa');
             break;
       case "editBtn4":
-            var inputId = 'em';
-            edit(clicked_id, inputId);
+            edit(clicked_id, 'em');
             break;
       case "editBtn5":
-            var inputId = 'ad';
-            edit(clicked_id, inputId);
+            edit(clicked_id, 'ad');
             break;
        }
     return false;
