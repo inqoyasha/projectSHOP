@@ -32,18 +32,48 @@
                 <p>Category: </p>
             </td>
             <td>
-                <p><input id= "pn" type="text"   name="productName"  readonly value ="${product.productName}"/></p>
-                <p><input id= "ph" type="text"   name="pictureUrl"   readonly value ="${product.pictureUrl}"/></p>
-                <p><input id= "pr" type="number" name="price"        readonly value ="${product.price}"/></p>
-                <p><input id= "qu" type="number" name="quantity"     readonly value ="${product.quantity}"/></p>
-                <p><input id= "de" type="text"   name="description"  readonly value ="${product.description}"/></p>
-                <p><input id= "ma" type="text"   name="manufacturer" readonly value ="${product.manufacturer}"/></p>
-                <p><input id= "ca" type="number" name="category"     readonly value ="${product.category.id}"/></p>
-            </td>
-            <td>
-                <c:forEach var = "i" begin = "1" end = "7">
-                    <p><input type="button" value="edit" id ="editBtn${i}" onClick="doOnClick(this.id, ${product.id});"/>
-                </c:forEach>
+                <p>
+                    <div>
+                        <input id= "pn" type="text"   name="productName"  readonly value ="${product.productName}"/>
+                        <input type="button" value="edit" id ="editBtn1" onClick="doOnClick(this.id, ${product.id});"/>
+                    </div>
+                </p>
+                <p>
+                    <div>
+                        <input id= "ph" type="text"   name="pictureUrl"   readonly value ="${product.pictureUrl}"/>
+                        <input type="button" value="edit" id ="editBtn2" onClick="doOnClick(this.id, ${product.id});"/>
+                    </div>
+                </p>
+                <p>
+                    <div>
+                        <input id= "pr" type="number" name="price"        readonly value ="${product.price}"/>
+                        <input type="button" value="edit" id ="editBtn3" onClick="doOnClick(this.id, ${product.id});"/>
+                    </div>
+                </p>
+                <p>
+                    <div>
+                        <input id= "qu" type="number" name="quantity"     readonly value ="${product.quantity}"/>
+                        <input type="button" value="edit" id ="editBtn4" onClick="doOnClick(this.id, ${product.id});"/>
+                    </div>
+                </p>
+                <p>
+                    <div>
+                        <input id= "de" type="text"   name="description"  readonly value ="${product.description}"/>
+                        <input type="button" value="edit" id ="editBtn5" onClick="doOnClick(this.id, ${product.id});"/>
+                    </div>
+                </p>
+                <p>
+                    <div>
+                        <input id= "ma" type="text"   name="manufacturer" readonly value ="${product.manufacturer}"/>
+                        <input type="button" value="edit" id ="editBtn6" onClick="doOnClick(this.id, ${product.id});"/>
+                    </div>
+                </p>
+                <p>
+                    <div>
+                        <input id= "ca" type="number" name="category"     readonly value ="${product.category.id}"/>
+                        <input type="button" value="edit" id ="editBtn7" onClick="doOnClick(this.id, ${product.id});"/>
+                    </div>
+                </p>
             </td>
         </table>
         <a href="${pageContext.request.contextPath}/manage/show/all">Back</a>

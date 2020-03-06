@@ -30,16 +30,36 @@
                     <p>Address:     </p>
                 </td>
                 <td>
-                    <p><input id= "fn" type="text" name="firstName"  readonly value ="${userPage.firstName}"/></p>
-                    <p><input id= "ln" type="text" name="lastName"   readonly value ="${userPage.lastName}"/></p>
-                    <p><input id= "pa" type="text" name="patronymic" readonly value ="${userPage.patronymic}"/></p>
-                    <p><input id= "em" type="text" name="email"      readonly value ="${userPage.email}"/></p>
-                    <p><input id= "ad" type="text" name="address"    readonly value ="${userPage.address}"/></p>
-                </td>
-                <td>
-                    <c:forEach var = "i" begin = "1" end = "5">
-                        <p><input type="button" value="edit" id ="editBtn${i}" onClick="doOnClick(this.id);"/>
-                    </c:forEach>
+                    <p>
+                        <div>
+                            <input id= "fn" type="text" name="firstName"  readonly value ="${userPage.firstName}"/>
+                            <input type="button" value="edit" id ="editBtn1" onClick="doOnClick(this.id);"/>
+                        </div>
+                    </p>
+                    <p>
+                        <div>
+                            <input id= "ln" type="text" name="lastName"   readonly value ="${userPage.lastName}"/>
+                            <input type="button" value="edit" id ="editBtn2" onClick="doOnClick(this.id);"/>
+                        </div>
+                    </p>
+                    <p>
+                        <div>
+                            <input id= "pa" type="text" name="patronymic" readonly value ="${userPage.patronymic}"/>
+                            <input type="button" value="edit" id ="editBtn3" onClick="doOnClick(this.id);"/>
+                        </div>
+                    </p>
+                    <p>
+                        <div>
+                            <input id= "em" type="text" name="email"      readonly value ="${userPage.email}"/>
+                            <input type="button" value="edit" id ="editBtn4" onClick="doOnClick(this.id);"/>
+                        </div>
+                    </p>
+                    <p>
+                        <div>
+                            <input id= "ad" type="text" name="address"    readonly value ="${userPage.address}"/>
+                            <input type="button" value="edit" id ="editBtn5" onClick="doOnClick(this.id);"/>
+                        </div>
+                    </p>
                 </td>
             </table>
         </div>

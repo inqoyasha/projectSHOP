@@ -1,21 +1,7 @@
 function doOnClick(clicked_id) {
-    switch(clicked_id) {
-      case "editBtn1":
-            edit(clicked_id, 'fn');
-            break;
-      case "editBtn2":
-            edit(clicked_id, 'ln');
-            break;
-      case "editBtn3":
-            edit(clicked_id, 'pa');
-            break;
-      case "editBtn4":
-            edit(clicked_id, 'em');
-            break;
-      case "editBtn5":
-            edit(clicked_id, 'ad');
-            break;
-       }
+    const button = document.getElementById(clicked_id);
+    edit(clicked_id, button.previousElementSibling.id);
+
     return false;
 }
 
