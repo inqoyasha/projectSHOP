@@ -1,20 +1,14 @@
 function doOnClick(clicked_id) {
     const button = document.getElementById(clicked_id);
-    edit(clicked_id, button.previousElementSibling.id);
-
-    return false;
-}
-
-function edit(clicked_id, inputId) {
-    const button = document.getElementById(clicked_id);
     if(button.value.toLowerCase() == 'edit'){
         button.value = 'save';
-        document.getElementById(inputId).removeAttribute("readonly");
+        document.getElementById(button.previousElementSibling.id).removeAttribute("readonly");
     } else {
         button.value = 'edit';
         send();
-        document.getElementById(inputId).setAttribute("readonly", true);
+        document.getElementById(button.previousElementSibling.id).setAttribute("readonly", true);
     }
+    return false;
 }
 
 function send() {
