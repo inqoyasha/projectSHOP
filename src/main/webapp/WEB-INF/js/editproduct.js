@@ -1,78 +1,56 @@
-function doOnClick(clicked_id) {
-const button = document.getElementById(clicked_id);
-switch(clicked_id) {
-  case "editBtn1":
-        if(button.value.toLowerCase() == 'edit'){
-            button.value = 'save';
-            document.getElementById("pn").removeAttribute("readonly");
-        } else {
-            button.value = 'edit';
-            send();
-            document.getElementById("pn").setAttribute("readonly", true);
+function doOnClick(clicked_id, id) {
+    const button = document.getElementById(clicked_id);
+        switch(clicked_id) {
+            case "editBtn1":
+                var inputId = 'pn';
+                edit(clicked_id, inputId, id);
+                break;
+            case "editBtn2":
+                var inputId = 'ph';
+                edit(clicked_id, inputId, id);
+                break;
+            case "editBtn3":
+                var inputId = 'pr';
+                edit(clicked_id, inputId, id);
+                break;
+            case "editBtn4":
+                var inputId = 'qu';
+                edit(clicked_id, inputId, id);
+                break;
+            case "editBtn5":
+                var inputId = 'de';
+                edit(clicked_id, inputId, id);
+                break;
+            case "editBtn6":
+                var inputId = 'ma';
+                edit(clicked_id, inputId, id);
+                break;
+            case "editBtn7":
+                var inputId = 'ca';
+                edit(clicked_id, inputId, id);
+                break;
         }
-        break;
-  case "editBtn2":
-        if(button.value.toLowerCase() == 'edit'){
-            button.value = 'save';
-            document.getElementById("ph").removeAttribute("readonly");
-        } else {
-            button.value = 'edit';
-            send();
-            document.getElementById("ph").setAttribute("readonly", true);
-        }
-        break;
-  case "editBtn3":
-        if(button.value.toLowerCase() == 'edit'){
-            button.value = 'save';
-            document.getElementById("pr").removeAttribute("readonly");
-        } else {
-            button.value = 'edit';
-            send();
-            document.getElementById("pr").setAttribute("readonly", true);
-        }
-        break;
-  case "editBtn4":
-        if(button.value.toLowerCase() == 'edit'){
-            button.value = 'save';
-            document.getElementById("qu").removeAttribute("readonly");
-        } else {
-            button.value = 'edit';
-            send();
-            document.getElementById("qu").setAttribute("readonly", true);
-        }
-        break;
-  case "editBtn5":
-        if(button.value.toLowerCase() == 'edit'){
-            button.value = 'save';
-            document.getElementById("de").removeAttribute("readonly");
-        } else {
-            button.value = 'edit';
-            send();
-            document.getElementById("de").setAttribute("readonly", true);
-        }
-        break;
-  case "editBtn6":
-        if(button.value.toLowerCase() == 'edit'){
-            button.value = 'save';
-            document.getElementById("ma").removeAttribute("readonly");
-        } else {
-            button.value = 'edit';
-            send();
-            document.getElementById("ma").setAttribute("readonly", true);
-        }
-        break;
-  case "editBtn7":
-        if(button.value.toLowerCase() == 'edit'){
-            button.value = 'save';
-            document.getElementById("ca").removeAttribute("readonly");
-        } else {
-            button.value = 'edit';
-            send();
-            document.getElementById("ca").setAttribute("readonly", true);
-        }
-        break;
-
-}
-return false;
+    return false;
 }
 
+function edit(clicked_id, inputId, id) {
+    const button = document.getElementById(clicked_id);
+    if(button.value.toLowerCase() == 'edit'){
+        button.value = 'save';
+        document.getElementById(inputId).removeAttribute("readonly");
+    } else {
+        button.value = 'edit';
+        send(id);
+        document.getElementById(inputId).setAttribute("readonly", true);
+    }
+}
+
+function send(id) {
+     let formData = new FormData(document.forms.productdata);
+
+     let xhr = new XMLHttpRequest();
+     xhr.open("POST", "/manage/edit/"+id);
+     xhr.send(formData);
+
+     return false;
+ }

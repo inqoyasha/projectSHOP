@@ -7,7 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin page</title>
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
-<script src="${pageContext.request.contextPath}/js/sortTable.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -53,7 +52,7 @@
         </div>
     </div>
     <div class="footer">
-    copyright
+        copyright
     </div>
 </div>
 </body>

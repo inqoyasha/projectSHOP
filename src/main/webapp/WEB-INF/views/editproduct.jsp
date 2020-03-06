@@ -6,17 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>user page</title>
 <script src="${pageContext.request.contextPath}/js/editproduct.js"></script>
-<script>
-    function send() {
-         let formData = new FormData(document.forms.productdata);
-
-         let xhr = new XMLHttpRequest();
-         xhr.open("POST", "/manage/edit/${product.id}");
-         xhr.send(formData);
-
-         return false;
-     }
-</script>
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -53,7 +42,7 @@
             </td>
             <td>
                 <c:forEach var = "i" begin = "1" end = "7">
-                    <p><input type="button" value="edit" id ="editBtn${i}" onClick="doOnClick(this.id);"/>
+                    <p><input type="button" value="edit" id ="editBtn${i}" onClick="doOnClick(this.id, ${product.id});"/>
                 </c:forEach>
             </td>
         </table>

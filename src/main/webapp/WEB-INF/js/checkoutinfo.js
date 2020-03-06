@@ -23,7 +23,7 @@ function send() {
     let formData = new FormData(document.forms.userdata);
 
     let xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/account");
+    xhr.open("POST", "/account");
     xhr.send(formData);
 
     return false;

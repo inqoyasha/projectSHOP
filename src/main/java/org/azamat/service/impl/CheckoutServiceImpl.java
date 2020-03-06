@@ -110,7 +110,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         return this.checkoutRepo.findByUser(user);
     }
 
-    // @checkstyle LocalFinalVariableNameCheck (14 lines)
+    // @checkstyle LocalFinalVariableNameCheck (16 lines)
     // @checkstyle DesignForExtensionCheck (2 lines)
     @Override
     public void addCheckout() {
@@ -123,20 +123,21 @@ public class CheckoutServiceImpl implements CheckoutService {
         checkout.setDateCreated(LocalDateTime.now());
         this.checkoutRepo.save(checkout);
         for (final OrderProduct op: this.opRepository.findAll()) {
-            if (op.getOrder().getId().equals(userSession.getOrder().getId())) {
-                final CheckoutProduct checkoutProduct = new CheckoutProduct();
-                checkoutProduct.setCheckout(checkout);
-                checkoutProduct.setProduct(op.getProduct());
-                checkoutProduct.setQuantity(op.getQuantity());
-                checkoutProduct.setSubPrice(op.getSubPrice());
-                this.checkPRepository.save(checkoutProduct);
-                if (op.getProduct().getQuantity() - op.getQuantity() < 0) {
-                    throw new ProductNotFoundException(
-                        op.getProduct().getId(), op.getProduct().getQuantity()
-                    );
-                }
-                op.getProduct().setQuantity(op.getProduct().getQuantity() - op.getQuantity());
+            if (!(op.getOrder().getId().equals(userSession.getOrder().getId()))) {
+                continue;
             }
+            final CheckoutProduct checkoutProduct = new CheckoutProduct();
+            checkoutProduct.setCheckout(checkout);
+            checkoutProduct.setProduct(op.getProduct());
+            checkoutProduct.setQuantity(op.getQuantity());
+            checkoutProduct.setSubPrice(op.getSubPrice());
+            this.checkPRepository.save(checkoutProduct);
+            if (op.getProduct().getQuantity() - op.getQuantity() < 0) {
+                throw new ProductNotFoundException(
+                    op.getProduct().getId(), op.getProduct().getQuantity()
+                );
+            }
+            op.getProduct().setQuantity(op.getProduct().getQuantity() - op.getQuantity());
         }
     }
 }

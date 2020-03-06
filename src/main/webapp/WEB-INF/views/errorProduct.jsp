@@ -7,13 +7,9 @@
 <title>Error Page</title>
 </head>
 <body>
-<h2>Application Error, please contact support.</h2>
-
-<h3>Debug Information:</h3>
-
-Requested URL = ${url}<br><br>
-
-Exception = ${exception.message}<br><br>
-
+    <h2>Application Error, please contact support.</h2>
+        <h3>Debug Information:</h3>
+        Requested URL = ${url}<br><br>
+        Exception = ${exception.message}<br><br>
 </body>
 </html>
